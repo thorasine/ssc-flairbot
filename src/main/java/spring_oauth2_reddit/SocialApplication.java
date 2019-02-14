@@ -52,15 +52,6 @@ public class SocialApplication extends WebSecurityConfigurerAdapter {
         return principal;
     }
 
-    /*
-    @Bean
-    public SpringTemplateEngine templateEngine(TemplateResolver templateResolver) {
-        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        templateEngine.setTemplateResolver(templateResolver);
-        templateEngine.addDialect(new SpringSecurityDialect());
-        return templateEngine;
-    }
-     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
