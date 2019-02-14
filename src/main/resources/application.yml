@@ -1,10 +1,12 @@
-discord:
+reddit:
   client:
-    clientId: ${CLIENT_ID}
-    clientSecret: ${CLIENT_SECRET}
-    accessTokenUri: https://discordapp.com/api/oauth2/token
-    userAuthorizationUri: https://discordapp.com/api/oauth2/authorize
-    scope: identify
-    clientAuthenticationScheme: query
+    clientId: ***REMOVED***
+    clientSecret: ***REMOVED***
+    accessTokenUri: https://www.reddit.com/api/v1/access_token
+    userAuthorizationUri: https://www.reddit.com/api/v1/authorize
+    scope: identity
+    clientAuthenticationScheme: header
+    preEstablishedRedirectUri: http://localhost:8080/login
+    useCurrentUri: false
   resource:
-    userInfoUri: https://discordapp.com/api/users/@me
+    userInfoUri: https://oauth.reddit.com/api/v1/me

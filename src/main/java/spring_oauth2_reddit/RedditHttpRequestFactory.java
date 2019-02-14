@@ -1,4 +1,4 @@
-package com.rhcloud.tutorials.spring_oauth2_discord;
+package spring_oauth2_reddit;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URI;
 
-public class DiscordHttpRequestFactory extends SimpleClientHttpRequestFactory {
+public class RedditHttpRequestFactory extends SimpleClientHttpRequestFactory {
 
     @Override
     public ClientHttpRequest createRequest(URI uri, HttpMethod httpMethod) throws IOException {
