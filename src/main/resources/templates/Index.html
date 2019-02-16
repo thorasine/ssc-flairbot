@@ -17,7 +17,8 @@
             </div>
         </div>
         <div class="container" sec:authorize="isAuthenticated()">
-            Logged in as: <span sec:authentication="name">testestest</span>
+            Logged in as:
+            <span th:text ="${#authentication.getUserAuthentication().getDetails().get('name')}"></span>
             <form th:action="@{/logout}" method="post"> 
                 <input class="btn btn-primary" type="submit" value="Logout"/> 
             </form>
@@ -26,8 +27,7 @@
             <div sec:authorize="isAuthenticated()">
                 Text visible only to authenticated users.
             </div>
-            Authenticated username:
-            <div sec:authentication="name">testestest</div>
+
         </div>
     </body>
 </html>
