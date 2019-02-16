@@ -1,8 +1,6 @@
 package spring_oauth2_reddit;
 
-import java.security.Principal;
 import java.util.Arrays;
-import java.util.Map;
 import javax.servlet.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
@@ -24,27 +22,16 @@ import org.springframework.security.oauth2.client.token.OAuth2AccessTokenSupport
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeAccessTokenProvider;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @Configuration
-@RestController
 @EnableOAuth2Client
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
     
     @Autowired
     OAuth2ClientContext oauth2ClientContext;
-
-    @RequestMapping("/user")
-    public Principal user(Principal principal) {
-        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
-        System.out.println("NAME: " + details.get("name"));
-        return principal;
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
