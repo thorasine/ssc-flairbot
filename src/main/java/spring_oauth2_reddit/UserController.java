@@ -16,7 +16,12 @@ public class UserController {
         return "index";
     }
 
-    @RequestMapping("/user2")
+    @RequestMapping("/login")
+    public String loginPage(Model model) {
+        return "login";
+    }
+
+    @RequestMapping("/test")
     public String user2(Principal principal) {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         System.out.println("NAME: " + details.get("name"));

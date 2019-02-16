@@ -35,19 +35,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // @formatter:off
-        http.antMatcher("/**").authorizeRequests().antMatchers("/", "/login**", "/greeting**", "/webjars/**", "/error**").permitAll().anyRequest()
+        http
+            .antMatcher("/**")
+                .authorizeRequests()
+            .antMatchers("/login**", "/greeting**", "/webjars/**", "/error**")
+                .permitAll()
+            .anyRequest()
                 .authenticated().and().exceptionHandling()
-                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")).and().logout()
-                .logoutSuccessUrl("/").permitAll().and().csrf()
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
-                .addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
-        // @formatter:on
+            .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
+            .and().logout().logoutSuccessUrl("/login").permitAll()
+            .and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+            .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
         http.logout().logoutUrl("/logout");
     }
 
     private Filter ssoFilter() {
-        OAuth2ClientAuthenticationProcessingFilter discordFilter = new OAuth2ClientAuthenticationProcessingFilter("/login");
+        OAuth2ClientAuthenticationProcessingFilter discordFilter = new OAuth2ClientAuthenticationProcessingFilter("/loginReddit");
         OAuth2RestTemplate discordTemplate = new OAuth2RestTemplate(reddit(), oauth2ClientContext);
 
         ClientHttpRequestFactory requestFactory = new RedditHttpRequestFactory();

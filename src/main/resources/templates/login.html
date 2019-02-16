@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <head>
         <meta charset="utf-8"/>
-        <title>Flairbot Alpha</title>
+        <title>Falirbot Alpha login</title>
         <meta name="description" content=""/>
         <meta name="viewport" content="width=device-width" />
         <base href="/"/>
@@ -13,19 +13,12 @@
     <body>
         <div class="container" sec:authorize="!isAuthenticated()">
             <div>
-                Sign in with Reddit: <a class="btn btn-primary" href="/login">Log in</a>
+                Sign in with Reddit: <a class="btn btn-primary" href="/loginReddit">Log in</a>
             </div>
         </div>
         <div class="container" sec:authorize="isAuthenticated()">
-            Logged in as:
-            <span th:text ="${#authentication.getUserAuthentication().getDetails().get('name')}"></span>
-            <form th:action="@{/logout}" method="post"> 
-                <input class="btn btn-primary" type="submit" value="Logout"/> 
-            </form>
-            <div sec:authorize="hasRole('USER')">Text visible to user.</div>
-            <div sec:authorize="hasRole('ADMIN')">Text visible to admin.</div>
-            <div sec:authorize="isAuthenticated()">
-                Text visible only to authenticated users.
+            <div>
+                You are already logged in!
             </div>
         </div>
     </body>

@@ -6,7 +6,7 @@ reddit:
     userAuthorizationUri: https://www.reddit.com/api/v1/authorize
     scope: identity
     clientAuthenticationScheme: header
-    preEstablishedRedirectUri: http://localhost:8080/login
+    preEstablishedRedirectUri: http://localhost:8080/loginReddit
     useCurrentUri: false
   resource:
     userInfoUri: https://oauth.reddit.com/api/v1/me
