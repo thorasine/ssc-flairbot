@@ -52,6 +52,7 @@ public class SocialApplication extends WebSecurityConfigurerAdapter {
         return principal;
     }
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
@@ -62,6 +63,7 @@ public class SocialApplication extends WebSecurityConfigurerAdapter {
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
                 .addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
         // @formatter:on
+        http.logout().logoutUrl("/logout");
     }
 
     private Filter ssoFilter() {

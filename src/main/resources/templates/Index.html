@@ -17,18 +17,17 @@
             </div>
         </div>
         <div class="container" sec:authorize="isAuthenticated()">
-            Logged in as: <span ng-bind="home.user"></span>
-            <div>
-                <a class="btn btn-primary" href="/loout">Logout</a>
+            Logged in as: <span sec:authentication="name">testestest</span>
+            <form th:action="@{/logout}" method="post"> 
+                <input class="btn btn-primary" type="submit" value="Logout"/> 
+            </form>
+            <div sec:authorize="hasRole('USER')">Text visible to user.</div>
+            <div sec:authorize="hasRole('ADMIN')">Text visible to admin.</div>
+            <div sec:authorize="isAuthenticated()">
+                Text visible only to authenticated users.
             </div>
+            Authenticated username:
+            <div sec:authentication="name">testestest</div>
         </div>
-        
-        <div sec:authorize="hasRole('USER')">Text visible to user.</div>
-        <div sec:authorize="hasRole('ADMIN')">Text visible to admin.</div>
-        <div sec:authorize="isAuthenticated()">
-            Text visible only to authenticated users.
-        </div>
-        Authenticated username:
-        <div sec:authentication="name">testestest</div>
     </body>
 </html>
