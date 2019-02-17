@@ -25,11 +25,12 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableOAuth2Client
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
-    
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     OAuth2ClientContext oauth2ClientContext;
 
@@ -37,16 +38,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
             .antMatcher("/**")
-                .authorizeRequests()
-            .antMatchers("/login**", "/greeting**", "/webjars/**", "/error**")
-                .permitAll()
+            .authorizeRequests()
+            .antMatchers("/login**", "/greeting**", "/webjars/**", "/error**", "/js/**", "/css/**")
+            .permitAll()
             .anyRequest()
-                .authenticated().and().exceptionHandling()
+            .authenticated().and().exceptionHandling()
             .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
-            .and().logout().logoutSuccessUrl("/login").permitAll()
             .and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-            .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
-        http.logout().logoutUrl("/logout");
+            .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
+
+            .logout() 
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) 
+                    .logoutSuccessUrl("/login") 
+                    .permitAll();
     }
 
     private Filter ssoFilter() {

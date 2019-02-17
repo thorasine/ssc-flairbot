@@ -7,7 +7,10 @@
     </head>
     <body>
         <p th:text="'Hellooo, ' + ${name} + '!'" />
-        <span th:if="${name} == 'User'" th:text="'the user is called User!'" /> 
+        <span th:if="${name} == 'User'" th:text="'the user is called User!'" />
+        <form th:action="@{/logout}" method="post"> 
+            <input class="btn btn-lg btn-danger" type="submit" value="Logout"/> 
+        </form>
 
 
         <div sec:authorize="hasRole('USER')">Text visible to user.</div>
