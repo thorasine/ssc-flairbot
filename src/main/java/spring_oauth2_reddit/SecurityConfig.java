@@ -38,19 +38,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .antMatcher("/**")
-            .authorizeRequests()
+                .authorizeRequests()
             .antMatchers("/login**", "/greeting**", "/webjars/**", "/error**", "/js/**", "/css/**")
-            .permitAll()
+                .permitAll()
             .anyRequest()
-            .authenticated().and().exceptionHandling()
-            .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
+                .authenticated().and().exceptionHandling()
+                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
             .and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
-
             .logout() 
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) 
-                    .logoutSuccessUrl("/login") 
-                    .permitAll();
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) 
+                .logoutSuccessUrl("/login") 
+                .permitAll();
     }
 
     private Filter ssoFilter() {
