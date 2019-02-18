@@ -82,6 +82,12 @@
             <version>2.1.1.RELEASE</version>
             <type>jar</type>
         </dependency>
+        
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>font-awesome</artifactId>
+            <version>5.7.2</version>
+        </dependency>
     </dependencies>
     
 
