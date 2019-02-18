@@ -88,7 +88,13 @@
             <artifactId>font-awesome</artifactId>
             <version>5.7.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>popper.js</artifactId>
+            <version>1.14.6</version>
+        </dependency>
     </dependencies>
+    
     
 
     <build>

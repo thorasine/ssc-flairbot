@@ -9,10 +9,18 @@
         <link rel="stylesheet" type="text/css" href="/css/index.css" />
         <!-- <link rel="stylesheet" href="/webjars/font-awesome/5.7.2/css/all.css" /> -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <!-- 2 hours wasted to learn that the order of js imports are important apparently -->
         <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-        <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/webjars/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="/webjars/bootstrap/4.2.1/js/bootstrap.min.js"></script>
     </head>
     <body>
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
+
         <div class="d-flex bg-dark border-bottom shadow p-2 px-md-4 mb-3 align-items-center">
             <a class="navbar-brand text-light" href="/">Summoner School Flairs</a>
             <a class="mr-md-auto ml-1 btn btn-success" href="/newSummoner">New Summoner</a>
@@ -26,8 +34,8 @@
                     <h5 class="card-title">Trefort</h5>
                     <h6 class="card-subtitle mb-2 text-muted">EUW</h6>
                     <div class="d-flex align-items-center">
-                        <span class="text-success mr-auto"><i class="fas fa-check"></i> Validated</span>
-                        <a class="btn btn-sm btn-danger mr-0 ml-1" href="/"><i class="fas fa-trash-alt"></i> Delete</a>
+                        <span class="text-success mr-auto "><i class="fas fa-check"></i> Validated</span>
+                        <a class="btn btn-sm btn-danger ml-2" href="/" data-toggle="tooltip" title="Delete"><i class="fas fa-trash-alt"></i></a>
                     </div>
                 </div>
             </div>
@@ -37,8 +45,8 @@
                     <h5 class="card-title">Trefort</h5>
                     <h6 class="card-subtitle mb-2 text-muted">EUW</h6>
                     <div class="d-flex align-items-center">
-                        <a class="btn btn-sm btn-info mr-auto" href="/"><i class="fas fa-spinner"></i> Validation in progress</a>
-                        <a class="btn btn-sm btn-danger mr-0 ml-1" href="/"><i class="fas fa-trash-alt"></i> Delete</a>
+                        <a class="btn btn-sm btn-warning mr-auto" href="/" data-toggle="tooltip" title="Click to validate"><i class="fas fa-exclamation-triangle"></i> Validation required</a>
+                        <a class="btn btn-sm btn-danger mr-0 ml-1" href="/" data-toggle="tooltip" title="Delete"><i class="fas fa-trash-alt"></i></a>
                     </div>
                 </div>
             </div>
@@ -49,10 +57,11 @@
                     <h6 class="card-subtitle mb-2 text-muted">EUW</h6>
                     <div class="d-flex align-items-center">
                         <a class="btn btn-sm btn-danger mr-auto" href="/"><i class="fas fa-times"></i> Validation failed</a>
-                        <a class="btn btn-sm btn-danger mr-0 ml-1" href="/"><i class="fas fa-trash-alt"></i> Delete</a>
+                        <a class="btn btn-sm btn-danger mr-0 ml-1" href="/" data-toggle="tooltip" title="Delete"><i class="fas fa-trash-alt"></i></a>
                     </div>
                 </div>
             </div>
+            
         </div>
         <footer class="footer d-flex flex-row-reverse w-100 bg-dark p-2 ">
             <p class="text-muted mr-1 mb-0">Report bugs on Discord: Thorasine#4073, Reddit: /u/Thorasine</p>
