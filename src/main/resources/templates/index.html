@@ -23,9 +23,76 @@
 
         <div class="d-flex bg-dark border-bottom shadow p-2 px-md-4 mb-3 align-items-center">
             <a class="navbar-brand text-light" href="/">Summoner School Flairs</a>
-            <a class="mr-md-auto ml-1 btn btn-success" href="/newSummoner">New Summoner</a>
+            <btn class="mr-md-auto ml-1 btn btn-success" data-toggle="modal" data-target="#newSummoner">New Summoner</btn>
             <h6 class="mr-3 mt-1 font-weight-light text-light" th:text="${#authentication.getUserAuthentication().getDetails().get('name')}"></h6>
             <a class="btn btn-md btn-danger" href="/logout">Log out</a>
+        </div>
+
+        <!-- New summoner modal -->
+        <div class="modal fade" id="newSummoner">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Modal Heading</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="summonerName">Summoner Name</label>
+                                <input type="text" class="form-control" id="summonerName">
+                            </div>
+                            <div class="form-group">
+                                <label for="region">Region</label>
+                                <select class="form-control" id="region">
+                                    <option>EUNE</option>
+                                    <option>EUW</option>
+                                    <option>NA</option>
+                                    <option>BR</option>
+                                    <option>LAN</option>
+                                    <option>LAS</option>
+                                    <option>JP</option>
+                                    <option>KR</option>
+                                    <option>OCE</option>
+                                    <option>RU</option>
+                                    <option>TR</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Register</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- The Modal -->
+        <div class="modal" id="modalValidate">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title">Validate Summoner</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p>To validate <strong>Garbage (EUW)</strong>, set your third-party validation code to the following:</p>
+                        <blockquote class="blockquote text-center">82BOX</blockquote>
+                        <p>Once your code is updated, validation will typically happen in an hour or two.</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row w-100 pl-4">
@@ -35,7 +102,7 @@
                     <h6 class="card-subtitle mb-2 text-muted">EUW</h6>
                     <div class="d-flex align-items-center">
                         <span class="text-success mr-auto "><i class="fas fa-check"></i> Validated</span>
-                        <a class="btn btn-sm btn-danger ml-2" href="/" data-toggle="tooltip" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                        <btn class="btn btn-sm btn-danger ml-2" href="/" data-toggle="tooltip" title="Delete"><i class="fas fa-trash-alt"></i></btn>
                     </div>
                 </div>
             </div>
@@ -45,8 +112,10 @@
                     <h5 class="card-title">Trefort</h5>
                     <h6 class="card-subtitle mb-2 text-muted">EUW</h6>
                     <div class="d-flex align-items-center">
-                        <a class="btn btn-sm btn-warning mr-auto" href="/" data-toggle="tooltip" title="Click to validate"><i class="fas fa-exclamation-triangle"></i> Validation required</a>
-                        <a class="btn btn-sm btn-danger mr-0 ml-1" href="/" data-toggle="tooltip" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                        <span class="mr-auto" data-toggle="modal" data-target="#modalValidate">
+                            <btn class="btn btn-sm btn-warning" href="/" data-toggle="tooltip" title="Click to validate"><i class="fas fa-exclamation-triangle"></i> Validation required</btn>
+                        </span>
+                        <btn class="btn btn-sm btn-danger mr-0 ml-1" href="/" data-toggle="tooltip" title="Delete"><i class="fas fa-trash-alt"></i></btn>
                     </div>
                 </div>
             </div>
@@ -56,12 +125,12 @@
                     <h5 class="card-title">Trefort</h5>
                     <h6 class="card-subtitle mb-2 text-muted">EUW</h6>
                     <div class="d-flex align-items-center">
-                        <a class="btn btn-sm btn-danger mr-auto" href="/"><i class="fas fa-times"></i> Validation failed</a>
-                        <a class="btn btn-sm btn-danger mr-0 ml-1" href="/" data-toggle="tooltip" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                        <btn class="btn btn-sm btn-danger mr-auto" href="/"><i class="fas fa-times"></i> Validation failed</btn>
+                        <btn class="btn btn-sm btn-danger mr-0 ml-1" href="/" data-toggle="tooltip" title="Delete"><i class="fas fa-trash-alt"></i></btn>
                     </div>
                 </div>
             </div>
-            
+
         </div>
         <footer class="footer d-flex flex-row-reverse w-100 bg-dark p-2 ">
             <p class="text-muted mr-1 mb-0">Report bugs on Discord: Thorasine#4073, Reddit: /u/Thorasine</p>

@@ -11,3 +11,6 @@ body {
     min-width: 16rem;
 }
 
+.blockquote{
+    font-size: 200%;
+}
