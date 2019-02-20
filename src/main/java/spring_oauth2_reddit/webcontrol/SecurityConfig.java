@@ -1,4 +1,4 @@
-package spring_oauth2_reddit;
+package spring_oauth2_reddit.webcontrol;
 
 import java.util.Arrays;
 import javax.servlet.Filter;
