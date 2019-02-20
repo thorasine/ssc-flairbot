@@ -1,4 +1,4 @@
-package spring_oauth2_reddit.webcontrol;
+package spring_oauth2_reddit.webservice;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;

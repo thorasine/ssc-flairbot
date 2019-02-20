@@ -21,6 +21,7 @@
             });
         </script>
 
+        <!-- Header bar -->
         <div class="d-flex bg-dark border-bottom shadow p-2 px-md-4 mb-3 align-items-center">
             <a class="navbar-brand text-light" href="/">Summoner School Flairs</a>
             <btn class="mr-md-auto ml-1 btn btn-success" data-toggle="modal" data-target="#newSummoner">New Summoner</btn>
@@ -75,7 +76,7 @@
         </div>
 
         <!-- Validation required modal -->
-        <div class="modal" id="modalValidate">
+        <div class="modal fade" id="modalValidate">
             <div class="modal-dialog">
                 <div class="modal-content">
 
@@ -95,38 +96,44 @@
             </div>
         </div>
 
-        <div class="row w-100 pl-4">
-            <div class="card m-1">
-                <div class="card-body">
-                    <h5 class="card-title">Trefort</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">EUW</h6>
-                    <div class="d-flex align-items-center">
-                        <span class="text-success mr-auto "><i class="fas fa-check"></i> Validated</span>
-                        <btn class="btn btn-sm btn-danger ml-2" href="/" data-toggle="tooltip" title="Delete"><i class="fas fa-trash-alt"></i></btn>
+        <!-- Deletion confirm modal -->
+        <div class="modal fade" id="deleteSummoner">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete Summoner?</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete <strong>Garbage (EUW)</strong>?</p>
+                        <div class="d-flex justify-content-end">
+                            <btn class="btn btn-sm btn-danger">Delete</btn>
+                            <btn class="btn btn-sm btn-secondary mr-0 ml-1">Cancel</btn>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="card m-1">
+        <div class="row w-100 pl-4">
+
+            <div th:each="user : ${users}" class="card m-1">
                 <div class="card-body">
-                    <h5 class="card-title">Trefort</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">EUW</h6>
-                    <div class="d-flex align-items-center">
-                        <span class="mr-auto" data-toggle="modal" data-target="#modalValidate">
+                    <h5 th:text=${user.getSummonerName()} class="card-title"></h5>
+                    <h6 th:text=${user.getServer()} class="card-subtitle mb-2 text-muted"></h6>
+                    <div th:switch="${user.getValidated()}" class="d-flex align-items-center">
+                        <span th:case="'validated'" class="text-success mr-auto"><i class="fas fa-check"></i> Validated</span>
+                        <span th:case="'pending'" class="mr-auto" data-toggle="modal" data-target="#modalValidate">
                             <btn class="btn btn-sm btn-warning" href="/" data-toggle="tooltip" title="Click to validate"><i class="fas fa-exclamation-triangle"></i> Validation required</btn>
                         </span>
-                        <btn class="btn btn-sm btn-danger mr-0 ml-1" href="/" data-toggle="tooltip" title="Delete"><i class="fas fa-trash-alt"></i></btn>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card m-1">
-                <div class="card-body">
-                    <h5 class="card-title">Trefort</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">EUW</h6>
-                    <div class="d-flex align-items-center">
-                        <btn class="btn btn-sm btn-danger mr-auto" href="/"><i class="fas fa-times"></i> Validation failed</btn>
-                        <btn class="btn btn-sm btn-danger mr-0 ml-1" href="/" data-toggle="tooltip" title="Delete"><i class="fas fa-trash-alt"></i></btn>
+                        <btn th:case="'failed'" class="btn btn-sm btn-danger mr-auto" href="/"><i class="fas fa-times"></i> Validation failed</btn>
+                        <span class="mr-0 ml-1" data-toggle="modal" data-target="#deleteSummoner">
+                            <btn class="btn btn-sm btn-danger" href="/" data-toggle="tooltip" title="Delete"><i class="fas fa-trash-alt"></i></btn>
+                        </span>
                     </div>
                 </div>
             </div>

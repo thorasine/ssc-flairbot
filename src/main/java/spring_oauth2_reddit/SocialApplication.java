@@ -26,18 +26,20 @@ public class SocialApplication implements CommandLineRunner {
                 .validationCode("83ERF").validationTries(0).buildUser();
 
         User user2 = new UserBuilder().redditName("Thorasine").summonerName("Sniblets")
-                .summonerId("uoigknrjbudfh").server("EUW").rank("Bronze V").buildUser();
+                .summonerId("uoigknrjbudfh").server("EUW").rank("Bronze V").validated("pending")
+                .validationCode("83ERF").validationTries(0).buildUser();
 
-        User user3 = new UserBuilder().redditName("Vjostar").summonerName("Vjostar")
-                .summonerId("trhgfefsfd").server("NA").rank("Bronze III").buildUser();
+        User user3 = new UserBuilder().redditName("Thorasine").summonerName("SecretSmurf")
+                .summonerId("uoigknrjbudfh").server("NA").rank("Challenger").validated("failed")
+                .validationCode("83ERF").validationTries(0).buildUser();
+
+        User user4 = new UserBuilder().redditName("Vjostar").summonerName("Vjostar")
+                .summonerId("trhgfefsfd").server("NA").rank("Bronze III").validated("validated")
+                .validationCode("83ERF").validationTries(0).buildUser();
 
         db.addUser(user1);
         db.addUser(user2);
         db.addUser(user3);
-
-        System.out.println("getAllUsers test: ");
-        for (User user : db.getAllUsers()) {
-            System.out.println(user.toString());
-        }
+        db.addUser(user4);
     }
 }

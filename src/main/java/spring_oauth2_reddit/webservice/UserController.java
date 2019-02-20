@@ -1,18 +1,29 @@
-package spring_oauth2_reddit.webcontrol;
+package spring_oauth2_reddit.webservice;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import spring_oauth2_reddit.persistence.DBHandler;
+import spring_oauth2_reddit.persistence.User;
 
 @Controller
 public class UserController {
 
+    @Autowired
+    private DBHandler db;
+
     @RequestMapping("/")
-    public String startPage(Model model) {
+    public String startPage(Model model, Principal principal) {
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        String redditName = (String) details.get("name");
+        List<User> users = db.getUserByRedditName(redditName);
+        model.addAttribute("users", users);
         return "index";
     }
 
