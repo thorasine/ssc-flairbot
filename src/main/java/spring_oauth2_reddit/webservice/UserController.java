@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import spring_oauth2_reddit.persistence.DBHandler;
@@ -24,7 +25,20 @@ public class UserController {
         String redditName = (String) details.get("name");
         List<User> users = db.getUserByRedditName(redditName);
         model.addAttribute("users", users);
+        
+        model.addAttribute("user", new User());
         return "index";
+    }
+
+    @RequestMapping("/newSummoner")
+    public String newSummoner(@ModelAttribute User user, Principal principal) {
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        String redditName = (String) details.get("name");
+        
+        user.setRedditName(redditName);
+        db.addUser(user);
+        System.out.println("CREATED USER: " + user.getSummonerName());
+        return "redirect:/";
     }
 
     @RequestMapping("/login")
