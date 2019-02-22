@@ -5,14 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
         <script src="/js/main.js"></script>
-    </head>
-    <body>
-        <form action="#" id="new-period-form" th:object="${user}" method="post">
-            <div>
-                <input type="text" id="period" th:field="*{summonerName}"/>
-                <input type="text" id="period2" th:field="*{server}"/>
-            </div>
-            <input id="submit-new-period" type="button"  value="save" />
-        </form>
-    </body>
+    <sec:csrfMetaTags />
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+    <form action="#" id="new-period-form" th:object="${user}" method="post">
+        <div>
+            <input type="text" id="period" th:field="*{summonerName}"/>
+            <input type="text" id="period2" th:field="*{server}"/>
+        </div>
+        <input id="submit-new-period" type="button"  value="save" />
+    </form>
+</body>
 </html>

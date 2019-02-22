@@ -1,17 +1,26 @@
 $(function () {
-    $('#submit-new-period').click(getSomething);
+    $('#submit-new-period').click(saveForm);
 });
 
+
+
 function saveForm() {
+    var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+    var csrfToken = $("meta[name='_csrf']").attr("content");
+
+    var headers = {};
+    headers[csrfHeader] = csrfToken;
+    
     $.ajax({
         method: "POST",
+        headers: headers,
         url: "/addSummoner",
         data: $('#new-period-form').serialize(),
         success: function (status) {
             console.log("success thing: " + status);
         },
         error: function (status) {
-            console.log("fail thing: " + status);
+            console.log("fail thing: " + JSON.stringify(status));
         }
     });
 }
