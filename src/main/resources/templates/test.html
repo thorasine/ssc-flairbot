@@ -1,0 +1,18 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head>
+        <title>JQuery tests</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+        <script src="/js/main.js"></script>
+    </head>
+    <body>
+        <form action="#" id="new-period-form" th:object="${user}" method="post">
+            <div>
+                <input type="text" id="period" th:field="*{summonerName}"/>
+                <input type="text" id="period2" th:field="*{server}"/>
+            </div>
+            <input id="submit-new-period" type="button"  value="save" />
+        </form>
+    </body>
+</html>

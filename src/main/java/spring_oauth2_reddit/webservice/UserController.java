@@ -19,13 +19,19 @@ public class UserController {
     @Autowired
     private DBHandler db;
 
+    @RequestMapping("/test")
+    public String test(Model model, Principal principal) {
+        model.addAttribute("user", new User());
+        return "test";
+    }
+
     @RequestMapping("/")
     public String startPage(Model model, Principal principal) {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String redditName = (String) details.get("name");
         List<User> users = db.getUserByRedditName(redditName);
-        model.addAttribute("users", users);
         
+        model.addAttribute("users", users);
         model.addAttribute("user", new User());
         return "index";
     }
@@ -34,7 +40,7 @@ public class UserController {
     public String newSummoner(@ModelAttribute User user, Principal principal) {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String redditName = (String) details.get("name");
-        
+
         user.setRedditName(redditName);
         db.addUser(user);
         System.out.println("CREATED USER: " + user.getSummonerName());
@@ -44,13 +50,6 @@ public class UserController {
     @RequestMapping("/login")
     public String loginPage(Model model) {
         return "login";
-    }
-
-    @RequestMapping("/test")
-    public String user2(Principal principal) {
-        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
-        System.out.println("NAME: " + details.get("name"));
-        return "greeting";
     }
 
     @RequestMapping("/greeting")

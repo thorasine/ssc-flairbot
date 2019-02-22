@@ -7,13 +7,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import spring_oauth2_reddit.persistence.*;
 
 @SpringBootApplication
-public class SocialApplication implements CommandLineRunner {
+public class Application implements CommandLineRunner {
 
     @Autowired
     private DBHandler db;
 
     public static void main(String[] args) {
-        SpringApplication.run(SocialApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
     @Override
