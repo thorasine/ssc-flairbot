@@ -41,17 +41,6 @@ public class UserController {
         return "index";
     }
 
-    @RequestMapping("/newSummoner")
-    public String newSummoner(@ModelAttribute User user, Principal principal) {
-        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
-        String redditName = (String) details.get("name");
-
-        user.setRedditName(redditName);
-        db.addUser(user);
-        System.out.println("CREATED USER: " + user.getSummonerName());
-        return "redirect:/";
-    }
-
     @RequestMapping("/login")
     public String loginPage(Model model) {
         return "login";

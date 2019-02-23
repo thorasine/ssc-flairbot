@@ -1,7 +1,14 @@
 $(function () {
-    $('#newSummonerBtn').click(saveForm);
+    $('#submit-new-period').click(saveForm);
 });
 
+$(function () {
+    $('#submit-request-user').click(getUserById);
+});
+
+$(function () {
+    $('#delete').click(changeDeleteModal);
+});
 
 function saveForm() {
     var csrfHeader = $("meta[name='_csrf_header']").attr("content");
@@ -13,11 +20,9 @@ function saveForm() {
         method: "POST",
         headers: headers,
         url: "/addSummoner",
-        data: $('#newSummonerForm').serialize(),
-        success: function (status) {
-            //$('#error-message').text("Summoner doesnt exist!");
-            $('#container').load(document.URL + ' #cardsContainer');
-            $('#newSummonerModal').modal('toggle');
+        data: $('#new-period-form').serialize(),
+        success: function (status) {     
+            $('#error-message').text("Summoner doesnt exist!");
             console.log("success thing: " + status);
         },
         error: function (status) {

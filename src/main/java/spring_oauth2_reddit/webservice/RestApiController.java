@@ -24,6 +24,8 @@ public class RestApiController {
         String redditName = (String) details.get("name");
 
         user.setRedditName(redditName);
+        user.setValidated("pending");
+        user.setValidationCode("RANDOM");
         db.addUser(user);
         System.out.println("CREATED USER: " + user.getSummonerName());
         return "WOOO IT WORKED";
