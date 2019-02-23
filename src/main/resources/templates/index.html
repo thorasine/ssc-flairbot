@@ -100,21 +100,21 @@
         </div>
 
         <!-- Deletion confirm modal -->
-        <div class="modal fade" id="deleteSummoner">
+        <div id="deleteSummoner" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
 
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <h5 class="modal-title">Delete Summoner?</h5>
-                        <button type="button" class="close" data-dismiss="deleteSummoner">&times;</button>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <p>Are you sure you want to delete <strong>Garbage (EUW)</strong>?</p>
+                        <p>Are you sure you want to delete <strong id="deleteSummonerTexts">Garbage (EUW)</strong>?</p>
                         <div class="d-flex justify-content-end">
-                            <btn class="btn btn-sm btn-danger">Delete</btn>
+                            <btn id="deleteConfirmBtn" class="btn btn-sm btn-danger">Delete</btn>
                             <btn class="btn btn-sm btn-secondary mr-0 ml-1" data-dismiss="modal">Cancel</btn>
                         </div>
                     </div>
@@ -126,16 +126,16 @@
             <div id="cardsContainer" class="row w-100 pl-4">
                 <div th:each="user : ${users}" class="card m-1" th:id="${user.id}">
                     <div class="card-body">
-                        <h5 th:text=${user.getSummonerName()} class="card-title"></h5>
-                        <h6 th:text=${user.getServer()} class="card-subtitle mb-2 text-muted"></h6>
+                        <h5 th:text=${user.getSummonerName()} class="summonerName card-title"></h5>
+                        <h6 th:text=${user.getServer()} class="server card-subtitle mb-2 text-muted"></h6>
                         <div th:switch="${user.getValidated()}" class="d-flex align-items-center">
                             <span th:case="'validated'" class="text-success mr-auto"><i class="fas fa-check"></i> Validated</span>
                             <span th:case="'pending'" class="mr-auto" data-toggle="modal" data-target="#modalValidate">
                                 <btn class="btn btn-sm btn-warning" href="/" data-toggle="tooltip" title="Click to validate"><i class="fas fa-exclamation-triangle"></i> Validation required</btn>
                             </span>
                             <btn th:case="'failed'" class="btn btn-sm btn-danger mr-auto" href="/"><i class="fas fa-times"></i> Validation failed</btn>
-                            <span class="mr-0 ml-1" data-toggle="modal" data-target="#deleteSummoner">
-                                <btn class="btn btn-sm btn-danger" href="/" data-toggle="tooltip" title="Delete"><i class="fas fa-trash-alt"></i></btn>
+                            <span class="deleteBtnSpan mr-0 ml-1" data-toggle="modal" data-target="#deleteSummoner">
+                                <btn class="btn btn-sm btn-danger" data-toggle="tooltip" title="Delete"><i class="fas fa-trash-alt"></i></btn>
                             </span>
                         </div>
                     </div>

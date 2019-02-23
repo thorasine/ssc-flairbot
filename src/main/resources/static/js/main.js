@@ -2,6 +2,16 @@ $(function () {
     $('#newSummonerBtn').click(saveForm);
 });
 
+$(function () {
+    $('.deleteBtnSpan').click(modalDelSetAccountIdAndTexts);
+});
+
+$(function () {
+    $('#deleteConfirmBtn').click(deleteSummoner);
+});
+
+var accountId;
+var removableDiv;
 
 function saveForm() {
     var csrfHeader = $("meta[name='_csrf_header']").attr("content");
@@ -26,14 +36,6 @@ function saveForm() {
     });
 }
 
-//This works too
-function saveForm2() {
-    var data = $('#new-period-form').serialize();
-    // Add parameter and index of item that is going to be removed.
-    //data += 'removeItem=' + $(this).val();
-    $.post('/addSummoner', data);
-}
-
 function getSomething() {
     $.get("/allUsers", function (data, status) {
         for (var item in data) {
@@ -49,12 +51,39 @@ function getUserById() {
     });
 }
 
-function changeDeleteModal() {
-    var removableDiv = $(this).parent();
-    var accountId = $(this).parent().attr('id');
-    var summonerName = $(this).attr('summonerName');
-    var server = $(this).parent().attr('server');
-    console.log(accountId);
-    console.log(summonerName);
-    console.log(server);
+function modalDelSetAccountIdAndTexts() {
+    removableDiv = $(this).parent().parent().parent();
+    var id = $(this).parent().parent().parent().attr("id");
+    var summonerName = $(this).parent().parent().children('.summonerName').text();
+    var server = $(this).parent().parent().children('.server').text();
+    accountId = id;
+    console.log("accountId: " + accountId);
+    $('#deleteSummonerTexts').text(summonerName + " (" + server + ")");
 }
+
+function deleteSummoner() {
+    var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+    var csrfToken = $("meta[name='_csrf']").attr("content");
+    var headers = {};
+    headers[csrfHeader] = csrfToken;
+
+    $.ajax({
+        method: "POST",
+        headers: headers,
+        url: "/deleteSummoner",
+        data: {"id": accountId},
+        success: function (status) {
+            //$('#error-message').text("Summoner doesnt exist!");
+            //$('#container').load(document.URL + ' #cardsContainer');
+            removableDiv.remove();
+            $('#deleteSummoner').modal('toggle');
+            accountId = "";
+            console.log("success thing: " + status);
+        },
+        error: function (status) {
+            accountId = "";
+            console.log("fail thing: " + JSON.stringify(status));
+        }
+    });
+}
+
