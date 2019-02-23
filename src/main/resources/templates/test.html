@@ -5,17 +5,36 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
         <script src="/js/main.js"></script>
-    <sec:csrfMetaTags />
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-</head>
-<body>
-    <form action="#" id="new-period-form" th:object="${user}" method="post">
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    </head>
+    <body>
+        <form action="#" id="new-period-form" th:object="${user}" method="post">
+            <div>
+                <p>Summoner name:</p>
+                <input type="text" id="period" th:field="*{summonerName}"/>
+                <p>Server:</p>
+                <input type="text" id="period2" th:field="*{server}"/>
+                <p id="error-message"></p>
+            </div>
+            <input id="submit-new-period" type="button"  value="save" />
+        </form>
         <div>
-            <input type="text" id="period" th:field="*{summonerName}"/>
-            <input type="text" id="period2" th:field="*{server}"/>
+            <p>Summoner ID:</p>
+            <input type="text" id="request-input"/>
+            <input id="submit-request-user" type="button"  value="request" />
         </div>
-        <input id="submit-new-period" type="button"  value="save" />
-    </form>
-</body>
+        <div test="testattribute">
+            <div id="3">
+                <h text="Trefort"></h>
+                <h text="EUW"></h>
+                <input id="delete" type="button" value="Delete" />
+            </div>
+        </div>
+
+        <div>
+            <p>Are you sure you want to delete Name Server</p>
+            <input id="delete-user" type="button"  value="Yes" />
+        </div>
+    </body>
 </html>
