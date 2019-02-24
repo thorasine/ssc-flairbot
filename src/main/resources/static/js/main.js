@@ -1,9 +1,4 @@
 $(function () {
-    $('#newSummonerModalBtn').click(loadNewSummonerModal);
-});
-
-//not working
-$(function () {
     $('#newSummonerBtn').click(newSummonerPost);
 });
 
@@ -18,31 +13,16 @@ $(function () {
 var accountId;
 var removableDiv;
 
-//Loads the cards in
-$(document).ready(function () {
-    $("#cardsContainer").load('/summonerCards');
+$(function () {
+    reloadCards();
 });
 
-//test
-$(function () {
-    $("#container").on("click", function () {
-        console.log("CLICKED");
+ //Loads the summoner cards in
+function reloadCards() {
+    $("#cardsContainer").load('/summonerCards', function () {
         $('[data-toggle="tooltip"]').tooltip();
+        $('.deleteBtnSpan').click(modalDelSetAccountIdAndTexts);
     });
-});
-
-//Making the newSummoner POST button work with dynamic load
-$(function () {
-    $("#modalContainer").on("click", "#newSummonerBtn", function () {
-        newSummonerPost();
-    });
-});
-
-//Loads the New Summoner modal in
-function loadNewSummonerModal() {
-    $("#modalContainer").load('/newSummonerModal');
-    $("#modalContainer").modal('toggle');
-    //$('#newSummonerBtn').click(newSummonerPost);
 }
 
 function newSummonerPost() {
@@ -57,8 +37,8 @@ function newSummonerPost() {
         url: "/addSummoner",
         data: $('#newSummonerForm').serialize(),
         success: function (status) {
-            //$('#modalContainer').modal('toggle');
-            $("#cardsContainer").load('/summonerCards');
+            $('#modalNewSummoner').modal('toggle');
+            reloadCards();
             console.log("success thing: " + status);
         },
         error: function (status) {
@@ -105,7 +85,6 @@ function deleteSummoner() {
         data: {"id": accountId},
         success: function (status) {
             //$('#error-message').text("Summoner doesnt exist!");
-            //$('#container').load(document.URL + ' #cardsContainer');
             removableDiv.remove();
             $('#deleteSummoner').modal('toggle');
             accountId = "";

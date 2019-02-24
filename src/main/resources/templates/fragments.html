@@ -1,28 +1,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <head>
         <meta charset="utf-8"/>
-        <title>Flairbot Alpha</title>
-        <meta name="description" content=""/>
-        <meta name="viewport" content="width=device-width" />
-        <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.2.1/css/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="/css/index.css" />
-        <!-- <link rel="stylesheet" href="/webjars/font-awesome/5.7.2/css/all.css" /> -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-        <!-- 2 hours wasted to learn that the order of js imports are important apparently -->
-        <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-        <script src="/webjars/popper.js/1.14.3/umd/popper.min.js"></script>
-        <script src="/webjars/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-        <script src="/js/main.js"></script>
-        <meta name="_csrf" th:content="${_csrf.token}"/>
-        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     </head>
 
     <body>
-        <script>
-            $(document).ready(function () {
-                $('[data-toggle="tooltip"]').tooltip();
-            });
-        </script>
         <!-- Summoner cards -->
         <div th:fragment="summonerCards" th:each="user : ${users}" class="card m-1" th:id="${user.id}">
             <div class="card-body">
@@ -41,8 +22,10 @@
             </div>
         </div>
 
+        <!-- Not used -->
         <!-- New summoner modal -->
-        <div th:fragment="newSummonerModal" class="modal-dialog">
+        <div th:fragment="newSummonerModal" id="modalNewSummoner" class="modal fade">
+        <div class="modal-dialog">
             <div class="modal-content">
 
                 <!-- Modal Header -->

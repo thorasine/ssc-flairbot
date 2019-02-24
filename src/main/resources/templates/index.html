@@ -18,20 +18,66 @@
         <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     </head>
     <body>
-        <script>
-            $(document).ready(function () {
-                $('[data-toggle="tooltip"]').tooltip();
-            });
-        </script>
-
-        <div id="modalContainer" class="modal fade"></div>
-
+        
         <!-- Header bar -->
         <div class="d-flex bg-dark border-bottom shadow p-2 px-md-4 mb-3 align-items-center">
             <a class="navbar-brand text-light" href="/">Summoner School Flairs</a>
-            <btn id="newSummonerModalBtn" class="mr-md-auto ml-1 btn btn-success" data-toggle="modal" data-target="#newSummonerModal">New Summoner</btn>
+            <btn id="newSummonerModalBtn" class="mr-md-auto ml-1 btn btn-success" data-toggle="modal" data-target="#modalNewSummoner">New Summoner</btn>
             <h6 class="mr-3 mt-1 font-weight-light text-light" th:text="${#authentication.getUserAuthentication().getDetails().get('name')}"></h6>
             <a class="btn btn-md btn-danger" href="/logout">Log out</a>
+        </div>
+
+        <!-- Card containers -->
+        <div id="container">
+            <div id="cardsContainer" class="row w-100 pl-4">
+
+            </div>
+        </div>
+
+        <!-- New Summoner Modal -->
+        <div id="modalNewSummoner" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add New Summoner</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <form id="newSummonerForm" action="#" th:object="${user}" method="post">
+                        <!-- Modal body -->
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label for="summonerName">Summoner Name</label>
+                                <input th:field="*{summonerName}" type="text" class="form-control" id="summonerName">
+                            </div>
+                            <div class="form-group">
+                                <label for="region">Region</label>
+                                <select th:field="*{server}" class="form-control" id="region">
+                                    <option th:value="'EUNE'">EUNE</option>
+                                    <option th:value="'EUW'">EUW</option>
+                                    <option th:value="'NA'">NA</option>
+                                    <option th:value="'BR'">BR</option>
+                                    <option th:value="'LAN'">LAN</option>
+                                    <option th:value="'LAS'">LAS</option>
+                                    <option th:value="'JP'">JP</option>
+                                    <option th:value="'KR'">KR</option>
+                                    <option th:value="'OCE'">OCE</option>
+                                    <option th:value="'RU'">RU</option>
+                                    <option th:value="'TR'">TR</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <input id="newSummonerBtn" class="btn btn-primary" type="button" data-dismiss="//todo" value="Register" />
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
 
         <!-- Validation required modal -->
@@ -77,13 +123,8 @@
                 </div>
             </div>
         </div>
-
-        <!-- Card containers -->
-        <div id="container">
-            <div id="cardsContainer" class="row w-100 pl-4">
-
-            </div>
-        </div>
+        
+        <!-- Footer -->
         <footer class="footer d-flex flex-row-reverse w-100 bg-dark p-2 ">
             <p class="text-muted mr-1 mb-0">Discord: Thorasine#4073, Reddit: /u/Thorasine</p>
         </footer>
