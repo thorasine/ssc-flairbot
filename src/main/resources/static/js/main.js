@@ -10,14 +10,11 @@ $(function () {
     $('#deleteConfirmBtn').click(deleteSummoner);
 });
 
-var accountId;
-var removableDiv;
-
 $(function () {
     reloadCards();
 });
 
- //Loads the summoner cards in
+//Loads the summoner cards in
 function reloadCards() {
     $("#cardsContainer").load('/summonerCards', function () {
         $('[data-toggle="tooltip"]').tooltip();
@@ -38,6 +35,7 @@ function newSummonerPost() {
         data: $('#newSummonerForm').serialize(),
         success: function (status) {
             $('#modalNewSummoner').modal('toggle');
+            $('#summonerName').val("");
             reloadCards();
             console.log("success thing: " + status);
         },
@@ -62,12 +60,15 @@ function getUserById() {
     });
 }
 
+
+var accountId;
+var removableDiv;
 function modalDelSetAccountIdAndTexts() {
-    removableDiv = $(this).parent().parent().parent();
     var id = $(this).parent().parent().parent().attr("id");
     var summonerName = $(this).parent().parent().children('.summonerName').text();
     var server = $(this).parent().parent().children('.server').text();
     accountId = id;
+    removableDiv = $(this).parent().parent().parent();
     console.log("accountId: " + accountId);
     $('#deleteSummonerTexts').text(summonerName + " (" + server + ")");
 }
@@ -84,8 +85,12 @@ function deleteSummoner() {
         url: "/deleteSummoner",
         data: {"id": accountId},
         success: function (status) {
-            //$('#error-message').text("Summoner doesnt exist!");
-            removableDiv.remove();
+            //$('#error-message').text("Something bad happened!");
+            //removableDiv.remove();
+            removableDiv.fadeOut("slow", function () {
+                removableDiv.remove();
+            });
+
             $('#deleteSummoner').modal('toggle');
             accountId = "";
             console.log("success thing: " + status);

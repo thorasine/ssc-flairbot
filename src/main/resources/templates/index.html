@@ -18,20 +18,26 @@
         <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     </head>
     <body>
-        
-        <!-- Header bar -->
-        <div class="d-flex bg-dark border-bottom shadow p-2 px-md-4 mb-3 align-items-center">
-            <a class="navbar-brand text-light" href="/">Summoner School Flairs</a>
-            <btn id="newSummonerModalBtn" class="mr-md-auto ml-1 btn btn-success" data-toggle="modal" data-target="#modalNewSummoner">New Summoner</btn>
-            <h6 class="mr-3 mt-1 font-weight-light text-light" th:text="${#authentication.getUserAuthentication().getDetails().get('name')}"></h6>
-            <a class="btn btn-md btn-danger" href="/logout">Log out</a>
-        </div>
 
-        <!-- Card containers -->
-        <div id="container">
-            <div id="cardsContainer" class="row w-100 pl-4">
 
+
+        <!-- Containers -->
+        <div id="container" class="d-flex flex-column">
+            <!-- Header bar -->
+            <div class="d-flex bg-dark border-bottom shadow p-2 px-md-4 mb-3 align-items-center">
+                <a class="navbar-brand text-light" href="/">Summoner School Flairs</a>
+                <btn id="newSummonerModalBtn" class="mr-md-auto ml-1 btn btn-success" data-toggle="modal" data-target="#modalNewSummoner">New Summoner</btn>
+                <h6 class="mr-3 mt-1 font-weight-light text-light" th:text="${#authentication.getUserAuthentication().getDetails().get('name')}"></h6>
+                <a class="btn btn-md btn-danger" href="/logout">Log out</a>
             </div>
+            <!-- Card container -->
+            <div id="cardsContainer" class="row w-100 pl-4">
+            </div>
+
+            <!-- Footer -->
+            <footer class="footer d-flex flex-row-reverse w-100 bg-dark p-2 mt-auto">
+                <p class="text-muted mr-1 mb-0">Got bugs? Discord: Thorasine#4073, Reddit: /u/Thorasine</p>
+            </footer>
         </div>
 
         <!-- New Summoner Modal -->
@@ -123,10 +129,5 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Footer -->
-        <footer class="footer d-flex flex-row-reverse w-100 bg-dark p-2 ">
-            <p class="text-muted mr-1 mb-0">Discord: Thorasine#4073, Reddit: /u/Thorasine</p>
-        </footer>
     </body>
 </html>
