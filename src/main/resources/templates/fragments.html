@@ -1,0 +1,88 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Flairbot Alpha</title>
+        <meta name="description" content=""/>
+        <meta name="viewport" content="width=device-width" />
+        <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.2.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="/css/index.css" />
+        <!-- <link rel="stylesheet" href="/webjars/font-awesome/5.7.2/css/all.css" /> -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <!-- 2 hours wasted to learn that the order of js imports are important apparently -->
+        <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+        <script src="/webjars/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="/webjars/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+        <script src="/js/main.js"></script>
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    </head>
+
+    <body>
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
+        <!-- Summoner cards -->
+        <div th:fragment="summonerCards" th:each="user : ${users}" class="card m-1" th:id="${user.id}">
+            <div class="card-body">
+                <h5 th:text=${user.getSummonerName()} class="summonerName card-title"></h5>
+                <h6 th:text=${user.getServer()} class="server card-subtitle mb-2 text-muted"></h6>
+                <div th:switch="${user.getValidated()}" class="d-flex align-items-center">
+                    <span th:case="'validated'" class="text-success mr-auto"><i class="fas fa-check"></i> Validated</span>
+                    <span th:case="'pending'" class="mr-auto" data-toggle="modal" data-target="#modalValidate">
+                        <btn class="btn btn-sm btn-warning" href="/" data-toggle="tooltip" title="Click to validate"><i class="fas fa-exclamation-triangle"></i> Validation required</btn>
+                    </span>
+                    <btn th:case="'failed'" class="btn btn-sm btn-danger mr-auto" href="/"><i class="fas fa-times"></i> Validation failed</btn>
+                    <span class="deleteBtnSpan mr-0 ml-1" data-toggle="modal" data-target="#deleteSummoner">
+                        <btn class="btn btn-sm btn-danger" data-toggle="tooltip" title="Delete"><i class="fas fa-trash-alt"></i></btn>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- New summoner modal -->
+        <div th:fragment="newSummonerModal" class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal Heading</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form id="newSummonerForm" action="#" th:object="${user}" method="post">
+                    <!-- Modal body -->
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label for="summonerName">Summoner Name</label>
+                            <input th:field="*{summonerName}" type="text" class="form-control" id="summonerName">
+                        </div>
+                        <div class="form-group">
+                            <label for="region">Region</label>
+                            <select th:field="*{server}" class="form-control" id="region">
+                                <option th:value="'EUNE'">EUNE</option>
+                                <option th:value="'EUW'">EUW</option>
+                                <option th:value="'NA'">NA</option>
+                                <option th:value="'BR'">BR</option>
+                                <option th:value="'LAN'">LAN</option>
+                                <option th:value="'LAS'">LAS</option>
+                                <option th:value="'JP'">JP</option>
+                                <option th:value="'KR'">KR</option>
+                                <option th:value="'OCE'">OCE</option>
+                                <option th:value="'RU'">RU</option>
+                                <option th:value="'TR'">TR</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <input id="newSummonerBtn" class="btn btn-primary" type="button" data-dismiss="//todo" value="Register" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    <body>
+</html>

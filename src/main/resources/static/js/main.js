@@ -1,5 +1,10 @@
 $(function () {
-    $('#newSummonerBtn').click(saveForm);
+    $('#newSummonerModalBtn').click(loadNewSummonerModal);
+});
+
+//not working
+$(function () {
+    $('#newSummonerBtn').click(newSummonerPost);
 });
 
 $(function () {
@@ -13,7 +18,34 @@ $(function () {
 var accountId;
 var removableDiv;
 
-function saveForm() {
+//Loads the cards in
+$(document).ready(function () {
+    $("#cardsContainer").load('/summonerCards');
+});
+
+//test
+$(function () {
+    $("#container").on("click", function () {
+        console.log("CLICKED");
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+});
+
+//Making the newSummoner POST button work with dynamic load
+$(function () {
+    $("#modalContainer").on("click", "#newSummonerBtn", function () {
+        newSummonerPost();
+    });
+});
+
+//Loads the New Summoner modal in
+function loadNewSummonerModal() {
+    $("#modalContainer").load('/newSummonerModal');
+    $("#modalContainer").modal('toggle');
+    //$('#newSummonerBtn').click(newSummonerPost);
+}
+
+function newSummonerPost() {
     var csrfHeader = $("meta[name='_csrf_header']").attr("content");
     var csrfToken = $("meta[name='_csrf']").attr("content");
     var headers = {};
@@ -25,9 +57,8 @@ function saveForm() {
         url: "/addSummoner",
         data: $('#newSummonerForm').serialize(),
         success: function (status) {
-            //$('#error-message').text("Summoner doesnt exist!");
-            $('#container').load(document.URL + ' #cardsContainer');
-            $('#newSummonerModal').modal('toggle');
+            //$('#modalContainer').modal('toggle');
+            $("#cardsContainer").load('/summonerCards');
             console.log("success thing: " + status);
         },
         error: function (status) {

@@ -19,6 +19,23 @@ public class UserController {
     @Autowired
     private DBHandler db;
 
+    @RequestMapping("/newSummonerModal")
+    public String newSummonerModal(Model model, Principal principal) {
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        String redditName = (String) details.get("name");
+        model.addAttribute("user", new User());
+        return "fragments :: newSummonerModal";
+    }
+
+    @RequestMapping("/summonerCards")
+    public String summonerCards(Model model, Principal principal) {
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        String redditName = (String) details.get("name");
+        List<User> users = db.getUserByRedditName(redditName);
+        model.addAttribute("users", users);
+        return "fragments :: summonerCards";
+    }
+
     @RequestMapping("/test")
     public String test(Model model, Principal principal) {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
