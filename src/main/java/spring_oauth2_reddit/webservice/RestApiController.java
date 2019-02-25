@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import spring_oauth2_reddit.Logic;
 import spring_oauth2_reddit.persistence.DBHandler;
 import spring_oauth2_reddit.persistence.User;
 
@@ -17,18 +18,18 @@ public class RestApiController {
 
     @Autowired
     DBHandler db;
+    
+    @Autowired
+    Logic logic;
 
     @PostMapping("/addSummoner")
     public String addSummoner(User user, Principal principal) {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String redditName = (String) details.get("name");
-
         user.setRedditName(redditName);
-        user.setValidated("pending");
-        user.setValidationCode("RANDOM");
-        db.addUser(user);
-        System.out.println("CREATED USER: " + user.getSummonerName());
-        return "WOOO IT WORKED";
+
+        String response = logic.addUser(user);
+        return response;
     }
 
     @PostMapping("/deleteSummoner")

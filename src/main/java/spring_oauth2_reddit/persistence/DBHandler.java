@@ -19,22 +19,22 @@ public class DBHandler {
         database.update(SQL, user.getRedditName(), user.getSummonerName(), user.getSummonerId(), user.getServer(),
                 user.getRank(), user.getValidated(), user.getValidationCode(), user.getValidationTries(), getDate());
     }
-  
-    public void deleteUser(long id){
+
+    public void deleteUser(long id) {
         String SQL = "DELETE FROM users WHERE id = ?";
         database.update(SQL, id);
     }
-    
-    public void updateUser(User user){
+
+    public void updateUser(User user) {
         String SQL = "UPDATE users SET redditName = ?, summonerName = ?, "
                 + "summonerId = ?, server = ?, rank = ?, validated = ?, validationCode = ?, "
                 + "validationTries = ?, updateDate = ? WHERE id = ?";
-        database.update(SQL, user.getRedditName(), user.getSummonerName(), user.getSummonerId(), user.getServer(), 
-                user.getRank(), user.getValidated(), user.getValidationCode(), user.getValidationTries(), 
+        database.update(SQL, user.getRedditName(), user.getSummonerName(), user.getSummonerId(), user.getServer(),
+                user.getRank(), user.getValidated(), user.getValidationCode(), user.getValidationTries(),
                 getDate(), user.getId());
     }
-    
-    public User getUserById(Long id){
+
+    public User getUserById(Long id) {
         String SQL = "SELECT * FROM users WHERE id = ?";
         User user = database.queryForObject(SQL, new Object[]{id}, new UserMapper());
         return user;
@@ -43,6 +43,12 @@ public class DBHandler {
     public List<User> getUserByRedditName(String redditName) {
         String SQL = "SELECT * FROM users WHERE redditName = ?";
         List<User> userList = database.query(SQL, new Object[]{redditName}, new UserMapper());
+        return userList;
+    }
+
+    public List<User> getUserBySummonerName(String summonerName) {
+        String SQL = "SELECT * FROM users WHERE summonerName = ?";
+        List<User> userList = database.query(SQL, new Object[]{summonerName}, new UserMapper());
         return userList;
     }
 
