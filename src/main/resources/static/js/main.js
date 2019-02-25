@@ -3,7 +3,7 @@ $(function () {
 });
 
 $(function () {
-    $('.deleteBtnSpan').click(modalDelSetAccountIdAndTexts);
+    $('.deleteBtnSpan').click(setModalDelAccountTexts);
 });
 
 $(function () {
@@ -18,7 +18,8 @@ $(function () {
 function reloadCards() {
     $("#cardsContainer").load('/summonerCards', function () {
         $('[data-toggle="tooltip"]').tooltip();
-        $('.deleteBtnSpan').click(modalDelSetAccountIdAndTexts);
+        $('.deleteBtnSpan').click(setModalDelAccountTexts);
+        $('.validationModalOpenBtn').click(setModalValidateAccountTexts);
     });
 }
 
@@ -60,16 +61,14 @@ function getUserById() {
     });
 }
 
-
 var accountId;
 var removableDiv;
-function modalDelSetAccountIdAndTexts() {
+function setModalDelAccountTexts() {
     var id = $(this).parent().parent().parent().attr("id");
     var summonerName = $(this).parent().parent().children('.summonerName').text();
     var server = $(this).parent().parent().children('.server').text();
     accountId = id;
     removableDiv = $(this).parent().parent().parent();
-    console.log("accountId: " + accountId);
     $('#deleteSummonerTexts').text(summonerName + " (" + server + ")");
 }
 
@@ -102,3 +101,10 @@ function deleteSummoner() {
     });
 }
 
+function setModalValidateAccountTexts() {
+    var validationCode = $(this).attr("validation-code");
+    var summonerName = $(this).parent().parent().children('.summonerName').text();
+    var server = $(this).parent().parent().children('.server').text();
+    $('#validationModalTexts').text(summonerName + " (" + server + ")");
+    $('#ValidationCodeText').text(validationCode);
+}

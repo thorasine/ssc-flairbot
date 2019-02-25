@@ -36,7 +36,7 @@
 
             <!-- Footer -->
             <footer class="footer d-flex flex-row-reverse w-100 bg-dark p-2 mt-auto">
-                <p class="text-muted mr-1 mb-0">Got bugs? Discord: Thorasine#4073, Reddit: /u/Thorasine</p>
+                <p class="text-muted mr-1 mb-0">Something bugged? Discord: Thorasine#4073, Reddit: /u/Thorasine</p>
             </footer>
         </div>
 
@@ -61,9 +61,9 @@
                             <div class="form-group">
                                 <label for="region">Region</label>
                                 <select th:field="*{server}" class="form-control" id="region">
-                                    <option th:value="'EUNE'">EUNE</option>
-                                    <option th:value="'EUW'">EUW</option>
                                     <option th:value="'NA'">NA</option>
+                                    <option th:value="'EUW'">EUW</option>
+                                    <option th:value="'EUNE'">EUNE</option>
                                     <option th:value="'BR'">BR</option>
                                     <option th:value="'LAN'">LAN</option>
                                     <option th:value="'LAS'">LAS</option>
@@ -99,9 +99,9 @@
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <p>To validate <strong>Garbage (EUW)</strong>, set your third-party validation code to the following:</p>
-                        <blockquote class="blockquote text-center">82BOX</blockquote>
-                        <p>Once your code is updated, validation will typically happen in an hour or two.</p>
+                        <p>To validate <strong id="validationModalTexts">Garbage (EUW)</strong>, set your third-party validation code to the following:</p>
+                        <blockquote id="ValidationCodeText" class="blockquote text-center">82BOX</blockquote>
+                        <p>Once your code is , validation will typically happen in an hour or two.</p>
                     </div>
                 </div>
             </div>
