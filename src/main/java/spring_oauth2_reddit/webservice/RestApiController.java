@@ -17,9 +17,6 @@ import spring_oauth2_reddit.persistence.User;
 public class RestApiController {
 
     @Autowired
-    DBHandler db;
-    
-    @Autowired
     Logic logic;
 
     @PostMapping("/addSummoner")

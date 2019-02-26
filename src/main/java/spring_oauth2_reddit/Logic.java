@@ -1,9 +1,13 @@
 package spring_oauth2_reddit;
 
+import java.security.Principal;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Component;
 import spring_oauth2_reddit.persistence.DBHandler;
 import spring_oauth2_reddit.persistence.User;
@@ -16,10 +20,10 @@ public class Logic {
 
     public String addUser(User user) {
         //Check if user's summoner has a name
-        if(user.getSummonerName().equals("")){
+        if (user.getSummonerName().equals("")) {
             return "You must fill the Summoner Name section!";
         }
-        
+
         //Check if validated one already exists
         List<User> users = db.getUserBySummonerName(user.getSummonerName());
         for (User u : users) {
@@ -58,6 +62,14 @@ public class Logic {
         System.out.println("DELETED USER: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ") " + "Validation: " + user.getValidated());
 
         return "ok";
+    }
+
+    public List<User> getUserAccounts(Principal principal) {
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        String redditName = (String) details.get("name");
+        List<User> users = db.getUserByRedditName(redditName);
+        users.sort(Comparator.comparing(User::getId));
+        return users;
     }
 
     private String randomString() {
