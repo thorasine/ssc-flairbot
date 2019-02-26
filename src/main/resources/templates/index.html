@@ -47,7 +47,7 @@
 
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">Add New Summoner</h4>
+                        <h5 class="modal-title">Register Summoner</h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <form id="newSummonerForm" action="#" th:object="${user}" method="post">
@@ -58,7 +58,7 @@
                                 <label for="summonerName">Summoner Name</label>
                                 <input th:field="*{summonerName}" type="text" class="form-control" id="summonerName">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group mb-0">
                                 <label for="region">Region</label>
                                 <select th:field="*{server}" class="form-control" id="region">
                                     <option th:value="'NA'">NA</option>
@@ -74,12 +74,11 @@
                                     <option th:value="'TR'">TR</option>
                                 </select>
                             </div>
-
                         </div>
-
                         <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <input id="newSummonerBtn" class="btn btn-primary" type="button" data-dismiss="//todo" value="Register" />
+                        <div class="modal-footer align-items-center">
+                            <p id="newSummonerErrorText" class="text-danger mb-0"></p>
+                            <input id="newSummonerBtn" class="btn btn-primary" disabled="true" type="button" data-dismiss="//todo" value="Register" />
                         </div>
                     </form>
                 </div>
@@ -121,7 +120,8 @@
                     <!-- Modal body -->
                     <div class="modal-body">
                         <p>Are you sure you want to delete <strong id="deleteSummonerTexts">Garbage (EUW)</strong>?</p>
-                        <div class="d-flex justify-content-end">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <p id="deleteSummonerErrorText" class="text-danger mb-0 mr-2"></p>
                             <btn id="deleteConfirmBtn" class="btn btn-sm btn-danger">Delete</btn>
                             <btn class="btn btn-sm btn-secondary mr-0 ml-1" data-dismiss="modal">Cancel</btn>
                         </div>

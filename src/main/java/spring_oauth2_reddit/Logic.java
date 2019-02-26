@@ -3,6 +3,7 @@ package spring_oauth2_reddit;
 import java.util.List;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 import spring_oauth2_reddit.persistence.DBHandler;
 import spring_oauth2_reddit.persistence.User;
@@ -14,6 +15,11 @@ public class Logic {
     DBHandler db;
 
     public String addUser(User user) {
+        //Check if user's summoner has a name
+        if(user.getSummonerName().equals("")){
+            return "You must fill the Summoner Name section!";
+        }
+        
         //Check if validated one already exists
         List<User> users = db.getUserBySummonerName(user.getSummonerName());
         for (User u : users) {
@@ -33,6 +39,23 @@ public class Logic {
         user.setValidationTries(0);
         db.addUser(user);
         System.out.println("CREATED USER: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ")");
+
+        return "ok";
+    }
+
+    public String deleteUser(String redditName, Long id) {
+        User user;
+        try {
+            user = db.getUserById(id);
+        } catch (EmptyResultDataAccessException ex) {
+            return "The account you tried to delete doesn't exists.";
+        }
+
+        if (!redditName.equals(user.getRedditName())) {
+            return "The account you tried to delete is not yours!";
+        }
+        db.deleteUser(id);
+        System.out.println("DELETED USER: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ") " + "Validation: " + user.getValidated());
 
         return "ok";
     }

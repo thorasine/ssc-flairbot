@@ -27,7 +27,6 @@ public class RestApiController {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String redditName = (String) details.get("name");
         user.setRedditName(redditName);
-
         String response = logic.addUser(user);
         return response;
     }
@@ -36,9 +35,8 @@ public class RestApiController {
     public String deleteSummoner(@RequestParam(value = "id") Long id, Principal principal) {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String redditName = (String) details.get("name");
-
-        db.deleteUser(id);
-        return "DELETED USER: " + id;
+        String response = logic.deleteUser(redditName, id);
+        return response;
     }
 
     @GetMapping("/principalName")
@@ -46,15 +44,5 @@ public class RestApiController {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String principalName = (String) details.get("name");
         return principalName;
-    }
-
-    @GetMapping("/userById")
-    public User userById(@RequestParam(value = "id") Long id) {
-        return db.getUserById(id);
-    }
-
-    @GetMapping("/allUsers")
-    public Collection<User> allUsers() {
-        return db.getAllUsers();
     }
 }

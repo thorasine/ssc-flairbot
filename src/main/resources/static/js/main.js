@@ -23,6 +23,18 @@ function reloadCards() {
     });
 }
 
+$(function () {
+    $('#summonerName').on("keyup", newSummonerModalButtonEnabler);
+});
+
+function newSummonerModalButtonEnabler() {
+    if ($('#summonerName').val().length > 0) {
+        $('#newSummonerBtn').prop("disabled", false);
+    } else {
+        $('#newSummonerBtn').prop("disabled", true);
+    }
+}
+
 function newSummonerPost() {
     var csrfHeader = $("meta[name='_csrf_header']").attr("content");
     var csrfToken = $("meta[name='_csrf']").attr("content");
@@ -35,9 +47,14 @@ function newSummonerPost() {
         url: "/addSummoner",
         data: $('#newSummonerForm').serialize(),
         success: function (status) {
-            $('#modalNewSummoner').modal('toggle');
-            $('#summonerName').val("");
-            reloadCards();
+            if (status === "ok") {
+                $('#modalNewSummoner').modal('toggle');
+                $('#summonerName').val("");
+                $('#newSummonerErrorText').text("");
+                reloadCards();
+            } else {
+                $('#newSummonerErrorText').text(status);
+            }
             console.log("success thing: " + status);
         },
         error: function (status) {
@@ -84,14 +101,16 @@ function deleteSummoner() {
         url: "/deleteSummoner",
         data: {"id": accountId},
         success: function (status) {
-            //$('#error-message').text("Something bad happened!");
-            //removableDiv.remove();
-            removableDiv.fadeOut("slow", function () {
-                removableDiv.remove();
-            });
-
-            $('#deleteSummoner').modal('toggle');
-            accountId = "";
+            if (status === "ok") {
+                removableDiv.fadeOut("slow", function () {
+                    removableDiv.remove();
+                });
+                $('#deleteSummonerErrorText').text("");
+                $('#deleteSummoner').modal('toggle');
+                accountId = "";
+            } else {
+                $('#deleteSummonerErrorText').text(status);
+            }
             console.log("success thing: " + status);
         },
         error: function (status) {

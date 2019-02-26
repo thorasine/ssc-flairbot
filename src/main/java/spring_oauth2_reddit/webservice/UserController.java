@@ -34,24 +34,8 @@ public class UserController {
         return "fragments :: summonerCards";
     }
 
-    @RequestMapping("/test")
-    public String test(Model model, Principal principal) {
-        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
-        String redditName = (String) details.get("name");
-        List<User> users = db.getUserByRedditName(redditName);
-
-        model.addAttribute("users", users);
-        model.addAttribute("user", new User());
-        return "test";
-    }
-
     @RequestMapping("/")
     public String startPage(Model model, Principal principal) {
-        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
-        String redditName = (String) details.get("name");
-        List<User> users = db.getUserByRedditName(redditName);
-
-        model.addAttribute("users", users);
         model.addAttribute("user", new User());
         return "index";
     }
