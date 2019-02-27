@@ -36,7 +36,7 @@ public class Application implements CommandLineRunner {
         User user4 = new UserBuilder().redditName("Vjostar").summonerName("Vjostar")
                 .summonerId("trhgfefsfd").server("NA").rank("Bronze III").validated("validated")
                 .validationCode("83ERF").validationTries(0).buildUser();
-
+        
         db.addUser(user1);
         db.addUser(user2);
         db.addUser(user3);

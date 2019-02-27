@@ -1,31 +1,39 @@
 $(function () {
-    $('#newSummonerBtn').click(newSummonerPost);
-});
-
-$(function () {
-    $('.deleteBtnSpan').click(setModalDelAccountTexts);
-});
-
-$(function () {
-    $('#deleteConfirmBtn').click(deleteSummoner);
-});
-
-$(function () {
     reloadCards();
+    $('#newSummonerBtn').click(newSummonerPost);
+    $('.deleteBtnSpan').click(setModalDelAccountTexts);
+    $('#deleteConfirmBtn').click(deleteSummoner);
+    $('#summonerName').on("keyup", newSummonerModalButtonEnabler);
+    $('#videoExampleToggle').click(videoPlayToggle);
+    $("#verificationVideo").hide();
+    $('#modalValidate').on('hidden.bs.modal', validationModalClose);
 });
+
+function validationModalClose() {
+    $("#validationExampleCollapse").removeClass('collapse show').addClass('collapse');
+    $("#verificationVideo").hide();
+}
+
+function videoPlayToggle() {
+    if ($('#validationExampleCollapse').is(":hidden")) {
+        $("#verificationVideo").show();
+        $("#verificationVideo")[0].currentTime = 0;
+        $("#verificationVideo")[0].play();
+    } else {
+        //$("#verificationVideo").delay(5000).hide();
+        $("#verificationVideo")[0].pause();
+    }
+}
 
 //Loads the summoner cards in
 function reloadCards() {
     $("#cardsContainer").load('/summonerCards', function () {
+        //this one is required for the fancy tooltips
         $('[data-toggle="tooltip"]').tooltip();
         $('.deleteBtnSpan').click(setModalDelAccountTexts);
         $('.validationModalOpenBtn').click(setModalValidateAccountTexts);
     });
 }
-
-$(function () {
-    $('#summonerName').on("keyup", newSummonerModalButtonEnabler);
-});
 
 function newSummonerModalButtonEnabler() {
     if ($('#summonerName').val().length > 0) {
@@ -55,26 +63,10 @@ function newSummonerPost() {
             } else {
                 $('#newSummonerErrorText').text(status);
             }
-            console.log("success thing: " + status);
         },
         error: function (status) {
-            console.log("fail thing: " + JSON.stringify(status));
+            console.log("failed: " + JSON.stringify(status));
         }
-    });
-}
-
-function getSomething() {
-    $.get("/allUsers", function (data, status) {
-        for (var item in data) {
-            console.log(data[item]);
-        }
-    });
-}
-
-function getUserById() {
-    var bla = $('#request-input').val();
-    $.get("/userById?id=" + bla, function (data, status) {
-        console.log(data);
     });
 }
 
@@ -111,11 +103,10 @@ function deleteSummoner() {
             } else {
                 $('#deleteSummonerErrorText').text(status);
             }
-            console.log("success thing: " + status);
         },
         error: function (status) {
             accountId = "";
-            console.log("fail thing: " + JSON.stringify(status));
+            console.log("failed: " + JSON.stringify(status));
         }
     });
 }
@@ -125,5 +116,5 @@ function setModalValidateAccountTexts() {
     var summonerName = $(this).parent().parent().children('.summonerName').text();
     var server = $(this).parent().parent().children('.server').text();
     $('#validationModalTexts').text(summonerName + " (" + server + ")");
-    $('#ValidationCodeText').text(validationCode);
+    $('#validationCodeText').text(validationCode);
 }

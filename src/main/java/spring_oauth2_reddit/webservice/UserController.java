@@ -7,14 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import spring_oauth2_reddit.Logic;
-import spring_oauth2_reddit.persistence.DBHandler;
 import spring_oauth2_reddit.persistence.User;
 
 @Controller
 public class UserController {
-
-    @Autowired
-    private DBHandler db;
     
     @Autowired
     private Logic logic;

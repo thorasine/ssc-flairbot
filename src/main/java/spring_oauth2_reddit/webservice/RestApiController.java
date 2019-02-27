@@ -1,7 +1,6 @@
 package spring_oauth2_reddit.webservice;
 
 import java.security.Principal;
-import java.util.Collection;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import spring_oauth2_reddit.Logic;
-import spring_oauth2_reddit.persistence.DBHandler;
 import spring_oauth2_reddit.persistence.User;
 
 @RestController
