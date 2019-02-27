@@ -14,6 +14,11 @@ public class UserController {
     
     @Autowired
     private Logic logic;
+    
+    @RequestMapping("/test")
+    public String test(){
+        return "test";
+    }
 
     @RequestMapping("/summonerCards")
     public String summonerCards(Model model, Principal principal) {

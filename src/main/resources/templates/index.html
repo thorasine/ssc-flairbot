@@ -7,24 +7,24 @@
         <meta name="viewport" content="width=device-width" />
         <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.2.1/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="/css/index.css" />
+        <link rel="stylesheet" type="text/css" href="/css/noty.css" />
+        <link rel="stylesheet" type="text/css" href="/css/themes/sunset.css" />
         <!-- <link rel="stylesheet" href="/webjars/font-awesome/5.7.2/css/all.css" /> -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
         <!-- 2 hours wasted to learn that the order of js imports are important apparently -->
         <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
         <script src="/webjars/popper.js/1.14.3/umd/popper.min.js"></script>
         <script src="/webjars/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+        <script src="/js/noty.js"></script>
         <script src="/js/main.js"></script>
         <meta name="_csrf" th:content="${_csrf.token}"/>
         <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     </head>
     <body>
-
-
-
         <!-- Containers -->
         <div id="container" class="d-flex flex-column">
             <!-- Header bar -->
-            <div class="d-flex bg-dark border-bottom shadow p-2 px-md-4 mb-3 align-items-center">
+            <div id="headerBar" class="d-flex bg-dark border-bottom shadow p-2 px-md-4 mb-3 align-items-center">
                 <a class="navbar-brand text-light" href="/">Summoner School Flairs</a>
                 <btn id="newSummonerModalBtn" class="mr-md-auto ml-1 btn btn-success" data-toggle="modal" data-target="#modalNewSummoner">New Summoner</btn>
                 <h6 class="mr-3 mt-1 font-weight-light text-light" th:text="${#authentication.getUserAuthentication().getDetails().get('name')}"></h6>
@@ -135,5 +135,7 @@
                 </div>
             </div>
         </div>
+
+        <!-- Toast thingie -->
     </body>
 </html>

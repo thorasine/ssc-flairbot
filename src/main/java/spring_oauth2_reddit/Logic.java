@@ -43,7 +43,6 @@ public class Logic {
         user.setValidationTries(0);
         db.addUser(user);
         System.out.println("CREATED USER: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ")");
-
         return "ok";
     }
 

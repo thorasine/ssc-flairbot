@@ -20,7 +20,6 @@ function videoPlayToggle() {
         $("#verificationVideo")[0].currentTime = 0;
         $("#verificationVideo")[0].play();
     } else {
-        //$("#verificationVideo").delay(5000).hide();
         $("#verificationVideo")[0].pause();
     }
 }
@@ -59,6 +58,7 @@ function newSummonerPost() {
                 $('#modalNewSummoner').modal('toggle');
                 $('#summonerName').val("");
                 $('#newSummonerErrorText').text("");
+                showNoty();
                 reloadCards();
             } else {
                 $('#newSummonerErrorText').text(status);
@@ -117,4 +117,17 @@ function setModalValidateAccountTexts() {
     var server = $(this).parent().parent().children('.server').text();
     $('#validationModalTexts').text(summonerName + " (" + server + ")");
     $('#validationCodeText').text(validationCode);
+}
+
+function showNoty() {
+    new Noty({
+        type: 'info',
+        layout: 'topRight',
+        theme: 'sunset',
+        text: 'Summoner registered successfully',
+        timeout: '3000',
+        progressBar: true,
+        closeWith: ['click'],
+        killer: true
+    }).show();
 }
