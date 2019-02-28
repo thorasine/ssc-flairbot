@@ -1,4 +1,4 @@
-package spring_oauth2_reddit.webservice;
+package ssc_flairbot.webservice;
 
 import java.util.Arrays;
 import javax.servlet.Filter;

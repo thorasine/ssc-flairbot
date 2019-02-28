@@ -1,4 +1,4 @@
-package spring_oauth2_reddit.webservice;
+package ssc_flairbot.webservice;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;

@@ -1,4 +1,4 @@
-package spring_oauth2_reddit;
+package ssc_flairbot;
 
 import java.security.Principal;
 import java.util.Comparator;
@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Component;
-import spring_oauth2_reddit.persistence.DBHandler;
-import spring_oauth2_reddit.persistence.User;
+import ssc_flairbot.persistence.DBHandler;
+import ssc_flairbot.persistence.User;
 
 @Component
 public class Logic {

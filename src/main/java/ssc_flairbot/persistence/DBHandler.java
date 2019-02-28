@@ -1,4 +1,4 @@
-package spring_oauth2_reddit.persistence;
+package ssc_flairbot.persistence;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

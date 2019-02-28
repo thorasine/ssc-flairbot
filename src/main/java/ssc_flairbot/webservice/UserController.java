@@ -1,4 +1,4 @@
-package spring_oauth2_reddit.webservice;
+package ssc_flairbot.webservice;
 
 import java.security.Principal;
 import java.util.List;
@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import spring_oauth2_reddit.Logic;
-import spring_oauth2_reddit.persistence.User;
+import ssc_flairbot.Logic;
+import ssc_flairbot.persistence.User;
 
 @Controller
 public class UserController {

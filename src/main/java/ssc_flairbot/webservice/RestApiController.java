@@ -1,4 +1,4 @@
-package spring_oauth2_reddit.webservice;
+package ssc_flairbot.webservice;
 
 import java.security.Principal;
 import java.util.Map;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import spring_oauth2_reddit.Logic;
-import spring_oauth2_reddit.persistence.User;
+import ssc_flairbot.Logic;
+import ssc_flairbot.persistence.User;
 
 @RestController
 public class RestApiController {

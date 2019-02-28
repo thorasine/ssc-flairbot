@@ -1,10 +1,12 @@
-package spring_oauth2_reddit;
+package ssc_flairbot;
 
+import ssc_flairbot.persistence.User;
+import ssc_flairbot.persistence.UserBuilder;
+import ssc_flairbot.persistence.DBHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import spring_oauth2_reddit.persistence.*;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
