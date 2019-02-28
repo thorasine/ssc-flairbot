@@ -5,10 +5,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import net.rithms.riot.api.endpoints.summoner.dto.Summoner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Component;
+import ssc_flairbot.api.LeagueApi;
 import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
 
@@ -18,23 +20,30 @@ public class Logic {
     @Autowired
     DBHandler db;
 
+    @Autowired
+    LeagueApi lolApi;
+
     public String addUser(User user) {
-        //Check if user's summoner has a name
+        //Check if user's summoner is a name
         if (user.getSummonerName().equals("")) {
             return "You must fill the Summoner Name section!";
         }
 
+        //Check if summoner exists
+        Summoner summoner = lolApi.getSummoner(user);
+        if (summoner == null) {
+            return "Summoner " + user.getSummonerName() + " (" + user.getServer() + ") does not exists.";
+        }
+        user.setSummonerName(summoner.getName());
+        user.setSummonerId(summoner.getId());
+
+        //Check if he have already added this summoner
+        if (db.isSummonerAlreadyRegisteredByUser(user)) {
+            return "You have already registered this account.";
+        }
         //Check if validated one already exists
-        List<User> users = db.getUserBySummonerName(user.getSummonerName());
-        for (User u : users) {
-            if (u.getServer().equals(user.getServer())) {
-                if (u.getValidated().equals("validated")) {
-                    return "Summoner is already registered.";
-                }
-                if (u.getRedditName().equals(user.getRedditName())) {
-                    return "You've already added this account";
-                }
-            }
+        if (db.isSummonerAlreadyValidatedBySomeone(user)) {
+            return "Summoner is already validated by someone else.";
         }
 
         //User passed the checks, complete registration
@@ -66,7 +75,7 @@ public class Logic {
     public List<User> getUserAccounts(Principal principal) {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String redditName = (String) details.get("name");
-        List<User> users = db.getUserByRedditName(redditName);
+        List<User> users = db.getUsersByRedditName(redditName);
         users.sort(Comparator.comparing(User::getId));
         return users;
     }

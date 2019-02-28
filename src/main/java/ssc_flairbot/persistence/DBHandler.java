@@ -40,13 +40,27 @@ public class DBHandler {
         return user;
     }
 
-    public List<User> getUserByRedditName(String redditName) {
+    public boolean isSummonerAlreadyValidatedBySomeone(User user) {
+        int count;
+        String SQL = "SELECT count(*) FROM users WHERE summonerName = ? AND server = ? AND validated = 'validated'";
+        count = database.queryForObject(SQL, new Object[]{user.getSummonerName(), user.getServer()}, Integer.class);
+        return count > 0;
+    }
+
+    public boolean isSummonerAlreadyRegisteredByUser(User user) {
+        String SQL = "SELECT count(*) FROM users WHERE summonerName = ? AND server = ? AND redditName = ?";
+        int count = database.queryForObject(SQL, new Object[]{user.getSummonerName(), user.getServer(), user.getRedditName()}, Integer.class);
+        return count > 0;
+    }
+
+    public List<User> getUsersByRedditName(String redditName) {
         String SQL = "SELECT * FROM users WHERE redditName = ?";
         List<User> userList = database.query(SQL, new Object[]{redditName}, new UserMapper());
         return userList;
     }
 
-    public List<User> getUserBySummonerName(String summonerName) {
+    //Not used
+    public List<User> getUsersBySummonerName(String summonerName) {
         String SQL = "SELECT * FROM users WHERE summonerName = ?";
         List<User> userList = database.query(SQL, new Object[]{summonerName}, new UserMapper());
         return userList;
