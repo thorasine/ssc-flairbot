@@ -1,19 +1,25 @@
-package ssc_flairbot.api;
+package ssc_flairbot.league;
 
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.rithms.riot.api.ApiConfig;
 import net.rithms.riot.api.RiotApi;
 import net.rithms.riot.api.RiotApiException;
+import net.rithms.riot.api.endpoints.league.dto.LeaguePosition;
 import net.rithms.riot.api.endpoints.summoner.dto.Summoner;
 import net.rithms.riot.constant.Platform;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ssc_flairbot.persistence.User;
 
 @Component
 public class LeagueApi {
+    
+    @Autowired
+    private RankHandler rankHandler;
 
-    private final ApiConfig config = new ApiConfig().setKey("RGAPI-890449c1-983c-40a5-b6ca-581605c56084");
+    private final ApiConfig config = new ApiConfig().setKey("RGAPI-71903872-6e71-44da-b6ce-2b7efd481b5e");
     private final RiotApi api = new RiotApi(config);
 
     public Summoner getSummoner(User user) {
@@ -34,21 +40,26 @@ public class LeagueApi {
         return summoner;
     }
     
-    public String checkThirdPartyCode(User user){
+    public boolean isThirdPartyCodeSet(User user){
         Platform enumServer = Platform.valueOf(user.getServer());
-        String apiCode = "";
+        String apiCode;
         try {
             apiCode = api.getThirdPartyCodeBySummoner(enumServer, user.getSummonerId());
         } catch (RiotApiException ex) {
-            Logger.getLogger(LeagueApi.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("FAILED VERIFICATION, SUMMONER DOESN'T EXISTS? FOR: /u/" + user.getRedditName() + " SUMMONER: " + user.getSummonerName() + " (" + user.getServer() + ")");
+            return false;
         }
-        if(apiCode.equalsIgnoreCase(user.getValidationCode())){
-            return "ok";
-        }
-        return "";
+        return apiCode.equalsIgnoreCase(user.getValidationCode());
     }
     
-    public void setHighestRank(User user){
-        
+    public String getHighestRank(User user){
+        Set<LeaguePosition> positions;
+        try {
+            positions = api.getLeaguePositionsBySummonerId(Platform.valueOf(user.getServer()), user.getSummonerId());
+        } catch (RiotApiException ex) {
+            System.out.println("ERROR TRYING TO RETRIEVE SUMMONER'S RANK FOR: /u/" + user.getRedditName() + " SUMMONER: " + user.getSummonerName() + " (" + user.getServer() + ")");
+            return null;
+        }
+        return rankHandler.getSummonerHighestRank(positions);
     }
 }

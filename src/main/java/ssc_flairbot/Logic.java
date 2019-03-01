@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Component;
-import ssc_flairbot.api.LeagueApi;
+import ssc_flairbot.league.LeagueApi;
 import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
 
@@ -19,7 +19,6 @@ public class Logic {
 
     @Autowired
     DBHandler db;
-
     @Autowired
     LeagueApi lolApi;
 
@@ -52,6 +51,8 @@ public class Logic {
         user.setValidationTries(0);
         db.addUser(user);
         System.out.println("CREATED USER: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ")");
+        
+        System.out.println("Added summoners highest rank: " + lolApi.getHighestRank(user));
         return "ok";
     }
 
