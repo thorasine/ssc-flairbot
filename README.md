@@ -1,3 +1,3 @@
-# flairbot
+# SSC-Flairbot
 
 Work in progress..
