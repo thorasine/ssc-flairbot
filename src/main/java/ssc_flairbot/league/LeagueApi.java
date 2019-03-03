@@ -15,11 +15,11 @@ import ssc_flairbot.persistence.User;
 
 @Component
 public class LeagueApi {
-    
+
     @Autowired
     private RankHandler rankHandler;
 
-    private final ApiConfig config = new ApiConfig().setKey("RGAPI-34aaf0d0-1adf-41ca-97ff-5e7b99da353e");
+    private final ApiConfig config = new ApiConfig().setKey("RGAPI-bfcdc030-98b1-411f-ba2d-0e4df36aa485");
     private final RiotApi api = new RiotApi(config);
 
     public Summoner getSummoner(User user) {
@@ -39,19 +39,25 @@ public class LeagueApi {
         }
         return summoner;
     }
-    
-    public String getThirdPartyCode(User user){
+
+    public String getThirdPartyCode(User user) {
         Platform enumServer = Platform.valueOf(user.getServer());
         String apiCode = null;
         try {
             apiCode = api.getThirdPartyCodeBySummoner(enumServer, user.getSummonerId());
         } catch (RiotApiException ex) {
-            System.out.println("FAILED VERIFICATION, SUMMONER DOESN'T EXISTS? FOR: /u/" + user.getRedditName() + " SUMMONER: " + user.getSummonerName() + " (" + user.getServer() + ")");
+            if (ex.getErrorCode() != 403) {
+                Logger.getLogger(LeagueApi.class.getName()).log(Level.SEVERE, "[Code: " + ex.getErrorCode() + " Msg: " + ex.getMessage() + "]");
+            } else {
+                //Logger.getLogger(LeagueApi.class.getName()).log(Level.WARNING, "[Code: " + ex.getErrorCode() + " Msg: " + ex.getMessage() + "]" + 
+                //           " Failed verification, summoner has no code set: /u/" + user.getRedditName() + " SUMMONER: " + user.getSummonerName() + " (" + user.getServer() + ")");
+            }
         }
+
         return apiCode;
     }
-    
-    public String getHighestRank(User user){
+
+    public String getHighestRank(User user) {
         Set<LeaguePosition> positions;
         try {
             positions = api.getLeaguePositionsBySummonerId(Platform.valueOf(user.getServer()), user.getSummonerId());

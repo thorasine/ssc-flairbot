@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
+@EnableScheduling
 public class Application implements CommandLineRunner {
 
     @Autowired
@@ -38,11 +40,11 @@ public class Application implements CommandLineRunner {
         User user4 = new UserBuilder().redditName("Vjostar").summonerName("Vjostar")
                 .summonerId("wWb-WB9G7sMRNTKCjnze7MX84wkIEJhmqe-2JsRwuu_WsEk").server("EUW").rank("Silver III").validated("pending")
                 .validationCode("TEST434").validationTries(0).buildUser();
-        
+
         User user5 = new UserBuilder().redditName("Holo").summonerName("Holó")
                 .summonerId("x4cgEXmZ7veIUcHAE8ma4ktpuaqDtecUVZyCM1zg3WEiTsI").server("EUW").rank("Bronze II").validated("pending")
                 .validationCode("TEST12").validationTries(0).buildUser();
-        
+
         User user6 = new UserBuilder().redditName("Oprah").summonerName("Oprah Winfrey")
                 .summonerId("UuWF2fkY0DvBdLZwJvfwxY3LQV8iHPxfCpL8KxaFT9seZ6Y").server("EUW").rank("Bronze I").validated("pending")
                 .validationCode("83ERF").validationTries(0).buildUser();
