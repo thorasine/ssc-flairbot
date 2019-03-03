@@ -19,7 +19,7 @@ public class LeagueApi {
     @Autowired
     private RankHandler rankHandler;
 
-    private final ApiConfig config = new ApiConfig().setKey("RGAPI-71903872-6e71-44da-b6ce-2b7efd481b5e");
+    private final ApiConfig config = new ApiConfig().setKey("RGAPI-34aaf0d0-1adf-41ca-97ff-5e7b99da353e");
     private final RiotApi api = new RiotApi(config);
 
     public Summoner getSummoner(User user) {
@@ -40,16 +40,15 @@ public class LeagueApi {
         return summoner;
     }
     
-    public boolean isThirdPartyCodeSet(User user){
+    public String getThirdPartyCode(User user){
         Platform enumServer = Platform.valueOf(user.getServer());
-        String apiCode;
+        String apiCode = null;
         try {
             apiCode = api.getThirdPartyCodeBySummoner(enumServer, user.getSummonerId());
         } catch (RiotApiException ex) {
             System.out.println("FAILED VERIFICATION, SUMMONER DOESN'T EXISTS? FOR: /u/" + user.getRedditName() + " SUMMONER: " + user.getSummonerName() + " (" + user.getServer() + ")");
-            return false;
         }
-        return apiCode.equalsIgnoreCase(user.getValidationCode());
+        return apiCode;
     }
     
     public String getHighestRank(User user){

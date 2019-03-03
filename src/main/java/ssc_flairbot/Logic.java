@@ -11,6 +11,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Component;
 import ssc_flairbot.league.LeagueApi;
+import ssc_flairbot.league.VerificationUpdater;
 import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
 
@@ -21,6 +22,9 @@ public class Logic {
     DBHandler db;
     @Autowired
     LeagueApi lolApi;
+    
+    @Autowired
+    VerificationUpdater verifyUpdater;
 
     public String addUser(User user) {
         //Check if user's summoner is a name
@@ -49,10 +53,9 @@ public class Logic {
         user.setValidationCode(randomString());
         user.setValidated("pending");
         user.setValidationTries(0);
+        user.setRank(lolApi.getHighestRank(user));
         db.addUser(user);
-        System.out.println("CREATED USER: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ")");
-        
-        System.out.println("Added summoners highest rank: " + lolApi.getHighestRank(user));
+        System.out.println("CREATED USER: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ") " + "Highest rank: " + user.getRank());
         return "ok";
     }
 
@@ -78,6 +81,9 @@ public class Logic {
         String redditName = (String) details.get("name");
         List<User> users = db.getUsersByRedditName(redditName);
         users.sort(Comparator.comparing(User::getId));
+        
+        //test
+        verifyUpdater.update();
         return users;
     }
 

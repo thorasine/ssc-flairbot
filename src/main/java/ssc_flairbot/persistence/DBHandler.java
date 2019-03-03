@@ -13,6 +13,17 @@ public class DBHandler {
     @Autowired
     JdbcTemplate database;
 
+    public void updateVerification(User user) {
+        String SQL = "UPDATE users SET validated = ?, validationTries = ? WHERE id = ?";
+        database.update(SQL, user.getValidated(), user.getValidationTries(), user.getId());
+    }
+
+    public List<User> getPendingUsers() {
+        String SQL = "SELECT * FROM users WHERE validated = 'pending'";
+        List<User> userList = database.query(SQL, new Object[]{}, new UserMapper());
+        return userList;
+    }
+
     public void addUser(User user) {
         String SQL = "INSERT INTO users(redditName, summonerName, summonerId, server, rank, validated, validationCode, "
                 + "validationTries, updateDate) VALUES (?,?,?,?,?,?,?,?,?)";

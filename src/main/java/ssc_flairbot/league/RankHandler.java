@@ -42,10 +42,8 @@ public class RankHandler {
         highestTier = highestTier.toLowerCase();
         highestTier = highestTier.substring(0, 1).toUpperCase() + highestTier.substring(1);
         if (highestTier.equalsIgnoreCase("Unranked") || highestTier.equalsIgnoreCase("Master") || highestTier.equalsIgnoreCase("Challenger")) {
-            System.out.println("Highest rank: " + highestTier);
             return highestTier;
         } else {
-            System.out.println("Highest rank: " + highestTier + " " + highestRNumber);
             return highestTier + " " + highestRNumber;
         }
     }
