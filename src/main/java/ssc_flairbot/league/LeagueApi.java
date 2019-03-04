@@ -19,7 +19,7 @@ public class LeagueApi {
     @Autowired
     private RankHandler rankHandler;
 
-    private final ApiConfig config = new ApiConfig().setKey("RGAPI-bfcdc030-98b1-411f-ba2d-0e4df36aa485");
+    private final ApiConfig config = new ApiConfig().setKey("RGAPI-82be84ce-ce04-4be2-9487-e51e40920a41");
     private final RiotApi api = new RiotApi(config);
 
     public Summoner getSummoner(User user) {
@@ -46,7 +46,7 @@ public class LeagueApi {
         try {
             apiCode = api.getThirdPartyCodeBySummoner(enumServer, user.getSummonerId());
         } catch (RiotApiException ex) {
-            if (ex.getErrorCode() != 403) {
+            if (ex.getErrorCode() != 404) {
                 Logger.getLogger(LeagueApi.class.getName()).log(Level.SEVERE, "[Code: " + ex.getErrorCode() + " Msg: " + ex.getMessage() + "]");
             } else {
                 //Logger.getLogger(LeagueApi.class.getName()).log(Level.WARNING, "[Code: " + ex.getErrorCode() + " Msg: " + ex.getMessage() + "]" + 

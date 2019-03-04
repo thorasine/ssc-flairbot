@@ -4,10 +4,18 @@ $(function () {
     $('.deleteBtnSpan').click(setModalDelAccountTexts);
     $('#deleteConfirmBtn').click(deleteSummoner);
     $('#summonerName').on("keyup", newSummonerModalButtonEnabler);
+    $('#region').on("change", newSummonerModalButtonEnabler);
+    
     $('#videoExampleToggle').click(videoPlayToggle);
     $("#verificationVideo").hide();
     $('#modalValidate').on('hidden.bs.modal', validationModalClose);
+    $('#modalNewSummoner').on('hidden.bs.modal', newSummonderModalClose);
 });
+
+function newSummonderModalClose() {
+    $('#newSummonerErrorText').text("");
+    $('#summonerName').val("");
+}
 
 function validationModalClose() {
     $("#validationExampleCollapse").removeClass('collapse show').addClass('collapse');
@@ -43,6 +51,9 @@ function newSummonerModalButtonEnabler() {
 }
 
 function newSummonerPost() {
+    $('#newSummonerBtn').text('Loading..');
+    $('#newSummonerBtn').prop("disabled", true);
+
     var csrfHeader = $("meta[name='_csrf_header']").attr("content");
     var csrfToken = $("meta[name='_csrf']").attr("content");
     var headers = {};
@@ -58,10 +69,12 @@ function newSummonerPost() {
                 $('#modalNewSummoner').modal('toggle');
                 $('#summonerName').val("");
                 $('#newSummonerErrorText').text("");
+                $('#newSummonerBtn').text('Register');
                 showNoty();
                 reloadCards();
             } else {
                 $('#newSummonerErrorText').text(status);
+                $('#newSummonerBtn').text('Register');
             }
         },
         error: function (status) {
