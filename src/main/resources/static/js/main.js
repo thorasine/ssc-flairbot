@@ -5,7 +5,7 @@ $(function () {
     $('#deleteConfirmBtn').click(deleteSummoner);
     $('#summonerName').on("keyup", newSummonerModalButtonEnabler);
     $('#region').on("change", newSummonerModalButtonEnabler);
-    
+
     $('#videoExampleToggle').click(videoPlayToggle);
     $("#verificationVideo").hide();
     $('#modalValidate').on('hidden.bs.modal', validationModalClose);
@@ -69,13 +69,12 @@ function newSummonerPost() {
                 $('#modalNewSummoner').modal('toggle');
                 $('#summonerName').val("");
                 $('#newSummonerErrorText').text("");
-                $('#newSummonerBtn').text('Register');
                 showNoty();
                 reloadCards();
             } else {
                 $('#newSummonerErrorText').text(status);
-                $('#newSummonerBtn').text('Register');
             }
+            $('#newSummonerBtn').text('Register');
         },
         error: function (status) {
             console.log("failed: " + JSON.stringify(status));

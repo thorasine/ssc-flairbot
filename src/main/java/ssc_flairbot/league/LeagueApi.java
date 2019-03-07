@@ -1,14 +1,12 @@
 package ssc_flairbot.league;
 
-import java.util.Set;
+import com.merakianalytics.orianna.Orianna;
+import com.merakianalytics.orianna.types.common.Region;
+import com.merakianalytics.orianna.types.core.league.LeaguePositions;
+import com.merakianalytics.orianna.types.core.summoner.Summoner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.rithms.riot.api.ApiConfig;
-import net.rithms.riot.api.RiotApi;
-import net.rithms.riot.api.RiotApiException;
-import net.rithms.riot.api.endpoints.league.dto.LeaguePosition;
-import net.rithms.riot.api.endpoints.summoner.dto.Summoner;
-import net.rithms.riot.constant.Platform;
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ssc_flairbot.persistence.User;
@@ -19,52 +17,65 @@ public class LeagueApi {
     @Autowired
     private RankHandler rankHandler;
 
-    private final ApiConfig config = new ApiConfig().setKey("RGAPI-82be84ce-ce04-4be2-9487-e51e40920a41");
-    private final RiotApi api = new RiotApi(config);
+    @PostConstruct
+    private void init() {
+        Orianna.setRiotAPIKey("RGAPI-983cffc4-5cfd-4e91-b053-805c8a840737");
+    }
 
     public Summoner getSummoner(User user) {
-        Platform enumServer;
-        try {
-            enumServer = Platform.valueOf(user.getServer());
-        } catch (IllegalArgumentException ex) {
-            System.out.println("USER'S (/u/" + user.getRedditName() + ")'S SERVER" + user.getServer() + " NOT FOUND");
+        Summoner summoner = Summoner.named(user.getSummonerName()).withRegion(regionConvert(user.getServer())).get();
+        if (!summoner.exists()) {
+            Logger.getLogger(LeagueApi.class.getName()).log(Level.INFO, "Summoner not found for: " + "/u/" + user.getRedditName() + " Summoner: " + user.getSummonerName() + "(" + user.getServer() + ")");
             return null;
-        }
-
-        Summoner summoner = null;
-        try {
-            summoner = api.getSummonerByName(enumServer, user.getSummonerName());
-        } catch (RiotApiException ex) {
-            System.out.println("USER'S (/u/" + user.getRedditName() + ")'S SUMMONER " + user.getSummonerName() + " (" + user.getServer() + ") NOT FOUND");
         }
         return summoner;
     }
 
     public String getThirdPartyCode(User user) {
-        Platform enumServer = Platform.valueOf(user.getServer());
-        String apiCode = null;
-        try {
-            apiCode = api.getThirdPartyCodeBySummoner(enumServer, user.getSummonerId());
-        } catch (RiotApiException ex) {
-            if (ex.getErrorCode() != 404) {
-                Logger.getLogger(LeagueApi.class.getName()).log(Level.SEVERE, "[Code: " + ex.getErrorCode() + " Msg: " + ex.getMessage() + "]");
-            } else {
-                //Logger.getLogger(LeagueApi.class.getName()).log(Level.WARNING, "[Code: " + ex.getErrorCode() + " Msg: " + ex.getMessage() + "]" + 
-                //           " Failed verification, summoner has no code set: /u/" + user.getRedditName() + " SUMMONER: " + user.getSummonerName() + " (" + user.getServer() + ")");
-            }
+        Summoner summoner = Summoner.withId(user.getSummonerId()).withRegion(regionConvert(user.getServer())).get();
+        String code = summoner.getVerificationString().getString();
+        if (code == null) {
+            //Logger.getLogger(LeagueApi.class.getName()).log(Level.INFO, "Verification code not found for: " + "/u/" + user.getRedditName() + " Summoner: " + user.getSummonerName() + "(" + user.getServer() + ")");
         }
-
-        return apiCode;
+        return code;
     }
 
     public String getHighestRank(User user) {
-        Set<LeaguePosition> positions;
-        try {
-            positions = api.getLeaguePositionsBySummonerId(Platform.valueOf(user.getServer()), user.getSummonerId());
-        } catch (RiotApiException ex) {
-            System.out.println("ERROR TRYING TO RETRIEVE SUMMONER'S RANK FOR: /u/" + user.getRedditName() + " SUMMONER: " + user.getSummonerName() + " (" + user.getServer() + ")");
-            return null;
+        Summoner summoner;
+        summoner = Summoner.withId(user.getSummonerId()).withRegion(regionConvert(user.getServer())).get();
+        LeaguePositions leaguePositions = summoner.getLeaguePositions();
+        if (!leaguePositions.exists()) {
+            return "Unranked";
         }
-        return rankHandler.getSummonerHighestRank(positions);
+        return rankHandler.getSummonerHighestRank(leaguePositions);
+    }
+
+    private Region regionConvert(String server) {
+        switch (server) {
+            case "NA":
+                return Region.NORTH_AMERICA;
+            case "EUW":
+                return Region.EUROPE_WEST;
+            case "EUNE":
+                return Region.EUROPE_NORTH_EAST;
+            case "BR":
+                return Region.BRAZIL;
+            case "LAN":
+                return Region.LATIN_AMERICA_NORTH;
+            case "LAS":
+                return Region.LATIN_AMERICA_SOUTH;
+            case "JP":
+                return Region.JAPAN;
+            case "KR":
+                return Region.KOREA;
+            case "OCE":
+                return Region.OCEANIA;
+            case "RU":
+                return Region.RUSSIA;
+            case "TR":
+                return Region.TURKEY;
+            default:
+                return Region.EUROPE_WEST;
+        }
     }
 }

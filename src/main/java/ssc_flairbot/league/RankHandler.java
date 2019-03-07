@@ -1,20 +1,21 @@
 package ssc_flairbot.league;
 
+import com.merakianalytics.orianna.types.common.Queue;
+import com.merakianalytics.orianna.types.core.league.LeaguePosition;
+import com.merakianalytics.orianna.types.core.league.LeaguePositions;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import net.rithms.riot.api.endpoints.league.dto.LeaguePosition;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RankHandler {
 
-    public String getSummonerHighestRank(Set<LeaguePosition> positions) {
+    public String getSummonerHighestRank(LeaguePositions leaguePositions) {
         Set<String> ranks = new HashSet<>();
-        for (LeaguePosition p : positions) {
-            if (p.getQueueType().equalsIgnoreCase("RANKED_SOLO_5x5")) {
-                System.out.println("Tier + Rank: " + p.getTier() + " " + p.getRank());
-                ranks.add(p.getTier() + " " + p.getRank());
+        for (LeaguePosition position : leaguePositions) {
+            if (position.getQueue().equals(Queue.RANKED_SOLO_5x5)) {
+                ranks.add(position.getTier() + " " + position.getDivision());
             }
         }
         return getHighestRank(ranks);
@@ -23,28 +24,32 @@ public class RankHandler {
     //Will use this for the updater too
     public String getHighestRank(Set<String> ranks) {
         String highestTier = "UNRANKED";
-        String highestRNumber = "IV";
+        String highestDivision = "IV";
         for (String rank : ranks) {
             String[] splitted = rank.split(" ");
             String tier = splitted[0];
-            String rnumber = splitted[1];
+            String division = splitted[1];
 
             if (Tier.valueOf(tier).isAbove(Tier.valueOf(highestTier))) {
                 highestTier = tier;
-                highestRNumber = rnumber;
+                highestDivision = division;
             } else if (Tier.valueOf(tier).isEqual(Tier.valueOf(highestTier))) {
-                if (RNumber.valueOf(rnumber).isAbove(RNumber.valueOf(highestRNumber))) {
-                    highestRNumber = rnumber;
+                if (Division.valueOf(division).isAbove(Division.valueOf(highestDivision))) {
+                    highestDivision = division;
                 }
             }
         }
 
-        highestTier = highestTier.toLowerCase();
-        highestTier = highestTier.substring(0, 1).toUpperCase() + highestTier.substring(1);
-        if (highestTier.equalsIgnoreCase("Unranked") || highestTier.equalsIgnoreCase("Master") || highestTier.equalsIgnoreCase("Challenger")) {
-            return highestTier;
+        return rankFormatter(highestTier, highestDivision);
+    }
+
+    private String rankFormatter(String tier, String division) {
+        tier = tier.toLowerCase();
+        tier = tier.substring(0, 1).toUpperCase() + tier.substring(1);
+        if (tier.equalsIgnoreCase("Unranked") || tier.equalsIgnoreCase("Master") || tier.equalsIgnoreCase("Challenger")) {
+            return tier;
         } else {
-            return highestTier + " " + highestRNumber;
+            return tier + " " + division;
         }
     }
 
@@ -66,16 +71,16 @@ public class RankHandler {
         }
     }
 
-    private enum RNumber {
+    private enum Division {
         IV(0), III(1), II(2), I(3);
 
         private final Integer level;
 
-        RNumber(int level) {
+        Division(int level) {
             this.level = level;
         }
 
-        public boolean isAbove(RNumber other) {
+        public boolean isAbove(Division other) {
             return this.level > other.level;
         }
     }

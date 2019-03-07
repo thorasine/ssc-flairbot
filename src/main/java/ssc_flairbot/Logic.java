@@ -1,11 +1,13 @@
 package ssc_flairbot;
 
+import com.merakianalytics.orianna.types.core.summoner.Summoner;
 import java.security.Principal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import net.rithms.riot.api.endpoints.summoner.dto.Summoner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -46,12 +48,12 @@ public class Logic {
         }
 
         //User passed the checks, complete registration
-        user.setValidationCode(randomString());
+        user.setValidationCode(randomStringGenerator());
         user.setValidated("pending");
         user.setValidationTries(0);
         user.setRank(lolApi.getHighestRank(user));
         db.addUser(user);
-        System.out.println("CREATED USER: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ") " + "Highest rank: " + user.getRank());
+        Logger.getLogger(Logic.class.getName()).log(Level.INFO, "Created user: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ") " + "Highest rank: " + user.getRank());
         return "ok";
     }
 
@@ -67,8 +69,7 @@ public class Logic {
             return "The account you tried to delete is not yours!";
         }
         db.deleteUser(id);
-        System.out.println("DELETED USER: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ") " + "Validation: " + user.getValidated());
-
+        Logger.getLogger(Logic.class.getName()).log(Level.INFO, "Deleted user: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ")");
         return "ok";
     }
 
@@ -80,7 +81,7 @@ public class Logic {
         return users;
     }
 
-    private String randomString() {
+    private String randomStringGenerator() {
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder salt = new StringBuilder();
         Random rnd = new Random();
