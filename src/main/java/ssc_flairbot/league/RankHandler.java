@@ -1,7 +1,7 @@
 package ssc_flairbot.league;
 
 import com.merakianalytics.orianna.types.common.Queue;
-import com.merakianalytics.orianna.types.core.league.LeaguePosition;
+import com.merakianalytics.orianna.types.core.league.LeagueEntry;
 import com.merakianalytics.orianna.types.core.league.LeaguePositions;
 import java.util.HashSet;
 import java.util.Objects;
@@ -13,11 +13,12 @@ public class RankHandler {
 
     public String getSummonerHighestRank(LeaguePositions leaguePositions) {
         Set<String> ranks = new HashSet<>();
-        for (LeaguePosition position : leaguePositions) {
+        for (LeagueEntry position : leaguePositions) {
             if (position.getQueue().equals(Queue.RANKED_SOLO_5x5)) {
                 ranks.add(position.getTier() + " " + position.getDivision());
             }
         }
+
         return getHighestRank(ranks);
     }
 

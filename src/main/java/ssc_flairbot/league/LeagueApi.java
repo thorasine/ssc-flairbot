@@ -19,7 +19,7 @@ public class LeagueApi {
 
     @PostConstruct
     private void init() {
-        Orianna.setRiotAPIKey("RGAPI-983cffc4-5cfd-4e91-b053-805c8a840737");
+        Orianna.setRiotAPIKey("RGAPI-b0997214-f26d-4aea-9414-d67f995d5466");
     }
 
     public Summoner getSummoner(User user) {
