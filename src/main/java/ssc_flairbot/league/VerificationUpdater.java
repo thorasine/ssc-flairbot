@@ -23,7 +23,7 @@ public class VerificationUpdater {
     @Scheduled(cron = "0 */5 * * * *")
     public void update() {
         List<User> users = db.getPendingUsers();
-        Logger.getLogger(VerificationUpdater.class.getName()).log(Level.INFO, "Updating session started for " + users.size() + " users.");
+        Logger.getLogger(VerificationUpdater.class.getName()).log(Level.INFO,"Updating session started for " + users.size() + " users.");
         for (User user : users) {
             checkValidationCode(user);
             db.updateUser(user);
@@ -32,6 +32,13 @@ public class VerificationUpdater {
     }
 
     private void checkValidationCode(User user) {
+        //To ensure no 2 people can validate the same account at the same time
+        if(user.getValidated().equalsIgnoreCase("validated")){
+            user.setValidationTries(100);
+            validationFailed(user);
+            return;
+        }
+
         String apiCode = lolApi.getThirdPartyCode(user);
         if (apiCode == null) {
             validationFailed(user);
