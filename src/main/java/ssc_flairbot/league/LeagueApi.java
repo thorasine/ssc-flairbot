@@ -4,6 +4,8 @@ import com.merakianalytics.orianna.Orianna;
 import com.merakianalytics.orianna.types.common.Region;
 import com.merakianalytics.orianna.types.core.league.LeaguePositions;
 import com.merakianalytics.orianna.types.core.summoner.Summoner;
+
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -16,13 +18,18 @@ public class LeagueApi {
 
     @Autowired
     private RankHandler rankHandler;
+    private List<String> availableRegions;
 
     @PostConstruct
     private void init() {
         Orianna.setRiotAPIKey("RGAPI-b0997214-f26d-4aea-9414-d67f995d5466");
+        availableRegions = List.of("NA", "EUW", "EUNE", "BR", "LAN", "LAS", "JP", "KR", "OCE", "RU", "TR");
     }
 
     public Summoner getSummoner(User user) {
+        if(!availableRegions.contains(user.getServer())){
+            return null;
+        }
         Summoner summoner = Summoner.named(user.getSummonerName()).withRegion(regionConvert(user.getServer())).get();
         if (!summoner.exists()) {
             Logger.getLogger(LeagueApi.class.getName()).log(Level.INFO, "Summoner not found for: " + "/u/" + user.getRedditName() + " Summoner: " + user.getSummonerName() + "(" + user.getServer() + ")");
