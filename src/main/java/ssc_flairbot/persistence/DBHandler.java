@@ -3,6 +3,7 @@ package ssc_flairbot.persistence;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -96,7 +97,6 @@ public class DBHandler {
     private String getDate() {
         Date dateRaw = new Date();
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String date = ft.format(dateRaw);
-        return date;
+        return ft.format(dateRaw);
     }
 }
