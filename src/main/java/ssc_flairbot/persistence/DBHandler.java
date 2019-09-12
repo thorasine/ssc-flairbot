@@ -71,7 +71,6 @@ public class DBHandler {
         return userList;
     }
 
-    //Not used
     public List<User> getUsersBySummonerName(String summonerName) {
         String SQL = "SELECT * FROM users WHERE summonerName = ?";
         List<User> userList = database.query(SQL, new Object[]{summonerName}, new UserMapper());

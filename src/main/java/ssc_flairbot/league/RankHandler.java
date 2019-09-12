@@ -22,7 +22,6 @@ public class RankHandler {
         return getHighestRank(ranks);
     }
 
-    //Will use this for the updater too
     public String getHighestRank(Set<String> ranks) {
         String highestTier = "UNRANKED";
         String highestDivision = "IV";

@@ -22,7 +22,7 @@ public class LeagueApi {
 
     @PostConstruct
     private void init() {
-        Orianna.setRiotAPIKey("RGAPI-2bcfd6d4-024b-4559-84a5-1698a2025f51");
+        Orianna.setRiotAPIKey("RGAPI-7bfe3de5-37e4-4f31-b0b9-ed7e271b042b");
         availableRegions = List.of("NA", "EUW", "EUNE", "BR", "LAN", "LAS", "JP", "KR", "OCE", "RU", "TR");
     }
 

@@ -1,13 +1,16 @@
 package ssc_flairbot.league;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
+import ssc_flairbot.reddit.FlairUpdater;
 
 @Component
 public class VerificationUpdater {
@@ -16,29 +19,32 @@ public class VerificationUpdater {
     LeagueApi lolApi;
     @Autowired
     DBHandler db;
+    @Autowired
+    FlairUpdater flairUpdater;
 
     private final int tries = 10;
 
     //Every 5 minutes
-    @Scheduled(cron = "0 */5 * * * *")
+    //@Scheduled(cron = "0 */5 * * * *")
+    @Scheduled(cron = "30 * * * * *")
     public void update() {
         List<User> users = db.getPendingUsers();
-        Logger.getLogger(VerificationUpdater.class.getName()).log(Level.INFO,"Updating session started for " + users.size() + " users.");
+        List<User> verifiedUsers = new ArrayList<>();
+        Logger.getLogger(VerificationUpdater.class.getName()).log(Level.INFO, "Updating verification session started for " + users.size() + " users.");
         for (User user : users) {
             checkValidationCode(user);
             db.updateUser(user);
+            if (user.getValidated().equalsIgnoreCase("validated")) {
+                verifiedUsers.add(user);
+            }
         }
-        Logger.getLogger(VerificationUpdater.class.getName()).log(Level.INFO, "Updating session finished");
+        Logger.getLogger(VerificationUpdater.class.getName()).log(Level.INFO, "Updating has been successfully completed.");
+        if (!verifiedUsers.isEmpty()) {
+            flairUpdater.updateFlairs(verifiedUsers);
+        }
     }
 
     private void checkValidationCode(User user) {
-        //To ensure no 2 people can validate the same account at the same time
-        if(user.getValidated().equalsIgnoreCase("validated")){
-            user.setValidationTries(100);
-            validationFailed(user);
-            return;
-        }
-
         String apiCode = lolApi.getThirdPartyCode(user);
         if (apiCode == null) {
             validationFailed(user);
