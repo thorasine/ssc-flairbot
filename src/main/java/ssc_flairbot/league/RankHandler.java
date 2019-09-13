@@ -1,21 +1,23 @@
 package ssc_flairbot.league;
 
-import com.merakianalytics.orianna.types.common.Queue;
-import com.merakianalytics.orianna.types.core.league.LeagueEntry;
-import com.merakianalytics.orianna.types.core.league.LeaguePositions;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
+import no.stelar7.api.l4j8.basic.constants.types.GameQueueType;
+import no.stelar7.api.l4j8.pojo.league.LeagueEntry;
+
 import org.springframework.stereotype.Component;
 
 @Component
 public class RankHandler {
 
-    public String getSummonerHighestRank(LeaguePositions leaguePositions) {
+    public String getSummonerHighestRank(List<LeagueEntry> leaguePositions) {
         Set<String> ranks = new HashSet<>();
         for (LeagueEntry position : leaguePositions) {
-            if (position.getQueue().equals(Queue.RANKED_SOLO_5x5)) {
-                ranks.add(position.getTier() + " " + position.getDivision());
+            if (position.getQueueType().equals(GameQueueType.RANKED_SOLO_5X5)) {
+                ranks.add(position.getTier() + " " + position.getRank());
             }
         }
 
@@ -46,7 +48,8 @@ public class RankHandler {
     private String rankFormatter(String tier, String division) {
         tier = tier.toLowerCase();
         tier = tier.substring(0, 1).toUpperCase() + tier.substring(1);
-        if (tier.equalsIgnoreCase("Unranked") || tier.equalsIgnoreCase("Master") || tier.equalsIgnoreCase("Challenger")) {
+        if (tier.equalsIgnoreCase("Unranked") || tier.equalsIgnoreCase("Master")
+                || tier.equalsIgnoreCase("Grandmaster") || tier.equalsIgnoreCase("Challenger")) {
             return tier;
         } else {
             return tier + " " + division;

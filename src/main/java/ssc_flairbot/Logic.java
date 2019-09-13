@@ -1,6 +1,5 @@
 package ssc_flairbot;
 
-import com.merakianalytics.orianna.types.core.summoner.Summoner;
 import java.security.Principal;
 import java.util.Comparator;
 import java.util.List;
@@ -8,6 +7,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -39,7 +40,7 @@ public class Logic {
             return "Summoner " + user.getSummonerName() + " (" + user.getServer() + ") does not exists.";
         }
         user.setSummonerName(summoner.getName());
-        user.setSummonerId(summoner.getId());
+        user.setSummonerId(summoner.getSummonerId());
 
         //Check if he have already added this summoner
         if (db.isSummonerAlreadyRegisteredByUser(user)) {
@@ -84,7 +85,7 @@ public class Logic {
         return users;
     }
 
-    public void test(){
+    public void test() {
         flairUpdater.test();
     }
 

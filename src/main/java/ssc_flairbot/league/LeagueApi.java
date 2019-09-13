@@ -1,14 +1,15 @@
 package ssc_flairbot.league;
 
-import com.merakianalytics.orianna.Orianna;
-import com.merakianalytics.orianna.types.common.Region;
-import com.merakianalytics.orianna.types.core.league.LeaguePositions;
-import com.merakianalytics.orianna.types.core.summoner.Summoner;
-
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.impl.L4J8;
+import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
+import no.stelar7.api.l4j8.pojo.league.LeagueEntry;
+import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ssc_flairbot.persistence.User;
@@ -18,11 +19,12 @@ public class LeagueApi {
 
     @Autowired
     private RankHandler rankHandler;
+    private L4J8 api;
     private List<String> availableRegions;
 
     @PostConstruct
     private void init() {
-        Orianna.setRiotAPIKey("RGAPI-37ff8861-8a0a-4f22-98c7-dc1ba72d9d9d");
+        this.api = new L4J8(SecretFile.CREDS);
         availableRegions = List.of("NA", "EUW", "EUNE", "BR", "LAN", "LAS", "JP", "KR", "OCE", "RU", "TR");
     }
 
@@ -30,8 +32,8 @@ public class LeagueApi {
         if(!availableRegions.contains(user.getServer())){
             return null;
         }
-        Summoner summoner = Summoner.named(user.getSummonerName()).withRegion(regionConvert(user.getServer())).get();
-        if (!summoner.exists()) {
+        Summoner summoner  = new SummonerBuilder().withPlatform(platformConvert(user.getServer())).withName(user.getSummonerName()).get();
+        if (summoner == null) {
             Logger.getLogger(LeagueApi.class.getName()).log(Level.INFO, "Summoner not found for: " + "/u/" + user.getRedditName() + " Summoner: " + user.getSummonerName() + "(" + user.getServer() + ")");
             return null;
         }
@@ -39,50 +41,49 @@ public class LeagueApi {
     }
 
     public String getThirdPartyCode(User user) {
-        Summoner summoner = Summoner.withId(user.getSummonerId()).withRegion(regionConvert(user.getServer())).get();
-        String code = summoner.getVerificationString().getString();
+        Summoner summoner  = new SummonerBuilder().withPlatform(platformConvert(user.getServer())).withSummonerId(user.getSummonerId()).get();
+        String code = summoner.getThirdPartyCode();
         if (code == null) {
-            //Logger.getLogger(LeagueApi.class.getName()).log(Level.INFO, "Verification code not found for: " + "/u/" + user.getRedditName() + " Summoner: " + user.getSummonerName() + "(" + user.getServer() + ")");
+            //Logger.getLogger(LeagueApi2.class.getName()).log(Level.INFO, "Verification code not found for: " + "/u/" + user.getRedditName() + " Summoner: " + user.getSummonerName() + "(" + user.getServer() + ")");
         }
         return code;
     }
 
     public String getHighestRank(User user) {
-        Summoner summoner;
-        summoner = Summoner.withId(user.getSummonerId()).withRegion(regionConvert(user.getServer())).get();
-        LeaguePositions leaguePositions = summoner.getLeaguePositions();
-        if (!leaguePositions.exists()) {
+        //Summoner summoner  = new SummonerBuilder().withPlatform(platformConvert(user.getServer())).withSummonerId(user.getSummonerId()).get();
+        List<LeagueEntry> leaguePositions = api.getLeagueAPI().getLeagueEntries(platformConvert(user.getServer()),user.getSummonerId());
+        if (leaguePositions.isEmpty()) {
             return "Unranked";
         }
         return rankHandler.getSummonerHighestRank(leaguePositions);
     }
 
-    private Region regionConvert(String server) {
+    private Platform platformConvert(String server) {
         switch (server) {
             case "NA":
-                return Region.NORTH_AMERICA;
+                return Platform.NA1;
             case "EUW":
-                return Region.EUROPE_WEST;
+                return Platform.EUW1;
             case "EUNE":
-                return Region.EUROPE_NORTH_EAST;
+                return Platform.EUN1;
             case "BR":
-                return Region.BRAZIL;
+                return Platform.BR1;
             case "LAN":
-                return Region.LATIN_AMERICA_NORTH;
+                return Platform.LA1;
             case "LAS":
-                return Region.LATIN_AMERICA_SOUTH;
+                return Platform.LA2;
             case "JP":
-                return Region.JAPAN;
+                return Platform.JP1;
             case "KR":
-                return Region.KOREA;
+                return Platform.KR;
             case "OCE":
-                return Region.OCEANIA;
+                return Platform.OC1;
             case "RU":
-                return Region.RUSSIA;
+                return Platform.RU;
             case "TR":
-                return Region.TURKEY;
+                return Platform.TR1;
             default:
-                return Region.EUROPE_WEST;
+                return Platform.EUW1;
         }
     }
 }

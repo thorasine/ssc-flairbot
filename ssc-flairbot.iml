@@ -71,6 +71,7 @@
     <orderEntry type="library" name="Maven: org.webjars:webjars-locator-core:0.35" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.8.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-compress:1.9" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.7" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.7" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework.boot:spring-boot-starter-test:2.1.1.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework.boot:spring-boot-test:2.1.1.RELEASE" level="project" />
@@ -120,19 +121,9 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:5.1.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.h2database:h2:1.4.197" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.46" level="project" />
-    <orderEntry type="library" name="Maven: com.merakianalytics.orianna:orianna:4.0.0-rc4" level="project" />
-    <orderEntry type="library" name="Maven: com.merakianalytics.datapipelines:datapipelines:1.0.4" level="project" />
-    <orderEntry type="library" name="Maven: es.usc.citius.hipster:hipster-core:1.0.1" level="project" />
-    <orderEntry type="library" name="Maven: com.google.guava:guava:20.0" level="project" />
-    <orderEntry type="library" name="Maven: com.squareup.okhttp3:okhttp:3.13.1" level="project" />
-    <orderEntry type="library" name="Maven: com.squareup.okio:okio:1.17.2" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.7" level="project" />
-    <orderEntry type="library" name="Maven: org.msgpack:jackson-dataformat-msgpack:0.8.16" level="project" />
-    <orderEntry type="library" name="Maven: org.msgpack:msgpack-core:0.8.16" level="project" />
-    <orderEntry type="library" name="Maven: joda-time:joda-time:2.10.1" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-joda:2.9.7" level="project" />
-    <orderEntry type="library" name="Maven: org.cache2k:cache2k-core:1.2.0.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.cache2k:cache2k-api:1.2.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20180813" level="project" />
+    <orderEntry type="library" name="Maven: com.github.stelar7:L4J8:1.6.41" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.5" level="project" />
+    <orderEntry type="library" name="Maven: com.neovisionaries:nv-websocket-client:2.3" level="project" />
   </component>
 </module>

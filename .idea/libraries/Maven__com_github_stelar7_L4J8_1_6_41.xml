@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.github.stelar7:L4J8:1.6.41">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/stelar7/L4J8/1.6.41/L4J8-1.6.41.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/stelar7/L4J8/1.6.41/L4J8-1.6.41-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/stelar7/L4J8/1.6.41/L4J8-1.6.41-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
