@@ -1,10 +1,12 @@
 package ssc_flairbot.reddit;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ssc_flairbot.persistence.User;
 
+import javax.annotation.PostConstruct;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -16,25 +18,41 @@ import java.util.logging.Logger;
 @Component
 public class RedditApi {
 
+    @Autowired
+    private TokenMaker tokenMaker;
+
     private String token;
     private final String subreddit = "myFlairTestSub";
+    //60 request / 1 min >> 60, 60_000
+    private final RateLimiter limiter = new RateLimiter(1, 30_000);
 
-    public void updateToken(String token) {
-        this.token = token;
+    @PostConstruct
+    private void init() {
+        refreshToken();
     }
 
+    //Every 55 minutes
+    @Scheduled(cron = "0 */55 * * * *")
+    private void refreshToken() {
+        this.token = tokenMaker.getToken();
+    }
+
+    //syncronized?
     public void updateFlairs(List<User> users) {
         StringBuffer parameters = new StringBuffer("flair_csv=");
+        //100 lines total, the rest gets ignored by reddit
         for (User user : users) {
             parameters.append(user.getRedditName()).append(",").append(user.getRank()).append(",\n");
         }
         try {
+            limiter.acquire();
+            limiter.enter();
             update(parameters.toString());
         } catch (Exception e) {
             Logger.getLogger(RedditApi.class.getName()).log(Level.WARNING, "Error while updating reddit flairs: " + e.getMessage());
             return;
         }
-        Logger.getLogger(RedditApi.class.getName()).log(Level.INFO, "Updating " + users.size() + " reddit flairs has been successfully completed.");
+        Logger.getLogger(RedditApi.class.getName()).log(Level.INFO, "Updating " + users.size() + " reddit flairs have been successfully completed.");
     }
 
     private void update(String parameters) throws Exception {
@@ -43,12 +61,11 @@ public class RedditApi {
         HttpURLConnection con = (HttpURLConnection) object.openConnection();
         String bearerAuth = "bearer " + token;
         con.setRequestProperty("Authorization", bearerAuth);
+        con.setRequestProperty("User-Agent", "windows:***REMOVED***:0.1 (by /u/Thorasine)");
         con.setDoOutput(true);
         con.setDoInput(true);
         con.setRequestMethod("POST");
-        con.setRequestProperty("User-Agent", "windows:***REMOVED***:0.1 (by /u/Thorasine)");
 
-        //String urlParameters = "flair_csv=Thorasine,Challenger," + "\n" + "Its_Vizicsacsi,Bronze II,";
         byte[] postData = parameters.getBytes(StandardCharsets.UTF_8);
         int postDataLength = postData.length;
         con.setRequestProperty("Content-Length", Integer.toString(postDataLength));
@@ -56,7 +73,6 @@ public class RedditApi {
         try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
             wr.write(postData);
         }
-
         //Reading
         JSONArray results = readResults(con);
     }

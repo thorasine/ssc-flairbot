@@ -2,6 +2,7 @@ package ssc_flairbot.webservice;
 
 import java.security.Principal;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,5 +40,11 @@ public class RestApiController {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String principalName = (String) details.get("name");
         return principalName;
+    }
+
+    @PostMapping("/testFunction")
+    public String test(Principal principal) {
+        logic.test();
+        return "Tested.";
     }
 }

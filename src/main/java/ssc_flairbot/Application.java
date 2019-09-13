@@ -38,15 +38,15 @@ public class Application implements CommandLineRunner {
                 .validationCode("83ERF").validationTries(0).buildUser();
 
         User user4 = new UserBuilder().redditName("Vjostar").summonerName("Vjostar")
-                .summonerId("wWb-WB9G7sMRNTKCjnze7MX84wkIEJhmqe-2JsRwuu_WsEk").server("EUW").rank("Silver III").validated("pending")
+                .summonerId("wWb-WB9G7sMRNTKCjnze7MX84wkIEJhmqe-2JsRwuu_WsEk").server("EUW").rank("Silver III").validated("validated")
                 .validationCode("TEST434").validationTries(0).buildUser();
 
         User user5 = new UserBuilder().redditName("Holo").summonerName("Holó")
-                .summonerId("x4cgEXmZ7veIUcHAE8ma4ktpuaqDtecUVZyCM1zg3WEiTsI").server("EUW").rank("Bronze II").validated("pending")
+                .summonerId("x4cgEXmZ7veIUcHAE8ma4ktpuaqDtecUVZyCM1zg3WEiTsI").server("EUW").rank("Bronze II").validated("validated")
                 .validationCode("TEST12").validationTries(0).buildUser();
 
         User user6 = new UserBuilder().redditName("Oprah").summonerName("Oprah Winfrey")
-                .summonerId("UuWF2fkY0DvBdLZwJvfwxY3LQV8iHPxfCpL8KxaFT9seZ6Y").server("EUW").rank("Bronze I").validated("pending")
+                .summonerId("UuWF2fkY0DvBdLZwJvfwxY3LQV8iHPxfCpL8KxaFT9seZ6Y").server("EUW").rank("Bronze I").validated("validated")
                 .validationCode("83ERF").validationTries(0).buildUser();
 
         db.addUser(user1);

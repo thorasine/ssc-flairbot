@@ -1,12 +1,22 @@
-let log = document.getElementById('log');
+$(function () {
+    $('#testBtn').click(testFunction);
+});
 
-new Noty({
-   type: 'success',
-   layout: 'topRight',
-   theme: 'nest',
-   text: 'Hello, just testing! 🤖',
-   timeout: '4000',
-   progressBar: true,
-   closeWith: ['click'],
-   killer: true,
-}).show();
+function testFunction() {
+    var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+    var csrfToken = $("meta[name='_csrf']").attr("content");
+    var headers = {};
+    headers[csrfHeader] = csrfToken;
+
+    $.ajax({
+        method: "POST",
+        headers: headers,
+        url: "/testFunction",
+        //data: {"id": accountId},
+        success: function (status) {
+            console.log("success: " + JSON.stringify(status));},
+        error: function (status) {
+            console.log("failed: " + JSON.stringify(status));
+        }
+    });
+}
