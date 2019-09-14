@@ -22,8 +22,13 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
-<body>
-<div id="log"></div>
-<btn id="testBtn" class="mr-md-auto ml-1 btn btn-success">Test button 2</btn>
+<body class="text-center">
+<div class="container">
+    <div class="form-signin">
+        <h1 class="h3 mb-3 font-weight-normal">Test page</h1>
+        <btn id="testBtn" class="mr-md-auto ml-1 btn btn-success">Test button 1</btn>
+        <btn id="testBtn2" class="mr-md-auto ml-1 btn btn-success">Test button 2</btn>
+    </div>
+</div>
 </body>
 </html>

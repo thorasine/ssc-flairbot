@@ -47,4 +47,10 @@ public class RestApiController {
         logic.test();
         return "Tested.";
     }
+
+    @PostMapping("/testFunction2")
+    public String test2(Principal principal) {
+        logic.test2();
+        return "Tested.";
+    }
 }

@@ -24,7 +24,8 @@ public class RedditApi {
     private String token;
     private final String subreddit = "myFlairTestSub";
     //60 request / 1 min >> 60, 60_000
-    private final RateLimiter limiter = new RateLimiter(1, 30_000);
+    private final RateLimiter limiter = new RateLimiter(60, 60_000);
+    private final RateLimiter testlimiter = new RateLimiter(1, 60_000);
 
     @PostConstruct
     private void init() {
@@ -35,6 +36,13 @@ public class RedditApi {
     @Scheduled(cron = "0 */55 * * * *")
     private void refreshToken() {
         this.token = tokenMaker.getToken();
+    }
+
+    public void regularUpdateFlairs(){
+        Logger.getLogger(RedditApi.class.getName()).log(Level.INFO, "Limit test started");
+        testlimiter.acquire();
+        testlimiter.enter();
+        Logger.getLogger(RedditApi.class.getName()).log(Level.INFO, "Limit test ended");
     }
 
     //syncronized?

@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
+import no.stelar7.api.l4j8.impl.builders.thirdparty.ThirdPartyCodeBuilder;
 import no.stelar7.api.l4j8.pojo.league.LeagueEntry;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,16 +42,14 @@ public class LeagueApi {
     }
 
     public String getThirdPartyCode(User user) {
-        Summoner summoner  = new SummonerBuilder().withPlatform(platformConvert(user.getServer())).withSummonerId(user.getSummonerId()).get();
-        String code = summoner.getThirdPartyCode();
+        String code = new ThirdPartyCodeBuilder().withPlatform(platformConvert(user.getServer())).withSummonerId(user.getSummonerId()).getCode();
         if (code == null) {
-            //Logger.getLogger(LeagueApi2.class.getName()).log(Level.INFO, "Verification code not found for: " + "/u/" + user.getRedditName() + " Summoner: " + user.getSummonerName() + "(" + user.getServer() + ")");
+            //Logger.getLogger(LeagueApi.class.getName()).log(Level.INFO, "Verification code not found for: " + "/u/" + user.getRedditName() + " Summoner: " + user.getSummonerName() + "(" + user.getServer() + ")");
         }
         return code;
     }
 
     public String getHighestRank(User user) {
-        //Summoner summoner  = new SummonerBuilder().withPlatform(platformConvert(user.getServer())).withSummonerId(user.getSummonerId()).get();
         List<LeagueEntry> leaguePositions = api.getLeagueAPI().getLeagueEntries(platformConvert(user.getServer()),user.getSummonerId());
         if (leaguePositions.isEmpty()) {
             return "Unranked";

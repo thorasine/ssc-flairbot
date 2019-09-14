@@ -26,7 +26,7 @@ public class VerificationUpdater {
 
     //Every 5 minutes
     //@Scheduled(cron = "0 */5 * * * *")
-    @Scheduled(cron = "30 * * * * *")
+    //@Scheduled(cron = "30 * * * * *")
     public void update() {
         List<User> users = db.getPendingUsers();
         List<User> verifiedUsers = new ArrayList<>();
@@ -38,7 +38,7 @@ public class VerificationUpdater {
                 verifiedUsers.add(user);
             }
         }
-        Logger.getLogger(VerificationUpdater.class.getName()).log(Level.INFO, "Updating has been successfully completed.");
+        Logger.getLogger(VerificationUpdater.class.getName()).log(Level.INFO, "Updating verifications have been successfully completed.");
         if (!verifiedUsers.isEmpty()) {
             flairUpdater.updateFlairs(verifiedUsers);
         }

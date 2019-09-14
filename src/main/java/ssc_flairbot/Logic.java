@@ -89,6 +89,10 @@ public class Logic {
         flairUpdater.test();
     }
 
+    public void test2(){
+        flairUpdater.test2();
+    }
+
     private String randomStringGenerator() {
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder salt = new StringBuilder();
