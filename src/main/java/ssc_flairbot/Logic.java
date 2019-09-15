@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import ssc_flairbot.league.LeagueApi;
 import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
-import ssc_flairbot.reddit.FlairUpdater;
+import ssc_flairbot.reddit.FlairHandler;
 
 @Component
 public class Logic {
@@ -26,7 +26,7 @@ public class Logic {
     @Autowired
     LeagueApi lolApi;
     @Autowired
-    FlairUpdater flairUpdater;
+    FlairHandler flairHandler;
 
     public String addUser(User user) {
         //Check if user's summoner is a name
@@ -80,17 +80,17 @@ public class Logic {
     public List<User> getUserAccounts(Principal principal) {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String redditName = (String) details.get("name");
-        List<User> users = db.getUsersByRedditName(redditName);
-        users.sort(Comparator.comparing(User::getId));
-        return users;
+        List<User> accounts = db.getAccountsByRedditName(redditName);
+        accounts.sort(Comparator.comparing(User::getId));
+        return accounts;
     }
 
     public void test() {
-        flairUpdater.test();
+        flairHandler.test();
     }
 
     public void test2(){
-        flairUpdater.test2();
+        flairHandler.test2();
     }
 
     private String randomStringGenerator() {

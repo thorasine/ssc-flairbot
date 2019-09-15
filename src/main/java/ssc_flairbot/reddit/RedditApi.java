@@ -12,6 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,14 +39,29 @@ public class RedditApi {
         this.token = tokenMaker.getToken();
     }
 
-    public void regularUpdateFlairs(){
-        Logger.getLogger(RedditApi.class.getName()).log(Level.INFO, "Limit test started");
+    public void testMethod(){
+        Logger.getLogger(RedditApi.class.getName()).log(Level.INFO, "Started: Limit test.");
         testlimiter.acquire();
         testlimiter.enter();
-        Logger.getLogger(RedditApi.class.getName()).log(Level.INFO, "Limit test ended");
+        Logger.getLogger(RedditApi.class.getName()).log(Level.INFO, "Ended: Limit test.");
     }
 
-    //syncronized?
+    public void updateRankedFlairs(Map<String,String> users) {
+        StringBuffer parameters = new StringBuffer("flair_csv=");
+        for (String redditName : users.keySet()) {
+            parameters.append(redditName).append(",").append(users.get(redditName)).append(",\n");
+        }
+        try {
+            limiter.acquire();
+            limiter.enter();
+            update(parameters.toString());
+        } catch (Exception e) {
+            Logger.getLogger(RedditApi.class.getName()).log(Level.WARNING, "Error while updating reddit flairs: " + e.getMessage());
+            return;
+        }
+        //Logger.getLogger(RedditApi.class.getName()).log(Level.INFO, "Updating " + users.size() + " reddit flairs have been successfully completed.");
+    }
+
     public void updateFlairs(List<User> users) {
         StringBuffer parameters = new StringBuffer("flair_csv=");
         //100 lines total, the rest gets ignored by reddit

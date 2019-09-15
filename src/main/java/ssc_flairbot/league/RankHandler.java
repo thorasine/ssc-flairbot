@@ -29,7 +29,7 @@ public class RankHandler {
         String highestDivision = "IV";
         for (String rank : ranks) {
             String[] splitted = rank.split(" ");
-            String tier = splitted[0];
+            String tier = splitted[0].toUpperCase();
             String division = splitted[1];
 
             if (Tier.valueOf(tier).isAbove(Tier.valueOf(highestTier))) {

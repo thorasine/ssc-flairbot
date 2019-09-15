@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
-import ssc_flairbot.reddit.FlairUpdater;
+import ssc_flairbot.reddit.FlairHandler;
 
 @Component
 public class VerificationUpdater {
@@ -20,13 +20,13 @@ public class VerificationUpdater {
     @Autowired
     DBHandler db;
     @Autowired
-    FlairUpdater flairUpdater;
+    FlairHandler flairHandler;
 
     private final int tries = 10;
 
     //Every 5 minutes
+    @Scheduled(cron = "*/30 * * * * *")
     //@Scheduled(cron = "0 */5 * * * *")
-    //@Scheduled(cron = "30 * * * * *")
     public void update() {
         List<User> users = db.getPendingUsers();
         List<User> verifiedUsers = new ArrayList<>();
@@ -40,7 +40,7 @@ public class VerificationUpdater {
         }
         Logger.getLogger(VerificationUpdater.class.getName()).log(Level.INFO, "Updating verifications have been successfully completed.");
         if (!verifiedUsers.isEmpty()) {
-            flairUpdater.updateFlairs(verifiedUsers);
+            flairHandler.updateRankFlairs(verifiedUsers);
         }
     }
 

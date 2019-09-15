@@ -1,11 +1,14 @@
 package ssc_flairbot.persistence;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -37,6 +40,22 @@ public class DBHandler {
         database.update(SQL, id);
     }
 
+    public int[] batchUpdateUsersRank(List<User> users) {
+        int[] updateCounts = database.batchUpdate(
+                "UPDATE users SET rank = ? WHERE id = ?",
+                new BatchPreparedStatementSetter() {
+                    public void setValues(PreparedStatement ps, int i) throws SQLException {
+                        ps.setString(1, users.get(i).getRank());
+                        ps.setString(2, String.valueOf(users.get(i).getId()));
+                    }
+
+                    public int getBatchSize() {
+                        return users.size();
+                    }
+                } );
+        return updateCounts;
+    }
+
     public void updateUser(User user) {
         String SQL = "UPDATE users SET redditName = ?, summonerName = ?, "
                 + "summonerId = ?, server = ?, rank = ?, validated = ?, validationCode = ?, "
@@ -65,10 +84,16 @@ public class DBHandler {
         return count > 0;
     }
 
-    public List<User> getUsersByRedditName(String redditName) {
+    public List<User> getValidatedAccountsByRedditName(String redditName) {
+        String SQL = "SELECT * FROM users WHERE redditName = ? AND validated = 'validated'";
+        List<User> accountList = database.query(SQL, new Object[]{redditName}, new UserMapper());
+        return accountList;
+    }
+
+    public List<User> getAccountsByRedditName(String redditName) {
         String SQL = "SELECT * FROM users WHERE redditName = ?";
-        List<User> userList = database.query(SQL, new Object[]{redditName}, new UserMapper());
-        return userList;
+        List<User> accountList = database.query(SQL, new Object[]{redditName}, new UserMapper());
+        return accountList;
     }
 
     public List<User> getUsersBySummonerName(String summonerName) {
