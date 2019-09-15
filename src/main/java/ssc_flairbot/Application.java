@@ -14,7 +14,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class Application implements CommandLineRunner {
 
     @Autowired
-    private DBHandler db;
+    private DBHandler database;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -22,8 +22,8 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... strings) {
-        db.dropTable();
-        db.createTable();
+        database.dropTable();
+        database.createTable();
 
         User user1 = new UserBuilder().redditName("Thorasine").summonerName("Trefort")
                 .summonerId("8kFIUtL2QHnAKmyI485jY7bWifUk6poPC1KQehEbjtr6zCc").server("EUW").rank("Diamond I").validated("validated")
@@ -34,7 +34,7 @@ public class Application implements CommandLineRunner {
                 .validationCode("83ITES").validationTries(0).buildUser();
 
         User user3 = new UserBuilder().redditName("Thorasine").summonerName("SecretSmurf")
-                .summonerId("dDsBSlaEk34758KbRuwTnydTNaC1nZQZ5kGOwboGfbb-Zz4").server("NA").rank("Challenger").validated("failed")
+                .summonerId("dDsBSlaEk34758KbRuwTnydTNaC1nZQZ5kGOwboGfbb-Zz4").server("NA").rank("Challenger I").validated("validated")
                 .validationCode("TEST754").validationTries(0).buildUser();
 
         User user4 = new UserBuilder().redditName("Vjostar").summonerName("Vjostar")
@@ -49,11 +49,11 @@ public class Application implements CommandLineRunner {
                 .summonerId("O06SyEvi6NVHMbIuisc_iAKh1g82vAEk6jvzzca25pov8oE").server("EUW").rank("Bronze I").validated("validated")
                 .validationCode("TEST239").validationTries(0).buildUser();
 
-        db.addUser(user1);
-        db.addUser(user2);
-        db.addUser(user3);
-        db.addUser(user4);
-        db.addUser(user5);
-        db.addUser(user6);
+        database.addUser(user1);
+        database.addUser(user2);
+        database.addUser(user3);
+        database.addUser(user4);
+        database.addUser(user5);
+        database.addUser(user6);
     }
 }

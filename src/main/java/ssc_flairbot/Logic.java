@@ -22,11 +22,13 @@ import ssc_flairbot.reddit.FlairHandler;
 public class Logic {
 
     @Autowired
-    DBHandler db;
+    DBHandler database;
     @Autowired
     LeagueApi lolApi;
     @Autowired
     FlairHandler flairHandler;
+    @Autowired
+    jobUpdate jobUpdate;
 
     public String addUser(User user) {
         //Check if user's summoner is a name
@@ -43,11 +45,11 @@ public class Logic {
         user.setSummonerId(summoner.getSummonerId());
 
         //Check if he have already added this summoner
-        if (db.isSummonerAlreadyRegisteredByUser(user)) {
+        if (database.isSummonerAlreadyRegisteredByUser(user)) {
             return "You have already registered this account.";
         }
         //Check if validated one already exists
-        if (db.isSummonerAlreadyValidatedBySomeone(user)) {
+        if (database.isSummonerAlreadyValidatedBySomeone(user)) {
             return "Summoner is already validated by someone else.";
         }
 
@@ -56,7 +58,7 @@ public class Logic {
         user.setValidated("pending");
         user.setValidationTries(0);
         user.setRank(lolApi.getHighestRank(user));
-        db.addUser(user);
+        database.addUser(user);
         Logger.getLogger(Logic.class.getName()).log(Level.INFO, "Created user: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ") " + "Highest rank: " + user.getRank());
         return "ok";
     }
@@ -64,7 +66,7 @@ public class Logic {
     public String deleteUser(String redditName, Long id) {
         User user;
         try {
-            user = db.getUserById(id);
+            user = database.getUserById(id);
         } catch (EmptyResultDataAccessException ex) {
             return "The account you tried to delete doesn't exists.";
         }
@@ -72,7 +74,7 @@ public class Logic {
         if (!redditName.equals(user.getRedditName())) {
             return "The account you tried to delete is not yours!";
         }
-        db.deleteUser(id);
+        database.deleteUser(id);
         Logger.getLogger(Logic.class.getName()).log(Level.INFO, "Deleted user: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ")");
         return "ok";
     }
@@ -80,13 +82,14 @@ public class Logic {
     public List<User> getUserAccounts(Principal principal) {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String redditName = (String) details.get("name");
-        List<User> accounts = db.getAccountsByRedditName(redditName);
+        List<User> accounts = database.getAccountsByRedditName(redditName);
         accounts.sort(Comparator.comparing(User::getId));
         return accounts;
     }
 
     public void test() {
-        flairHandler.test();
+        //flairHandler.test();
+        jobUpdate.scheduledUpdate();
     }
 
     public void test2(){

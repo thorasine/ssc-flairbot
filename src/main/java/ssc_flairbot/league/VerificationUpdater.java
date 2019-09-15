@@ -18,29 +18,29 @@ public class VerificationUpdater {
     @Autowired
     LeagueApi lolApi;
     @Autowired
-    DBHandler db;
+    DBHandler database;
     @Autowired
     FlairHandler flairHandler;
 
-    private final int tries = 10;
+    private final int triesUntilFail = 10;
 
     //Every 5 minutes
     @Scheduled(cron = "*/30 * * * * *")
     //@Scheduled(cron = "0 */5 * * * *")
     public void update() {
-        List<User> users = db.getPendingUsers();
+        List<User> users = database.getPendingUsers();
         List<User> verifiedUsers = new ArrayList<>();
-        Logger.getLogger(VerificationUpdater.class.getName()).log(Level.INFO, "Updating verification session started for " + users.size() + " users.");
+        Logger.getLogger(VerificationUpdater.class.getName()).log(Level.INFO, "Started: Updating verification session for " + users.size() + " users.");
         for (User user : users) {
             checkValidationCode(user);
-            db.updateUser(user);
+            database.updateUser(user);
             if (user.getValidated().equalsIgnoreCase("validated")) {
                 verifiedUsers.add(user);
             }
         }
-        Logger.getLogger(VerificationUpdater.class.getName()).log(Level.INFO, "Updating verifications have been successfully completed.");
+        Logger.getLogger(VerificationUpdater.class.getName()).log(Level.INFO, "Ended: Updating verifications have been successfully completed.");
         if (!verifiedUsers.isEmpty()) {
-            flairHandler.updateRankFlairs(verifiedUsers);
+            flairHandler.updateFlairs(verifiedUsers);
         }
     }
 
@@ -59,7 +59,7 @@ public class VerificationUpdater {
 
     private void validationFailed(User user) {
         user.setValidationTries(user.getValidationTries() + 1);
-        if (user.getValidationTries() > tries) {
+        if (user.getValidationTries() > triesUntilFail) {
             user.setValidated("failed");
         }
     }

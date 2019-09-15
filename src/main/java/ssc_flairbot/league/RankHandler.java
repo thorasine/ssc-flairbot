@@ -30,6 +30,7 @@ public class RankHandler {
         for (String rank : ranks) {
             String[] splitted = rank.split(" ");
             String tier = splitted[0].toUpperCase();
+            if(tier.equalsIgnoreCase("UNRANKED")) continue;
             String division = splitted[1];
 
             if (Tier.valueOf(tier).isAbove(Tier.valueOf(highestTier))) {
@@ -48,8 +49,7 @@ public class RankHandler {
     private String rankFormatter(String tier, String division) {
         tier = tier.toLowerCase();
         tier = tier.substring(0, 1).toUpperCase() + tier.substring(1);
-        if (tier.equalsIgnoreCase("Unranked") || tier.equalsIgnoreCase("Master")
-                || tier.equalsIgnoreCase("Grandmaster") || tier.equalsIgnoreCase("Challenger")) {
+        if (tier.equalsIgnoreCase("Unranked")) {
             return tier;
         } else {
             return tier + " " + division;

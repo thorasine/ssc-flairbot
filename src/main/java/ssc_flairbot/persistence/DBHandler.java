@@ -8,7 +8,6 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -82,6 +81,12 @@ public class DBHandler {
         String SQL = "SELECT count(*) FROM users WHERE summonerName = ? AND server = ? AND redditName = ?";
         int count = database.queryForObject(SQL, new Object[]{user.getSummonerName(), user.getServer(), user.getRedditName()}, Integer.class);
         return count > 0;
+    }
+
+    public List<User> getValidatedAccountsByServer(String server){
+        String SQL = "SELECT * FROM users WHERE server = ? AND validated = 'validated'";
+        List<User> accountList = database.query(SQL, new Object[]{server}, new UserMapper());
+        return accountList;
     }
 
     public List<User> getValidatedAccountsByRedditName(String redditName) {

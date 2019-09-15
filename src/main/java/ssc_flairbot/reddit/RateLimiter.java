@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 public class RateLimiter {
 
-    private final LinkedList<Long> list = new LinkedList<Long>();
+    private final LinkedList<Long> list = new LinkedList<>();
 
     private final int amount;
     private final int timespan;
