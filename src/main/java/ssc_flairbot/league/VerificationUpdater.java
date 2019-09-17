@@ -24,9 +24,8 @@ public class VerificationUpdater {
 
     private final int triesUntilFail = 10;
 
-    //Every 5 minutes
-    @Scheduled(cron = "*/30 * * * * *")
-    //@Scheduled(cron = "0 */5 * * * *")
+    //@Scheduled(cron = "*/30 * * * * *")
+    @Scheduled(cron = "0 */5 * * * *")
     public void update() {
         List<User> users = database.getPendingUsers();
         List<User> verifiedUsers = new ArrayList<>();
