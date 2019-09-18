@@ -7,3 +7,5 @@
 .idea/libraries/Maven__org_springframework_security_oauth_spring_security_oauth2_2_3_5_RELEASE.xml
 .idea/workspace.xml
 l4j8cache/
+/src/main/resources/application.properties
+/src/main/resources/application.yml
