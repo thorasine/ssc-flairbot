@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import ssc_flairbot.SecretFile;
 import ssc_flairbot.persistence.User;
 
 import javax.annotation.PostConstruct;
@@ -23,7 +24,7 @@ public class RedditApi {
     private TokenMaker tokenMaker;
 
     private String token;
-    private final String subreddit = "myFlairTestSub";
+    private final String subreddit = SecretFile.SUBREDDIT;
     private final RateLimiter limiter = new RateLimiter(60, 60_000);
     private final RateLimiter testlimiter = new RateLimiter(1, 60_000);
 

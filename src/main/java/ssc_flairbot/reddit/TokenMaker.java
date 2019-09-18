@@ -2,6 +2,7 @@ package ssc_flairbot.reddit;
 
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
+import ssc_flairbot.SecretFile;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -14,7 +15,7 @@ import java.util.logging.Logger;
 @Component
 public class TokenMaker {
 
-    private final String refreshToken = "***REMOVED***";
+    private final String refreshToken = SecretFile.REDDIT_REFRESH_TOKEN;
 
     public String getToken(){
         String token = null;

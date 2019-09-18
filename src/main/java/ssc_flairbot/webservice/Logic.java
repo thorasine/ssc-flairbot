@@ -88,7 +88,6 @@ public class Logic {
     }
 
     public void test() {
-        //flairHandler.test();
         jobUpdate.scheduledUpdate();
     }
 
