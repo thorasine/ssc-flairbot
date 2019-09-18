@@ -13,6 +13,7 @@ import no.stelar7.api.l4j8.pojo.league.LeagueEntry;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ssc_flairbot.SecretFile;
 import ssc_flairbot.persistence.User;
 
 @Component
