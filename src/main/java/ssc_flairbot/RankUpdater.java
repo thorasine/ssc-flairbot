@@ -1,7 +1,8 @@
-package ssc_flairbot.league;
+package ssc_flairbot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ssc_flairbot.league.LeagueApi;
 import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
 import ssc_flairbot.reddit.FlairHandler;

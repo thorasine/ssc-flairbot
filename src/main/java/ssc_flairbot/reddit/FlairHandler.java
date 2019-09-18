@@ -30,14 +30,8 @@ public class FlairHandler {
         for(List<User> chunk : lists) {
             Map<String, String> flairMap = new HashMap<>();
             for (User user : chunk) {
-                List<User> accounts = new ArrayList<>();
-                Set<String> ranks = new HashSet<>();
-                accounts = database.getValidatedAccountsByRedditName(user.getRedditName());
-                for (User account : accounts) {
-                    ranks.add(account.getRank());
-                }
-                String rank = rankHandler.getHighestRank(ranks);
-                if(!rank.equalsIgnoreCase("Unranked")){
+                String rank = getRedditHighestRank(user);
+                if(getRedditHighestRank(user) != null){
                     flairMap.put(user.getRedditName(), rank);
                 }
             }
@@ -46,13 +40,17 @@ public class FlairHandler {
         //Logger.getLogger(FlairHandler.class.getName()).log(Level.INFO, "Finished: Updating flairs for " + users.size() + " users.");
     }
 
-    public void updateFlairsOld(List<User> users) {
-        if (users.isEmpty()) return;
-        Logger.getLogger(FlairHandler.class.getName()).log(Level.INFO, "Started: Updating flairs for " + users.size() + " users.");
-        List<List<User> > lists = Lists.partition(users, 100);
-        for(List<User> chunk : lists){
-            redditApi.updateFlairs(chunk);
+    private String getRedditHighestRank(User user){
+        Set<String> ranks = new HashSet<>();
+        List<User> accounts = database.getValidatedAccountsByRedditName(user.getRedditName());
+        for (User account : accounts) {
+            ranks.add(account.getRank());
         }
+        String rank = rankHandler.getHighestRank(ranks);
+        if(!rank.equalsIgnoreCase("Unranked")){
+            return rank;
+        }
+        return null;
     }
 
     public void test() {

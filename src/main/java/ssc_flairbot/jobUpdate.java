@@ -6,11 +6,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import ssc_flairbot.league.LeagueApi;
-import ssc_flairbot.league.RankUpdater;
 import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
-import ssc_flairbot.reddit.FlairHandler;
 import ssc_flairbot.reddit.RateLimiter;
 
 import javax.annotation.PostConstruct;
@@ -24,10 +21,6 @@ import java.util.logging.Logger;
 public class jobUpdate {
     @Autowired
     DBHandler db;
-    @Autowired
-    LeagueApi lolApi;
-    @Autowired
-    FlairHandler flairHandler;
     @Autowired
     RankUpdater rankUpdater;
 
@@ -57,7 +50,7 @@ public class jobUpdate {
     @Scheduled(cron = "0 0 */6 * * *")
     public void scheduledUpdate() {
         Logger.getLogger(jobUpdate.class.getName()).log(Level.INFO, "Started: Updating database.");
-        for(int i = 0; i < servers.size(); i++){
+        for (int i = 0; i < servers.size(); i++) {
             taskExecutor.execute(new UpdateTask(servers.get(i), limiters.get(i), globalLimiter));
         }
     }
