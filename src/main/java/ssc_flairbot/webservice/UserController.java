@@ -14,7 +14,7 @@ public class UserController {
     @Autowired
     private Logic logic;
     
-    @RequestMapping("/test")
+    @RequestMapping("/src/main/test")
     public String test(){
         return "test";
     }

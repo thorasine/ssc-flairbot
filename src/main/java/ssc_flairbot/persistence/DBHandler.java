@@ -16,11 +16,6 @@ public class DBHandler {
     @Autowired
     JdbcTemplate database;
 
-    public void updateVerification(User user) {
-        String SQL = "UPDATE users SET validated = ?, validationTries = ? WHERE id = ?";
-        database.update(SQL, user.getValidated(), user.getValidationTries(), user.getId());
-    }
-
     public List<User> getPendingUsers() {
         String SQL = "SELECT * FROM users WHERE validated = 'pending'";
         List<User> userList = database.query(SQL, new Object[]{}, new UserMapper());
@@ -99,12 +94,6 @@ public class DBHandler {
         String SQL = "SELECT * FROM users WHERE redditName = ?";
         List<User> accountList = database.query(SQL, new Object[]{redditName}, new UserMapper());
         return accountList;
-    }
-
-    public List<User> getUsersBySummonerName(String summonerName) {
-        String SQL = "SELECT * FROM users WHERE summonerName = ?";
-        List<User> userList = database.query(SQL, new Object[]{summonerName}, new UserMapper());
-        return userList;
     }
 
     public List<User> getAllUsers() {
