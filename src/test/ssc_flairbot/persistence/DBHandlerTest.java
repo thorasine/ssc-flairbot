@@ -12,8 +12,8 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-@RunWith(SpringRunner.class)
 @JdbcTest
+@RunWith(SpringRunner.class)
 @ComponentScan
 public class DBHandlerTest {
 
