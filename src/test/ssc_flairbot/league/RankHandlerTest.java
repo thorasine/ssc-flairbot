@@ -5,7 +5,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Repository;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashSet;
