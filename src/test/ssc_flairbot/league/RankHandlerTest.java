@@ -3,8 +3,7 @@ package ssc_flairbot.league;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashSet;
@@ -13,8 +12,7 @@ import java.util.Set;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
-@ComponentScan
-@ImportAutoConfiguration
+@ContextConfiguration(classes = {RankHandler.class})
 public class RankHandlerTest {
 
     @Autowired

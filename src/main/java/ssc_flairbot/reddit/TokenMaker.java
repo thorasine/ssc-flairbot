@@ -22,7 +22,7 @@ public class TokenMaker {
         try {
             token = refreshToken();
         } catch (Exception e) {
-            Logger.getLogger(TokenMaker.class.getName()).log(Level.WARNING,"Error refreshing reddit token: " + e.getMessage());
+            Logger.getLogger(TokenMaker.class.getName()).log(Level.SEVERE,"Error refreshing reddit token: " + e.getMessage());
         }
         Logger.getLogger(TokenMaker.class.getName()).log(Level.INFO,"Refreshed reddit token successfully.");
         return token;

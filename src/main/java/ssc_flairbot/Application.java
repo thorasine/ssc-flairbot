@@ -24,7 +24,7 @@ public class Application implements CommandLineRunner {
     public void run(String... strings) {
         database.dropTable();
         database.createTable();
-/*
+
         User user1 = new UserBuilder().redditName("Thorasine").summonerName("Trefort")
                 .summonerId("8kFIUtL2QHnAKmyI485jY7bWifUk6poPC1KQehEbjtr6zCc").server("EUW").rank("Diamond I").validated("validated")
                 .validationCode("83ERFK").validationTries(0).buildUser();
@@ -55,6 +55,5 @@ public class Application implements CommandLineRunner {
         database.addUser(user4);
         database.addUser(user5);
         database.addUser(user6);
-        */
     }
 }

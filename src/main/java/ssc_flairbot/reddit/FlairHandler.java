@@ -25,7 +25,7 @@ public class FlairHandler {
 
     public void updateFlairs(List<User> users){
         if (users.isEmpty()) return;
-        //Logger.getLogger(FlairHandler.class.getName()).log(Level.INFO, "Started: Updating flairs for " + users.size() + " users.");
+        Logger.getLogger(FlairHandler.class.getName()).log(Level.FINE, "Started: Updating flairs for " + users.size() + " users.");
         List<List<User> > lists = Lists.partition(users, 100);
         for(List<User> chunk : lists) {
             Map<String, String> flairMap = new HashMap<>();
@@ -37,7 +37,7 @@ public class FlairHandler {
             }
             redditApi.updateRankedFlairs(flairMap);
         }
-        //Logger.getLogger(FlairHandler.class.getName()).log(Level.INFO, "Finished: Updating flairs for " + users.size() + " users.");
+        Logger.getLogger(FlairHandler.class.getName()).log(Level.FINE, "Finished: Updating flairs for " + users.size() + " users.");
     }
 
     private String getRedditHighestRank(User user){
@@ -54,8 +54,6 @@ public class FlairHandler {
     }
 
     public void test() {
-        redditApi.testMethod();
-        redditApi.testMethod();
 
     }
 

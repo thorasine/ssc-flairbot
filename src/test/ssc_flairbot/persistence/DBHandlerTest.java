@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import static org.junit.Assert.*;
 
 @JdbcTest
 @RunWith(SpringRunner.class)
-@ComponentScan
+@ContextConfiguration(classes = {DBHandler.class})
 public class DBHandlerTest {
 
     @Autowired
@@ -25,6 +26,8 @@ public class DBHandlerTest {
 
     @Before
     public void setUp() {
+        database.dropTable();
+        database.createTable();
         user1 = new UserBuilder().redditName("Thorasine").summonerName("Trefort")
                 .summonerId("8kFIUtL2QHnAKmyI485jY7bWifUk6poPC1KQehEbjtr6zCc").server("EUW").rank("Diamond I").validated("validated")
                 .validationCode("83ERFK").validationTries(0).buildUser();

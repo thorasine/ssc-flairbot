@@ -36,11 +36,12 @@ public class DBHandler {
 
     public int[] batchUpdateUsersRank(List<User> users) {
         int[] updateCounts = database.batchUpdate(
-                "UPDATE users SET rank = ? WHERE id = ?",
+                "UPDATE users SET rank = ?, updateDate = ? WHERE id = ?",
                 new BatchPreparedStatementSetter() {
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
                         ps.setString(1, users.get(i).getRank());
-                        ps.setString(2, String.valueOf(users.get(i).getId()));
+                        ps.setString(2, getDate());
+                        ps.setString(3, String.valueOf(users.get(i).getId()));
                     }
 
                     public int getBatchSize() {

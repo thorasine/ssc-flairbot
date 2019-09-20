@@ -1,13 +1,11 @@
 package ssc_flairbot.league;
 
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
-import org.checkerframework.checker.nullness.qual.AssertNonNullIfNonNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import ssc_flairbot.persistence.User;
 import ssc_flairbot.persistence.UserBuilder;
@@ -15,8 +13,7 @@ import ssc_flairbot.persistence.UserBuilder;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
-@ComponentScan
-@ImportAutoConfiguration
+@ContextConfiguration(classes = {LeagueApi.class, RankHandler.class})
 public class LeagueApiTest {
 
     @Autowired

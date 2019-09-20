@@ -45,7 +45,7 @@ public class LeagueApi {
     public String getThirdPartyCode(User user) {
         String code = new ThirdPartyCodeBuilder().withPlatform(platformConvert(user.getServer())).withSummonerId(user.getSummonerId()).getCode();
         if (code == null) {
-            //Logger.getLogger(LeagueApi.class.getName()).log(Level.INFO, "Verification code not found for: " + "/u/" + user.getRedditName() + " Summoner: " + user.getSummonerName() + "(" + user.getServer() + ")");
+            Logger.getLogger(LeagueApi.class.getName()).log(Level.FINE, "Verification code not found for: " + "/u/" + user.getRedditName() + " Summoner: " + user.getSummonerName() + "(" + user.getServer() + ")");
         }
         return code;
     }
