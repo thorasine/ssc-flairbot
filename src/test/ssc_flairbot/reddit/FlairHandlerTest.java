@@ -23,29 +23,55 @@ import static org.junit.Assert.*;
 public class FlairHandlerTest {
 
     @Autowired
-    private RedditApi redditApi;
+    private FlairHandler flairHandler;
     @Autowired
     private DBHandler database;
 
+    private User user1;
+    private User user2;
+    private User user3;
+    private User user4;
+    private List<User> users = new ArrayList<>();;
 
     @Before
     public void setUp() {
+        database.dropTable();
+        database.createTable();
+        user1 = new UserBuilder().redditName("Thorasine").summonerName("Trefort").rank("Iron II").validated("validated").buildUser();
+        user2 = new UserBuilder().redditName("Thorasine").summonerName("Thorasine").rank("Grandmaster I").validated("validated").buildUser();
+        user3 = new UserBuilder().redditName("Its_Vizicsacsi").summonerName("Vizicsacsi").rank("Gold II").validated("validated").buildUser();
+        user4 = new UserBuilder().redditName("Its_Vizicsacsi").summonerName("Betteraccount").rank("Diamond III").validated("pending").buildUser();
+        database.addUser(user1);
+        database.addUser(user2);
+        database.addUser(user3);
+        database.addUser(user4);
+        List<User> allUsers = database.getAllUsers();
+        user1 = database.getUserById(allUsers.get(0).getId());
+        user2 = database.getUserById(allUsers.get(1).getId());
+        user3 = database.getUserById(allUsers.get(2).getId());
+        user4 = database.getUserById(allUsers.get(3).getId());
+    }
+
+    //Can't really test these automatically without writing a method for retriving users flair from reddit
+    @Test
+    public void onlyCompareValidatedAccounts() {
+        users.add(user1);
+        users.add(user2);
+        users.add(user3);
+        users.add(user4);
+        flairHandler.updateFlairs(users);
     }
 
     @Test
-    public void updateFlairs() {
-
-    }
-
-    @Test
-    public void properChunking(){
-        List<User> users = new ArrayList<>();
-        User user1 = new UserBuilder().redditName("Thorasine").rank("Iron IV").buildUser();
-        User user2 = new UserBuilder().redditName("Its_Vizicsacsi").rank("Silver IV").validated("validated").buildUser();
-        for(int i = 0; i < 2001; i++){
+    public void properlyPartitioned(){
+        user1.setRank("Challenger I");
+        user3.setRank("Platinum IV");
+        database.updateUser(user1);
+        database.updateUser(user3);
+        for(int i = 0; i < 100; i++){
             users.add(user1);
         }
-        users.add(user2);
-        //updateFlairs(users);
+        users.add(user3);
+        flairHandler.updateFlairs(users);
     }
 }

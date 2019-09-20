@@ -36,6 +36,7 @@ public class RedditApi {
         this.token = tokenMaker.getToken();
     }
 
+    //max 100 users at a time
     public String updateRankedFlairs(Map<String, String> users) {
         String response = null;
         StringBuilder parameters = new StringBuilder("flair_csv=");
@@ -46,6 +47,9 @@ public class RedditApi {
             limiter.acquire();
             limiter.enter();
             response = update(parameters.toString());
+            if(!response.equalsIgnoreCase("ok")){
+                Logger.getLogger(RedditApi.class.getName()).log(Level.WARNING, "Some user flairs are failed to update:\n" + response);
+            }
         } catch (Exception e) {
             Logger.getLogger(RedditApi.class.getName()).log(Level.SEVERE, "Error while updating reddit flairs: " + e.getMessage());
             return e.getMessage();

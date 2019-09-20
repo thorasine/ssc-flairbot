@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -36,6 +35,9 @@ public class DBHandlerTest {
                 .validationCode("83ITES").validationTries(0).buildUser();
         database.addUser(user1);
         database.addUser(user2);
+        List<User> allUsers = database.getAllUsers();
+        user1 = database.getUserById(allUsers.get(0).getId());
+        user2 = database.getUserById(allUsers.get(1).getId());
     }
 
     @Test
@@ -51,8 +53,7 @@ public class DBHandlerTest {
 
     @Test
     public void getUserById() {
-        List<User> users = database.getAllUsers();
-        User user = database.getUserById(users.get(0).getId());
+        User user = database.getUserById(user1.getId());
         assertEquals("Reddit name is not Thorasine.", user.getRedditName(), "Thorasine");
         assertEquals("Summoner name is not Trefort.", user.getSummonerName(), "Trefort");
     }
@@ -66,20 +67,18 @@ public class DBHandlerTest {
 
     @Test
     public void deleteUser() {
-        List<User> users = database.getAllUsers();
-        database.deleteUser(users.get(0).getId());
+        database.deleteUser(user1.getId());
         assertEquals("Database size is not 1.", database.getAllUsers().size(), 1);
-        users = database.getAllUsers();
+        List<User> users = database.getAllUsers();
         assertEquals("Wrong account got deleted.", users.get(0).getSummonerName(), "Oreena");
     }
 
     @Test
     public void updateUser() {
-        List<User> users = database.getAllUsers();
-        User userTest1 = users.get(0);
-        userTest1.setServer("NA");
-        database.updateUser(userTest1);
-        assertEquals("Users updated server is not NA", database.getUserById(userTest1.getId()).getServer(), "NA");
+        User user = database.getUserById(user1.getId());
+        user.setServer("NA");
+        database.updateUser(user);
+        assertEquals("Users updated server is not NA", database.getUserById(user.getId()).getServer(), "NA");
     }
 
     @Test

@@ -52,21 +52,4 @@ public class FlairHandler {
         }
         return null;
     }
-
-    public void test() {
-
-    }
-
-    public void test2(){
-        List<User> users = new ArrayList<>();
-        User user1 = new UserBuilder().redditName("Thorasine").rank("Iron IV").buildUser();
-        User user2 = new UserBuilder().redditName("Its_Vizicsacsi").rank("Silver IV").validated("validated").buildUser();
-        database.addUser(user2);
-        for(int i = 0; i < 2001; i++){
-            users.add(user1);
-        }
-        users.add(user2);
-        updateFlairs(users);
-    }
-
 }

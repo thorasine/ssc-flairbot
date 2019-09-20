@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Component
-public class jobUpdate {
+public class JobUpdate {
     @Autowired
     DBHandler db;
     @Autowired
@@ -49,7 +49,7 @@ public class jobUpdate {
 
     @Scheduled(cron = "0 0 */6 * * *")
     public void scheduledUpdate() {
-        Logger.getLogger(jobUpdate.class.getName()).log(Level.INFO, "Started: Updating database.");
+        Logger.getLogger(JobUpdate.class.getName()).log(Level.INFO, "Started: Updating database.");
         for (int i = 0; i < servers.size(); i++) {
             taskExecutor.execute(new UpdateTask(servers.get(i), limiters.get(i), globalLimiter));
         }
@@ -70,12 +70,12 @@ public class jobUpdate {
         public void run() {
             List<User> accounts = db.getValidatedAccountsByServer(server);
             if (accounts.size() == 0) return;
-            Logger.getLogger(jobUpdate.class.getName()).log(Level.INFO, "Started: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
+            Logger.getLogger(JobUpdate.class.getName()).log(Level.INFO, "Started: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
             List<List<User>> lists = Lists.partition(accounts, 100);
             for (List<User> chunk : lists) {
                 rankUpdater.update(chunk, limiter, globalLimiter);
             }
-            Logger.getLogger(jobUpdate.class.getName()).log(Level.INFO, "Finished: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
+            Logger.getLogger(JobUpdate.class.getName()).log(Level.INFO, "Finished: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
         }
 
     }

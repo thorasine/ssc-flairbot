@@ -27,9 +27,9 @@ public class RedditApiTest {
     }
 
     @Test
-    public void badUpdateRankedFlairs() {
+    public void updateNonExistingAccount() {
         Map<String,String> flairs = new HashMap<>();
-        flairs.put("Thorasineeeeeee32453", "Challenger I");
+        flairs.put("ThorasineNonExistingAccount", "Challenger I");
         assertNotEquals("Flair update not failed.", "ok", redditApi.updateRankedFlairs(flairs));
     }
 }
