@@ -11,7 +11,7 @@ import ssc_flairbot.reddit.RateLimiter;
 import java.util.List;
 
 @Component
-public class RankUpdater {
+public class RankUpdateTask {
 
     @Autowired
     LeagueApi lolApi;

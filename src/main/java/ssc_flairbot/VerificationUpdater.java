@@ -6,7 +6,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ssc_flairbot.league.LeagueApi;
 import ssc_flairbot.persistence.DBHandler;
@@ -25,8 +24,7 @@ public class VerificationUpdater {
 
     private final int triesUntilFail = 10;
 
-    @Scheduled(cron = "0 */5 * * * *")
-    public void update() {
+    public void scheduledUpdate() {
         List<User> users = database.getPendingUsers();
         List<User> verifiedUsers = new ArrayList<>();
         Logger.getLogger(VerificationUpdater.class.getName()).log(Level.INFO, "Started: Updating verification session for " + users.size() + " users.");

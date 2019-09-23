@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.task.TaskExecutor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
@@ -18,11 +17,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Component
-public class JobUpdate {
+public class AccountUpdater {
     @Autowired
     DBHandler db;
     @Autowired
-    RankUpdater rankUpdater;
+    RankUpdateTask rankUpdateTask;
 
     @Qualifier("applicationTaskExecutor")
     @Autowired
@@ -47,9 +46,8 @@ public class JobUpdate {
 
     }
 
-    @Scheduled(cron = "0 0 */6 * * *")
     public void scheduledUpdate() {
-        Logger.getLogger(JobUpdate.class.getName()).log(Level.INFO, "Started: Updating database.");
+        Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Started: Updating database.");
         for (int i = 0; i < servers.size(); i++) {
             taskExecutor.execute(new UpdateTask(servers.get(i), limiters.get(i), globalLimiter));
         }
@@ -70,12 +68,12 @@ public class JobUpdate {
         public void run() {
             List<User> accounts = db.getValidatedAccountsByServer(server);
             if (accounts.size() == 0) return;
-            Logger.getLogger(JobUpdate.class.getName()).log(Level.INFO, "Started: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
+            Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Started: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
             List<List<User>> lists = Lists.partition(accounts, 100);
             for (List<User> chunk : lists) {
-                rankUpdater.update(chunk, limiter, globalLimiter);
+                rankUpdateTask.update(chunk, limiter, globalLimiter);
             }
-            Logger.getLogger(JobUpdate.class.getName()).log(Level.INFO, "Finished: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
+            Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Finished: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
         }
 
     }

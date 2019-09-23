@@ -1,4 +1,4 @@
-package ssc_flairbot.webservice;
+package ssc_flairbot.webcontrollers;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;

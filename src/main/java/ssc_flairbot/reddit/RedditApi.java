@@ -31,8 +31,7 @@ public class RedditApi {
         refreshToken();
     }
 
-    @Scheduled(cron = "0 */55 * * * *")
-    private void refreshToken() {
+    public void refreshToken() {
         this.token = tokenMaker.getToken();
     }
 

@@ -1,4 +1,4 @@
-package ssc_flairbot.webservice;
+package ssc_flairbot.webcontrollers;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,8 +13,6 @@ import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
 import ssc_flairbot.persistence.UserBuilder;
 import ssc_flairbot.reddit.TokenMaker;
-
-import java.util.List;
 
 import static org.junit.Assert.*;
 

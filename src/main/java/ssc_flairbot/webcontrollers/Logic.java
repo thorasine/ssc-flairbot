@@ -1,4 +1,4 @@
-package ssc_flairbot.webservice;
+package ssc_flairbot.webcontrollers;
 
 import java.security.Principal;
 import java.util.Comparator;

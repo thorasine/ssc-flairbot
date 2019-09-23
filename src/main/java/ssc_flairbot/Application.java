@@ -22,6 +22,10 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... strings) {
+        //putInSampleData();
+    }
+
+    private void putInSampleData() {
         database.dropTable();
         database.createTable();
 
