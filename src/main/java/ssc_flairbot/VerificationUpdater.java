@@ -16,11 +16,11 @@ import ssc_flairbot.reddit.FlairHandler;
 public class VerificationUpdater {
 
     @Autowired
-    LeagueApi lolApi;
+    private LeagueApi lolApi;
     @Autowired
-    DBHandler database;
+    private DBHandler database;
     @Autowired
-    FlairHandler flairHandler;
+    private FlairHandler flairHandler;
 
     private final int triesUntilFail = 10;
 
