@@ -28,11 +28,11 @@ public class DBHandlerTest {
         database.dropTable();
         database.createTable();
         user1 = new UserBuilder().redditName("Thorasine").summonerName("Trefort")
-                .summonerId("8kFIUtL2QHnAKmyI485jY7bWifUk6poPC1KQehEbjtr6zCc").server("EUW").rank("Diamond I").validated("validated")
+                .summonerId("fakeSummonerId1").server("EUW").rank("Diamond I").validated("validated")
                 .validationCode("83ERFK").validationTries(0).buildUser();
         user2 = new UserBuilder().redditName("Thorasine").summonerName("Oreena")
-                .summonerId("YKuxOWZtcpkiE1V07iLisX1s93FdVSEf3TnHEYHBqy0Qe-8").server("EUW").rank("Gold IV").validated("pending")
-                .validationCode("83ITES").validationTries(0).buildUser();
+                .summonerId("fakeSummonerID2").server("EUW").rank("Gold IV").validated("pending")
+                .validationCode("QWERTY").validationTries(0).buildUser();
         database.addUser(user1);
         database.addUser(user2);
         List<User> allUsers = database.getAllUsers();
