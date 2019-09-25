@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -43,34 +44,80 @@ public class DBHandlerTest {
     @Test
     public void getAllUsers() {
         List<User> users = database.getAllUsers();
-        assertEquals("Database size is not 2.", users.size(), 2);
+        assertEquals("Database size is not 2.", 2, users.size());
     }
 
     @Test
     public void getPendingUsers() {
-        assertEquals("Database pending users are not 1.", database.getPendingUsers().size(), 1);
+        assertEquals("Database pending users are not 1.", 1, database.getPendingUsers().size());
     }
 
     @Test
     public void getUserById() {
         User user = database.getUserById(user1.getId());
-        assertEquals("Reddit name is not Thorasine.", user.getRedditName(), "Thorasine");
-        assertEquals("Summoner name is not Trefort.", user.getSummonerName(), "Trefort");
+        assertEquals("Reddit name is not Thorasine.", "Thorasine", user.getRedditName());
+        assertEquals("Summoner name is not Trefort.", "Trefort", user.getSummonerName());
     }
 
     @Test
     public void addUser() {
-        User user = new UserBuilder().redditName("Thorasine").summonerName("Test").buildUser();
-        database.addUser(user);
-        assertEquals("Database size is not 3.", database.getAllUsers().size(), 3);
+        User user3 = new UserBuilder().redditName("Pilvax").summonerName("Sniblets")
+                .summonerId("fakeSummonerId3").server("OCE").rank("Master I").validated("validated")
+                .validationCode("AZERTY").validationTries(3).buildUser();
+        database.addUser(user3);
+        User testUser = database.getAllUsers().get(2);
+        assertEquals("Database size is not 3.", 3, database.getAllUsers().size());
+        assertEquals("Reddit name is not Pilvax.", "Pilvax", testUser.getRedditName());
+        assertEquals("Summoner name is not Sniblets.", "Sniblets", testUser.getSummonerName());
+        assertEquals("SummonerId is not fakeSummonerId3", "fakeSummonerId3", testUser.getSummonerId());
+        assertEquals("Server is not OCE", "OCE", testUser.getServer());
+        assertEquals("Rank is not Master I", "Master I", testUser.getRank());
+        assertEquals("Validated is not validated", "validated", testUser.getValidated());
+        assertEquals("Validation code is not AZERTY", "AZERTY", testUser.getValidationCode());
+        assertEquals("Validation tries is not 3", 3, testUser.getValidationTries());
+    }
+
+    @Test
+    public void batchAddUser(){
+        User user3 = new UserBuilder().redditName("Pilvax").summonerName("Sniblets")
+                .summonerId("fakeSummonerId3").server("OCE").rank("Master I").validated("validated")
+                .validationCode("AZERTY").validationTries(3).buildUser();
+        User user4 = new UserBuilder().redditName("George").summonerName("Charlie")
+                .summonerId("fakeSummonerId4").server("JP").rank("Grandmaster I").validated("validated")
+                .validationCode("QWERTZ").validationTries(5).buildUser();
+        List<User> testUsers = new ArrayList<>();
+        testUsers.add(user3);
+        testUsers.add(user4);
+        database.batchAddUsers(testUsers);
+
+        User testUser3 = database.getAllUsers().get(2);
+        User testUser4 = database.getAllUsers().get(3);
+        assertEquals("Database size is not 3.", 4, database.getAllUsers().size());
+        assertEquals("Reddit name is not Pilvax.", "Pilvax", testUser3.getRedditName());
+        assertEquals("Summoner name is not Sniblets.", "Sniblets", testUser3.getSummonerName());
+        assertEquals("SummonerId is not fakeSummonerId3", "fakeSummonerId3", testUser3.getSummonerId());
+        assertEquals("Server is not OCE", "OCE", testUser3.getServer());
+        assertEquals("Rank is not Master I", "Master I", testUser3.getRank());
+        assertEquals("Validated is not validated", "validated", testUser3.getValidated());
+        assertEquals("Validation code is not AZERTY", "AZERTY", testUser3.getValidationCode());
+        assertEquals("Validation tries is not 3", 3, testUser3.getValidationTries());
+
+        assertEquals("Reddit name is not George.", "George", testUser4.getRedditName());
+        assertEquals("Summoner name is not Charlie.", "Charlie", testUser4.getSummonerName());
+        assertEquals("SummonerId is not fakeSummonerId4", "fakeSummonerId4", testUser4.getSummonerId());
+        assertEquals("Server is not JP", "JP", testUser4.getServer());
+        assertEquals("Rank is not Grandmaster I", "Grandmaster I", testUser4.getRank());
+        assertEquals("Validated is not validated", "validated", testUser4.getValidated());
+        assertEquals("Validation code is not QWERTZ", "QWERTZ", testUser4.getValidationCode());
+        assertEquals("Validation tries is not 5", 5, testUser4.getValidationTries());
     }
 
     @Test
     public void deleteUser() {
         database.deleteUser(user1.getId());
-        assertEquals("Database size is not 1.", database.getAllUsers().size(), 1);
+        assertEquals("Database size is not 1.", 1, database.getAllUsers().size());
         List<User> users = database.getAllUsers();
-        assertEquals("Wrong account got deleted.", users.get(0).getSummonerName(), "Oreena");
+        assertEquals("Wrong account got deleted.", "Oreena", users.get(0).getSummonerName());
     }
 
     @Test
@@ -78,7 +125,7 @@ public class DBHandlerTest {
         User user = database.getUserById(user1.getId());
         user.setServer("NA");
         database.updateUser(user);
-        assertEquals("Users updated server is not NA", database.getUserById(user.getId()).getServer(), "NA");
+        assertEquals("Users updated server is not NA", "NA", database.getUserById(user.getId()).getServer());
     }
 
     @Test
@@ -90,8 +137,8 @@ public class DBHandlerTest {
         userTest2.setRank("Silver IV");
         database.batchUpdateUsersRank(users);
 
-        assertEquals("User1 is not Gold II", database.getUserById(users.get(0).getId()).getRank(), "Gold II");
-        assertEquals("User2 is not Silver IV", database.getUserById(users.get(1).getId()).getRank(), "Silver IV");
+        assertEquals("User1 is not Gold II", "Gold II", database.getUserById(users.get(0).getId()).getRank());
+        assertEquals("User2 is not Silver IV", "Silver IV", database.getUserById(users.get(1).getId()).getRank());
     }
 
     @Test
@@ -107,18 +154,18 @@ public class DBHandlerTest {
     @Test
     public void getValidatedAccountsByServer() {
         List<User> users = database.getValidatedAccountsByServer("EUW");
-        assertEquals("Validated users on EUW should be 1.", users.size(), 1);
+        assertEquals("Validated users on EUW should be 1.", 1, users.size());
     }
 
     @Test
     public void getValidatedAccountsByRedditName() {
         List<User> users = database.getValidatedAccountsByRedditName("Thorasine");
-        assertEquals("Validated accounts for Thorasine should be 1.", users.size(), 1);
+        assertEquals("Validated accounts for Thorasine should be 1.", 1, users.size());
     }
 
     @Test
     public void getAccountsByRedditName() {
         List<User> users = database.getAccountsByRedditName("Thorasine");
-        assertEquals("Thorasine's accounts should be 2", users.size(), 2);
+        assertEquals("Thorasine's accounts should be 2", 2, users.size());
     }
 }

@@ -32,13 +32,13 @@ public class RankHandlerTest {
         ranks.add("Master I");
         ranks.add("Grandmaster I");
         ranks.add("Challenger I");
-        assertEquals("Rank is not Challenger I", rankHandler.getHighestRank(ranks), "Challenger I");
+        assertEquals("Rank is not Challenger I", "Challenger I", rankHandler.getHighestRank(ranks));
     }
 
     @Test
     public void getUnranked() {
         Set<String> ranks = new HashSet<>();
-        assertEquals("Rank is not Unranked", rankHandler.getHighestRank(ranks), "Unranked");
+        assertEquals("Rank is not Unranked", "Unranked", rankHandler.getHighestRank(ranks));
     }
 
 }

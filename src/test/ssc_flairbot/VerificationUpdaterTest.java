@@ -24,9 +24,9 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @TestPropertySource(properties = "app.scheduling.enable=false")
+@AutoConfigureTestDatabase
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureTestDatabase
 public class VerificationUpdaterTest {
 
     @Autowired
@@ -61,8 +61,8 @@ public class VerificationUpdaterTest {
     @Test
     public void validationSessionCompleted() {
         verificationUpdater.scheduledUpdate();
-        assertEquals("Validation tries is not 1.", 1, database.getAllUsers().get(0).getValidationTries());
-        assertEquals("Validation tries is not pending.", "pending", database.getAllUsers().get(0).getValidated());
+        assertEquals("Validation tries is not 1.", database.getAllUsers().get(0).getValidationTries(), 1);
+        assertEquals("Validation tries is not pending.", database.getAllUsers().get(0).getValidated(), "pending");
     }
 
     @Test
@@ -71,11 +71,11 @@ public class VerificationUpdaterTest {
         user.setValidationTries(10);
         database.updateUser(user);
         verificationUpdater.scheduledUpdate();
-        assertEquals("User didn't change from pending to failed after 11 tries.", "failed", database.getAllUsers().get(0).getValidated());
+        assertEquals("User didn't change from pending to failed after 11 tries.", database.getAllUsers().get(0).getValidated(), "failed");
     }
 
     @Test
-    public void updatedMultipleUsersSuccessfully(){
+    public void updatedMultipleUsersSuccessfully() {
         database.addUser(users.get(1));
         database.addUser(users.get(2));
         List<User> dbUsers = database.getAllUsers();
@@ -88,12 +88,12 @@ public class VerificationUpdaterTest {
         database.updateUser(user3);
 
         verificationUpdater.scheduledUpdate();
-        assertEquals("Validation tries is not 1 for user1.", 1, database.getAllUsers().get(0).getValidationTries());
-        assertEquals("Validation tries is not pending. for user1", "pending", database.getAllUsers().get(0).getValidated());
-        assertEquals("Validation tries is not 11 for user2.", 11, database.getUserById(user2.getId()).getValidationTries());
-        assertEquals("Validation tries is not failed for user2.", "failed", database.getUserById(user2.getId()).getValidated());
-        assertEquals("User3 got updated despite being validated.", user3Tries, database.getUserById(user3.getId()).getValidationTries());
-        assertEquals("Validation tries is not validated for user3", "validated", database.getUserById(user3.getId()).getValidated());
+        assertEquals("Validation tries is not 1 for user1.", database.getAllUsers().get(0).getValidationTries(), 1);
+        assertEquals("Validation tries is not pending. for user1", database.getAllUsers().get(0).getValidated(),"pending");
+        assertEquals("Validation tries is not 11 for user2.", database.getUserById(user2.getId()).getValidationTries(), 11);
+        assertEquals("Validation tries is not failed for user2.", database.getUserById(user2.getId()).getValidated(), "failed");
+        assertEquals("User3 got updated despite being validated.", database.getUserById(user3.getId()).getValidationTries(), user3Tries);
+        assertEquals("Validation tries is not validated for user3", database.getUserById(user3.getId()).getValidated(), "validated");
     }
 
 }

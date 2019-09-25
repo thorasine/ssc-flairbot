@@ -47,7 +47,7 @@ public class RedditApi {
             limiter.enter();
             response = update(parameters.toString());
             if(!response.equalsIgnoreCase("ok")){
-                Logger.getLogger(RedditApi.class.getName()).log(Level.WARNING, "Some user flairs are failed to update:\n" + response);
+                Logger.getLogger(RedditApi.class.getName()).log(Level.WARNING, "Some user flairs have failed to update:\n" + response);
             }
         } catch (Exception e) {
             Logger.getLogger(RedditApi.class.getName()).log(Level.SEVERE, "Error while updating reddit flairs: " + e.getMessage());

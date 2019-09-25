@@ -46,10 +46,10 @@ public class FlairHandlerTest {
         database.addUser(user3);
         database.addUser(user4);
         List<User> allUsers = database.getAllUsers();
-        user1 = database.getUserById(allUsers.get(0).getId());
-        user2 = database.getUserById(allUsers.get(1).getId());
-        user3 = database.getUserById(allUsers.get(2).getId());
-        user4 = database.getUserById(allUsers.get(3).getId());
+        user1 = allUsers.get(0);
+        user2 = allUsers.get(1);
+        user3 = allUsers.get(2);
+        user4 = allUsers.get(3);
     }
 
     //Can't really test these automatically without writing a method for retriving users flair from reddit

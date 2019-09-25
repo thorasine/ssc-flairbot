@@ -29,6 +29,29 @@ public class DBHandler {
                 user.getRank(), user.getValidated(), user.getValidationCode(), user.getValidationTries(), getDate());
     }
 
+    public int[] batchAddUsers(List<User> users) {
+        String SQL = "INSERT INTO users(redditName, summonerName, summonerId, server, rank, validated, validationCode, "
+                + "validationTries, updateDate) VALUES (?,?,?,?,?,?,?,?,?)";
+        int[] updateCounts = database.batchUpdate(SQL,
+                new BatchPreparedStatementSetter() {
+                    public void setValues(PreparedStatement ps, int i) throws SQLException {
+                        ps.setString(1, users.get(i).getRedditName());
+                        ps.setString(2, users.get(i).getSummonerName());
+                        ps.setString(3, users.get(i).getSummonerId());
+                        ps.setString(4, users.get(i).getServer());
+                        ps.setString(5, users.get(i).getRank());
+                        ps.setString(6, users.get(i).getValidated());
+                        ps.setString(7, users.get(i).getValidationCode());
+                        ps.setString(8, String.valueOf(users.get(i).getValidationTries()));
+                        ps.setString(9, getDate());
+                    }
+                    public int getBatchSize() {
+                        return users.size();
+                    }
+                } );
+        return updateCounts;
+    }
+
     public void deleteUser(long id) {
         String SQL = "DELETE FROM users WHERE id = ?";
         database.update(SQL, id);

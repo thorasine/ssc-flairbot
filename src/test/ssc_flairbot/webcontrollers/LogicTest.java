@@ -32,7 +32,7 @@ public class LogicTest {
     private User user2;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         database.dropTable();
         database.createTable();
         user = new UserBuilder().redditName("Thorasine").summonerName("Trefort").server("EUW").buildUser();
@@ -42,49 +42,49 @@ public class LogicTest {
 
     @Test
     public void addUser() {
-        assertEquals("Failed to add Thorasine:Trefort.","ok",logic.addUser(user));
+        assertEquals("Failed to add Thorasine:Trefort.", logic.addUser(user), "ok");
     }
 
     @Test
     public void addUserWithoutSummonerName() {
         user.setSummonerName("");
-        assertNotEquals("Added user without summonername.","ok",logic.addUser(user));
+        assertNotEquals("Added user without summonername.", logic.addUser(user), "ok");
     }
 
     @Test
     public void addNonExistingSummoner() {
         user.setSummonerName("dsguheriu32zr3q23dnn353");
-        assertNotEquals("Non-existent summoner added.","ok",logic.addUser(user));
+        assertNotEquals("Non-existent summoner added.", logic.addUser(user), "ok");
     }
 
     @Test
     public void addAlreadyRegisteredSummoner() {
         logic.addUser(user);
-        assertNotEquals("Already registered summoner by User added.","ok",logic.addUser(user));
+        assertNotEquals("Already registered summoner by User added.", logic.addUser(user), "ok");
     }
 
     @Test
     public void addAlreadyValidatedSummoner() {
         user.setSummonerName("Vizicsacsi");
-        assertNotEquals("Already validated summoner (Vizicsacsi) added","ok",logic.addUser(user));
+        assertNotEquals("Already validated summoner (Vizicsacsi) added", logic.addUser(user), "ok");
     }
 
     @Test
     public void deleteUser() {
         User user = database.getAllUsers().get(0);
-        assertEquals("Couldn't delete user.","ok",logic.deleteUser(user.getRedditName(), user.getId()));
-        assertEquals("Account didn't get deleted.",0,database.getAllUsers().size());
+        assertEquals("Couldn't delete user.", logic.deleteUser(user.getRedditName(), user.getId()), "ok");
+        assertEquals("Account didn't get deleted.", database.getAllUsers().size(), 0);
     }
 
     @Test
     public void deleteNonExistentUser() {
         user.setRedditName("Its_Vizicsacsi");
-        assertNotEquals("Non-existent account got deleted.","ok",logic.deleteUser(user.getRedditName(), 999L));
+        assertNotEquals("Non-existent account got deleted.", logic.deleteUser(user.getRedditName(), 999L), "ok");
     }
 
     @Test
     public void deletedNotOwnedUser() {
         Long id = database.getAllUsers().get(0).getId();
-        assertNotEquals("Deleted not owned user.","ok",logic.deleteUser(user.getRedditName(), id));
+        assertNotEquals("Deleted not owned user.", logic.deleteUser(user.getRedditName(), id), "ok");
     }
 }

@@ -58,7 +58,7 @@ public class LeagueApi {
         return rankHandler.getSummonerHighestRank(leaguePositions);
     }
 
-    private Platform platformConvert(String server) {
+    public Platform platformConvert(String server) {
         switch (server) {
             case "NA":
                 return Platform.NA1;

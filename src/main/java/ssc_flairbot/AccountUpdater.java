@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,11 +47,23 @@ public class AccountUpdater {
 
     }
 
-    public void scheduledUpdate() {
+    public void scheduledUpdateOld() {
         Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Started: Updating database.");
         for (int i = 0; i < servers.size(); i++) {
+            System.out.println(i + ". update task started for " + servers.get(i));
             taskExecutor.execute(new UpdateTask(servers.get(i), limiters.get(i), globalLimiter));
         }
+    }
+
+    public void scheduledUpdate(){
+        Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Started: Updating database.");
+        ExecutorService executor = Executors.newFixedThreadPool(11);
+        CompletableFuture[] futures = new CompletableFuture[11];
+        for (int i = 0; i < servers.size(); i++) {
+            Runnable runner = new UpdateTask(servers.get(i), limiters.get(i), globalLimiter);
+            futures[i] =  CompletableFuture.runAsync(runner, executor);
+        }
+        CompletableFuture.allOf(futures).join();
     }
 
     private class UpdateTask implements Runnable {
