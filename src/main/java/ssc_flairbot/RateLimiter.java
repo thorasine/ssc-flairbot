@@ -1,4 +1,4 @@
-package ssc_flairbot.reddit;
+package ssc_flairbot;
 
 import java.util.LinkedList;
 

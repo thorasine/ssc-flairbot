@@ -2,6 +2,7 @@ package ssc_flairbot.webcontrollers;
 
 import java.util.Arrays;
 import javax.servlet.Filter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
@@ -39,18 +40,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .antMatcher("/**")
+                .antMatcher("/**")
                 .authorizeRequests()
-            .antMatchers("/login**", "/greeting**", "/webjars/**", "/error**", "/js/**", "/css/**")
+                .antMatchers("/login**", "/greeting**", "/webjars/**", "/error**", "/js/**", "/css/**")
                 .permitAll()
-            .anyRequest()
+                .anyRequest()
                 .authenticated().and().exceptionHandling()
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
-            .and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-            .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
-            .logout() 
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) 
-                .logoutSuccessUrl("/login") 
+                .and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login")
                 .permitAll();
     }
 

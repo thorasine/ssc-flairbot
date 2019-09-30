@@ -1,6 +1,6 @@
 package ssc_flairbot;
 
-import no.stelar7.api.l4j8.basic.constants.api.Platform;
+
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
@@ -38,11 +38,13 @@ public class AccountUpdaterTest {
     @Autowired
     LeagueApi lolApi;
 
+    private static int nAccounts = 5; //Number of accounts / server, max 10
     private static boolean setUpIsDone = false;
     private final L4J8 riotApi = new L4J8(SecretFile.CREDS);
     private static List<User> euwUsers = new ArrayList<>();
     private static List<User> naUsers = new ArrayList<>();
     private static List<User> krUsers = new ArrayList<>();
+    private static List<User> oceUsers = new ArrayList<>();
 
     @Before
     public void setUp() {
@@ -54,14 +56,15 @@ public class AccountUpdaterTest {
         setUsers("EUW", euwUsers);
         setUsers("NA", naUsers);
         setUsers("KR", krUsers);
+        setUsers("OCE", oceUsers);
         setUpIsDone = true;
         setUp();
     }
 
     private void setUsers(String server, List<User> list){
         List<SpectatorParticipant> participants = new SpectatorBuilder().withPlatform(lolApi.platformConvert(server)).getFeaturedGames().get(0).getParticipants();
-        for (SpectatorParticipant p : participants) {
-            Summoner summoner = new SummonerBuilder().withPlatform(lolApi.platformConvert(server)).withName(p.getSummonerName()).get();
+        for(int i = 0; i < nAccounts; i++){
+            Summoner summoner = new SummonerBuilder().withPlatform(lolApi.platformConvert(server)).withName(participants.get(i).getSummonerName()).get();
             User user = new UserBuilder().redditName(summoner.getName()).summonerName(summoner.getName())
                     .summonerId(summoner.getSummonerId()).server(server).validated("validated").buildUser();
             list.add(user);
@@ -69,10 +72,19 @@ public class AccountUpdaterTest {
     }
 
     @Test
-    public void scheduledUpdate() {
-        database.batchAddUsers(euwUsers);
-        database.batchAddUsers(naUsers);
-        database.batchAddUsers(krUsers);
-        accountUpdater.scheduledUpdate();
+    public void persistenceTest() {
+        for(int i = 0; i < nAccounts; i++){
+            database.addUser(euwUsers.get(i));
+            database.addUser(naUsers.get(i));
+            database.addUser(krUsers.get(i));
+            database.addUser(oceUsers.get(i));
+        }
+        List<User> users = database.getAllUsers();
+        users.forEach(user -> user.setRank("Iron I"));
+        database.batchUpdateUsersRank(users);
+        String response = accountUpdater.scheduledUpdate();
+        users = database.getAllUsers();
+        assertEquals("Couldn't finsh updating account ranks.", "ok", response);
+        users.forEach(user -> assertNotEquals("User's rank didn't get updated.", "Iron I", user.getRank()));
     }
 }

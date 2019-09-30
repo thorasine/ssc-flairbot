@@ -26,7 +26,7 @@ public class User {
         this.validationCode = validationCode;
         this.validationTries = validationTries;
     }
-    
+
     public long getId() {
         return id;
     }
@@ -42,8 +42,8 @@ public class User {
     public String getSummonerId() {
         return summonerId;
     }
-    
-    public String getServer(){
+
+    public String getServer() {
         return server;
     }
 
@@ -82,8 +82,8 @@ public class User {
     public void setSummonerId(String summonerId) {
         this.summonerId = summonerId;
     }
-    
-    public void setServer(String server){
+
+    public void setServer(String server) {
         this.server = server;
     }
 

@@ -45,10 +45,11 @@ public class DBHandler {
                         ps.setString(8, String.valueOf(users.get(i).getValidationTries()));
                         ps.setString(9, getDate());
                     }
+
                     public int getBatchSize() {
                         return users.size();
                     }
-                } );
+                });
         return updateCounts;
     }
 
@@ -70,7 +71,7 @@ public class DBHandler {
                     public int getBatchSize() {
                         return users.size();
                     }
-                } );
+                });
         return updateCounts;
     }
 
@@ -102,7 +103,7 @@ public class DBHandler {
         return count > 0;
     }
 
-    public List<User> getValidatedAccountsByServer(String server){
+    public List<User> getValidatedAccountsByServer(String server) {
         String SQL = "SELECT * FROM users WHERE server = ? AND validated = 'validated'";
         List<User> accountList = database.query(SQL, new Object[]{server}, new UserMapper());
         return accountList;
@@ -121,7 +122,7 @@ public class DBHandler {
     }
 
     public List<User> getAllUsers() {
-        String SQL = "select * from users";
+        String SQL = "SELECT * FROM users";
         List<User> users = database.query(SQL, new UserMapper());
         return users;
     }

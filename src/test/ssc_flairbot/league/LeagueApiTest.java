@@ -29,7 +29,7 @@ public class LeagueApiTest {
     @Test
     public void getSummoner() {
         Summoner summoner = lolApi.getSummoner(user1);
-        assertEquals("Summoner's name is not Thorasine.", summoner.getName(), "Thorasine");
+        assertEquals("Summoner's name is not Thorasine.", "Thorasine", summoner.getName());
     }
 
 

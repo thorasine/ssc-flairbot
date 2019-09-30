@@ -45,7 +45,7 @@ public class RestApiController {
     public String test(Principal principal) {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String principalName = (String) details.get("name");
-        if(principalName.equalsIgnoreCase("thorasine")){
+        if (principalName.equalsIgnoreCase("thorasine")) {
             logic.test();
         }
         return "Tested.";
@@ -55,7 +55,7 @@ public class RestApiController {
     public String test2(Principal principal) {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String principalName = (String) details.get("name");
-        if(principalName.equalsIgnoreCase("thorasine")){
+        if (principalName.equalsIgnoreCase("thorasine")) {
             logic.test2();
         }
         return "Tested.";

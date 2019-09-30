@@ -15,8 +15,6 @@ import ssc_flairbot.persistence.UserBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 @JdbcTest
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {FlairHandler.class, RedditApi.class, DBHandler.class, RankHandler.class, TokenMaker.class})
@@ -31,7 +29,7 @@ public class FlairHandlerTest {
     private User user2;
     private User user3;
     private User user4;
-    private List<User> users = new ArrayList<>();;
+    private List<User> users = new ArrayList<>();
 
     @Before
     public void setUp() {
@@ -52,7 +50,7 @@ public class FlairHandlerTest {
         user4 = allUsers.get(3);
     }
 
-    //Can't really test these automatically without writing a method for retriving users flair from reddit
+    //todo Write methods to retrive user's flair to be able to properly test these
     @Test
     public void onlyCompareValidatedAccounts() {
         users.add(user1);

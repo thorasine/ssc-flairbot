@@ -15,35 +15,35 @@ public class RankHandler {
 
     public String getSummonerHighestRank(List<LeagueEntry> leaguePositions) {
         Set<String> ranks = new HashSet<>();
-        for (LeagueEntry position : leaguePositions) {
+        leaguePositions.forEach(position -> {
             if (position.getQueueType().equals(GameQueueType.RANKED_SOLO_5X5)) {
                 ranks.add(position.getTier() + " " + position.getRank());
             }
-        }
+        });
 
         return getHighestRank(ranks);
     }
 
     public String getHighestRank(Set<String> ranks) {
-        String highestTier = "UNRANKED";
-        String highestDivision = "IV";
+        String maxTier = "UNRANKED";
+        String maxDivision = "IV";
         for (String rank : ranks) {
             String[] splitted = rank.split(" ");
             String tier = splitted[0].toUpperCase();
-            if(tier.equalsIgnoreCase("UNRANKED")) continue;
+            if (tier.equalsIgnoreCase("UNRANKED")) continue;
             String division = splitted[1];
 
-            if (Tier.valueOf(tier).isAbove(Tier.valueOf(highestTier))) {
-                highestTier = tier;
-                highestDivision = division;
-            } else if (Tier.valueOf(tier).isEqual(Tier.valueOf(highestTier))) {
-                if (Division.valueOf(division).isAbove(Division.valueOf(highestDivision))) {
-                    highestDivision = division;
+            if (Tier.valueOf(tier).isAbove(Tier.valueOf(maxTier))) {
+                maxTier = tier;
+                maxDivision = division;
+            } else if (Tier.valueOf(tier).isEqual(Tier.valueOf(maxTier))) {
+                if (Division.valueOf(division).isAbove(Division.valueOf(maxDivision))) {
+                    maxDivision = division;
                 }
             }
         }
 
-        return rankFormatter(highestTier, highestDivision);
+        return rankFormatter(maxTier, maxDivision);
     }
 
     private String rankFormatter(String tier, String division) {

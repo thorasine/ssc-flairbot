@@ -3,8 +3,8 @@ package ssc_flairbot.reddit;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import ssc_flairbot.RateLimiter;
 import ssc_flairbot.SecretFile;
 
 import javax.annotation.PostConstruct;
@@ -37,7 +37,6 @@ public class RedditApi {
 
     //max 100 users at a time
     public String updateRankedFlairs(Map<String, String> users) {
-        String response = null;
         StringBuilder parameters = new StringBuilder("flair_csv=");
         for (String redditName : users.keySet()) {
             parameters.append(redditName).append(",").append(users.get(redditName)).append(",\n");
@@ -45,16 +44,17 @@ public class RedditApi {
         try {
             limiter.acquire();
             limiter.enter();
-            response = update(parameters.toString());
-            if(!response.equalsIgnoreCase("ok")){
-                Logger.getLogger(RedditApi.class.getName()).log(Level.WARNING, "Some user flairs have failed to update:\n" + response);
+            String answer = update(parameters.toString());
+            if (!answer.equalsIgnoreCase("ok")) {
+                Logger.getLogger(RedditApi.class.getName()).log(Level.WARNING, "Some user flairs have failed to update:\n" + answer);
+                return "warning";
             }
         } catch (Exception e) {
             Logger.getLogger(RedditApi.class.getName()).log(Level.SEVERE, "Error while updating reddit flairs: " + e.getMessage());
-            return e.getMessage();
+            return "error";
         }
         Logger.getLogger(RedditApi.class.getName()).log(Level.FINE, "Updating " + users.size() + " reddit flairs have been successfully completed.");
-        return response;
+        return "ok";
     }
 
     private String update(String parameters) throws Exception {
@@ -64,9 +64,9 @@ public class RedditApi {
         String bearerAuth = "bearer " + token;
         con.setRequestProperty("Authorization", bearerAuth);
         con.setRequestProperty("User-Agent", "windows:***REMOVED***:0.1 (by /u/Thorasine)");
+        con.setRequestMethod("POST");
         con.setDoOutput(true);
         con.setDoInput(true);
-        con.setRequestMethod("POST");
 
         byte[] postData = parameters.getBytes(StandardCharsets.UTF_8);
         int postDataLength = postData.length;

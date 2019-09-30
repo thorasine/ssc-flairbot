@@ -31,10 +31,11 @@ public class LeagueApi {
     }
 
     public Summoner getSummoner(User user) {
-        if(!availableRegions.contains(user.getServer())){
+        if (!availableRegions.contains(user.getServer())) {
+            Logger.getLogger(LeagueApi.class.getName()).log(Level.INFO, "Server not found for: /u/" + user.getRedditName() + " server: " + user.getServer());
             return null;
         }
-        Summoner summoner  = new SummonerBuilder().withPlatform(platformConvert(user.getServer())).withName(user.getSummonerName()).get();
+        Summoner summoner = new SummonerBuilder().withPlatform(platformConvert(user.getServer())).withName(user.getSummonerName()).get();
         if (summoner == null) {
             Logger.getLogger(LeagueApi.class.getName()).log(Level.INFO, "Summoner not found for: " + "/u/" + user.getRedditName() + " Summoner: " + user.getSummonerName() + "(" + user.getServer() + ")");
             return null;
@@ -51,7 +52,7 @@ public class LeagueApi {
     }
 
     public String getHighestRank(User user) {
-        List<LeagueEntry> leaguePositions = api.getLeagueAPI().getLeagueEntries(platformConvert(user.getServer()),user.getSummonerId());
+        List<LeagueEntry> leaguePositions = api.getLeagueAPI().getLeagueEntries(platformConvert(user.getServer()), user.getSummonerId());
         if (leaguePositions.isEmpty()) {
             return "Unranked";
         }

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import ssc_flairbot.league.RankHandler;
 import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
-import ssc_flairbot.persistence.UserBuilder;
 
 import com.google.common.collect.Lists;
 
@@ -23,31 +22,31 @@ public class FlairHandler {
     @Autowired
     private RankHandler rankHandler;
 
-    public void updateFlairs(List<User> users){
+    public void updateFlairs(List<User> users) {
         if (users.isEmpty()) return;
         Logger.getLogger(FlairHandler.class.getName()).log(Level.FINE, "Started: Updating flairs for " + users.size() + " users.");
-        List<List<User> > lists = Lists.partition(users, 100);
-        for(List<User> chunk : lists) {
+        List<List<User>> lists = Lists.partition(users, 100);
+        for (List<User> chunk : lists) {
             Map<String, String> flairMap = new HashMap<>();
-            for (User user : chunk) {
+            chunk.forEach(user -> {
                 String rank = getRedditHighestRank(user);
-                if(getRedditHighestRank(user) != null){
+                if (rank != null) {
                     flairMap.put(user.getRedditName(), rank);
                 }
-            }
+            });
             redditApi.updateRankedFlairs(flairMap);
         }
         Logger.getLogger(FlairHandler.class.getName()).log(Level.FINE, "Finished: Updating flairs for " + users.size() + " users.");
     }
 
-    private String getRedditHighestRank(User user){
+    private String getRedditHighestRank(User user) {
         Set<String> ranks = new HashSet<>();
         List<User> accounts = database.getValidatedAccountsByRedditName(user.getRedditName());
         for (User account : accounts) {
             ranks.add(account.getRank());
         }
         String rank = rankHandler.getHighestRank(ranks);
-        if(!rank.equalsIgnoreCase("Unranked")){
+        if (!rank.equalsIgnoreCase("Unranked")) {
             return rank;
         }
         return null;

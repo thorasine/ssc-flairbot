@@ -2,6 +2,7 @@ package ssc_flairbot.webcontrollers;
 
 import java.security.Principal;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,12 +11,12 @@ import ssc_flairbot.persistence.User;
 
 @Controller
 public class UserController {
-    
+
     @Autowired
     private Logic logic;
-    
+
     @RequestMapping("/test")
-    public String test(){
+    public String test() {
         return "test";
     }
 

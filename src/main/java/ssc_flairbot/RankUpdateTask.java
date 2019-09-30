@@ -6,7 +6,6 @@ import ssc_flairbot.league.LeagueApi;
 import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
 import ssc_flairbot.reddit.FlairHandler;
-import ssc_flairbot.reddit.RateLimiter;
 
 import java.util.List;
 
@@ -20,8 +19,8 @@ public class RankUpdateTask {
     @Autowired
     FlairHandler flairHandler;
 
-    public void update(List<User> users, RateLimiter limiter, RateLimiter globalLimiter){
-        for(User user : users){
+    public void update(List<User> users, RateLimiter limiter, RateLimiter globalLimiter) {
+        for (User user : users) {
             globalLimiter.acquire();
             globalLimiter.enter();
             limiter.acquire();

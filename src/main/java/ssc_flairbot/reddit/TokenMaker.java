@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 public class TokenMaker {
 
     private final String refreshToken = SecretFile.REDDIT_REFRESH_TOKEN;
+    private final String clientId = SecretFile.REDDIT_MOD_CLIENT_ID;
+    private final String clientSecret = SecretFile.REDDIT_MOD_CLIENT_SECRET;
 
     public String getToken(){
         String token = null;
@@ -32,13 +34,13 @@ public class TokenMaker {
         String url = "https://www.reddit.com/api/v1/access_token";
         URL object = new URL(url);
         HttpURLConnection con = (HttpURLConnection) object.openConnection();
-        String userCredentials = "***REMOVED***:***REMOVED***";
+        String userCredentials = clientId + ":" + clientSecret;
         String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
         con.setRequestProperty("Authorization", basicAuth);
         con.setDoOutput(true);
         con.setDoInput(true);
         con.setRequestMethod("POST");
-        con.setRequestProperty("User-Agent", "Thorasine Flairbotmod testing");
+        con.setRequestProperty("User-Agent", "Thorasine Flairbot mod beta");
 
         String urlParameters = "grant_type=refresh_token&refresh_token=" + refreshToken;
         byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);

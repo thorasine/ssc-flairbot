@@ -7,7 +7,6 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Component;
 import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
-import ssc_flairbot.reddit.RateLimiter;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -44,26 +43,25 @@ public class AccountUpdater {
         for (Integer serverLimit : serverLimits) {
             limiters.add(new RateLimiter(serverLimit, 60_000));
         }
-
     }
 
     public void scheduledUpdateOld() {
         Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Started: Updating database.");
         for (int i = 0; i < servers.size(); i++) {
-            System.out.println(i + ". update task started for " + servers.get(i));
             taskExecutor.execute(new UpdateTask(servers.get(i), limiters.get(i), globalLimiter));
         }
     }
 
-    public void scheduledUpdate(){
+    public String scheduledUpdate() {
         Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Started: Updating database.");
         ExecutorService executor = Executors.newFixedThreadPool(11);
         CompletableFuture[] futures = new CompletableFuture[11];
         for (int i = 0; i < servers.size(); i++) {
             Runnable runner = new UpdateTask(servers.get(i), limiters.get(i), globalLimiter);
-            futures[i] =  CompletableFuture.runAsync(runner, executor);
+            futures[i] = CompletableFuture.runAsync(runner, executor);
         }
         CompletableFuture.allOf(futures).join();
+        return "ok";
     }
 
     private class UpdateTask implements Runnable {
@@ -88,7 +86,6 @@ public class AccountUpdater {
             }
             Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Finished: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
         }
-
     }
 
 }

@@ -34,28 +34,28 @@ public class UserBuilder {
         this.summonerId = id;
         return this;
     }
-    
-    public UserBuilder server(String server){
+
+    public UserBuilder server(String server) {
         this.server = server;
         return this;
     }
-    
-    public UserBuilder rank(String rank){
+
+    public UserBuilder rank(String rank) {
         this.rank = rank;
         return this;
     }
-    
-    public UserBuilder validated(String validated){
+
+    public UserBuilder validated(String validated) {
         this.validated = validated;
         return this;
     }
-    
-    public UserBuilder validationCode(String validationCode){
+
+    public UserBuilder validationCode(String validationCode) {
         this.validationCode = validationCode;
         return this;
     }
-    
-    public UserBuilder validationTries(int validationTries){
+
+    public UserBuilder validationTries(int validationTries) {
         this.validationTries = validationTries;
         return this;
     }
