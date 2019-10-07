@@ -81,9 +81,7 @@ public class AccountUpdater {
             if (accounts.size() == 0) return;
             Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Started: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
             List<List<User>> lists = Lists.partition(accounts, 100);
-            for (List<User> chunk : lists) {
-                rankUpdateTask.update(chunk, limiter, globalLimiter);
-            }
+            lists.forEach(chunk -> rankUpdateTask.update(chunk, limiter, globalLimiter));
             Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Finished: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
         }
     }
