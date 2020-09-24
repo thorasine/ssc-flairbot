@@ -1,10 +1,6 @@
+.idea/
 /target/
 /src/main/java/ssc_flairbot/SecretFile.java
-.idea/.name
-.idea/libraries/Maven__commons_codec_commons_codec_1_11.xml
-.idea/libraries/Maven__org_codehaus_jackson_jackson_core_asl_1_9_13.xml
-.idea/libraries/Maven__org_codehaus_jackson_jackson_mapper_asl_1_9_13.xml
-.idea/libraries/Maven__org_springframework_security_oauth_spring_security_oauth2_2_3_5_RELEASE.xml
-.idea/workspace.xml
-l4j8cache/
 /src/main/resources/application.yml
+l4j8cache/
+ssc-flairbot.iml
