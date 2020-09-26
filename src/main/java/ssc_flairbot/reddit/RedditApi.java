@@ -24,6 +24,7 @@ public class RedditApi {
 
     private String token;
     private final String subreddit = SecretFile.SUBREDDIT;
+    private final String redditModClientId = SecretFile.REDDIT_MOD_CLIENT_ID;
     private final RateLimiter limiter = new RateLimiter(60, 60_000);
 
     @PostConstruct
@@ -63,7 +64,7 @@ public class RedditApi {
         HttpURLConnection con = (HttpURLConnection) object.openConnection();
         String bearerAuth = "bearer " + token;
         con.setRequestProperty("Authorization", bearerAuth);
-        con.setRequestProperty("User-Agent", "windows:***REMOVED***:0.1 (by /u/Thorasine)");
+        con.setRequestProperty("User-Agent", "windows:" + redditModClientId + ":0.1 (by /u/Thorasine)");
         con.setRequestMethod("POST");
         con.setDoOutput(true);
         con.setDoInput(true);
