@@ -13,8 +13,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class Application implements CommandLineRunner {
 
+    private final DBHandler database;
+
     @Autowired
-    private DBHandler database;
+    public Application(DBHandler database) {
+        this.database = database;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

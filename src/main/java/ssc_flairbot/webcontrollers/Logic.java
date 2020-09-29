@@ -20,10 +20,14 @@ import ssc_flairbot.persistence.User;
 @Component
 public class Logic {
 
+    private final DBHandler database;
+    private final LeagueApi lolApi;
+
     @Autowired
-    DBHandler database;
-    @Autowired
-    LeagueApi lolApi;
+    public Logic(DBHandler database, LeagueApi lolApi) {
+        this.database = database;
+        this.lolApi = lolApi;
+    }
 
     public String addUser(User user) {
         //Check if user's summoner is a name

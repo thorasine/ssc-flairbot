@@ -18,19 +18,21 @@ import java.util.logging.Logger;
 
 @Component
 public class AccountUpdater {
-    @Autowired
-    DBHandler db;
-    @Autowired
-    RankUpdateTask rankUpdateTask;
-
-    @Qualifier("applicationTaskExecutor")
-    @Autowired
-    private TaskExecutor taskExecutor;
+    private final DBHandler db;
+    private final RankUpdateTask rankUpdateTask;
+    private final TaskExecutor taskExecutor;
 
     private double threshold;
     private RateLimiter globalLimiter;
     private List<String> servers;
     private List<RateLimiter> limiters;
+
+    @Autowired
+    public AccountUpdater(DBHandler db, RankUpdateTask rankUpdateTask, @Qualifier("applicationTaskExecutor") TaskExecutor taskExecutor) {
+        this.db = db;
+        this.rankUpdateTask = rankUpdateTask;
+        this.taskExecutor = taskExecutor;
+    }
 
     @PostConstruct
     private void init() {

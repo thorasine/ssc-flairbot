@@ -19,13 +19,17 @@ import java.util.logging.Logger;
 @Component
 public class RedditApi {
 
-    @Autowired
-    private TokenMaker tokenMaker;
+    private final TokenMaker tokenMaker;
 
     private String token;
     private final String subreddit = SecretFile.SUBREDDIT;
     private final String redditModClientId = SecretFile.REDDIT_MOD_CLIENT_ID;
     private final RateLimiter limiter = new RateLimiter(60, 60_000);
+
+    @Autowired
+    public RedditApi(TokenMaker tokenMaker) {
+        this.tokenMaker = tokenMaker;
+    }
 
     @PostConstruct
     private void init() {

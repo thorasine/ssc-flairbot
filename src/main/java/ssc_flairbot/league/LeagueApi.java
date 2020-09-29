@@ -19,10 +19,14 @@ import ssc_flairbot.persistence.User;
 @Component
 public class LeagueApi {
 
-    @Autowired
-    private RankHandler rankHandler;
+    private final RankHandler rankHandler;
     private L4J8 api;
     private List<String> availableRegions;
+
+    @Autowired
+    public LeagueApi(RankHandler rankHandler) {
+        this.rankHandler = rankHandler;
+    }
 
     @PostConstruct
     private void init() {

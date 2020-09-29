@@ -15,12 +15,16 @@ import java.util.logging.Logger;
 @Component
 public class FlairHandler {
 
+    private final RedditApi redditApi;
+    private final DBHandler database;
+    private final RankHandler rankHandler;
+
     @Autowired
-    private RedditApi redditApi;
-    @Autowired
-    private DBHandler database;
-    @Autowired
-    private RankHandler rankHandler;
+    public FlairHandler(RedditApi redditApi, DBHandler database, RankHandler rankHandler) {
+        this.redditApi = redditApi;
+        this.database = database;
+        this.rankHandler = rankHandler;
+    }
 
     public void updateFlairs(List<User> users) {
         if (users.isEmpty()) return;

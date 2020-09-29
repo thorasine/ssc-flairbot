@@ -15,14 +15,18 @@ import ssc_flairbot.reddit.FlairHandler;
 @Component
 public class VerificationUpdater {
 
-    @Autowired
-    private LeagueApi lolApi;
-    @Autowired
-    private DBHandler database;
-    @Autowired
-    private FlairHandler flairHandler;
+    private final LeagueApi lolApi;
+    private final DBHandler database;
+    private final FlairHandler flairHandler;
 
-    private final int triesUntilFail = 10;
+    private final int TRIES_UNTIL_FAIL = 10;
+
+    @Autowired
+    public VerificationUpdater(LeagueApi lolApi, DBHandler database, FlairHandler flairHandler) {
+        this.lolApi = lolApi;
+        this.database = database;
+        this.flairHandler = flairHandler;
+    }
 
     public void scheduledUpdate() {
         List<User> users = database.getPendingUsers();
@@ -56,7 +60,7 @@ public class VerificationUpdater {
 
     private void validationFailed(User user) {
         user.setValidationTries(user.getValidationTries() + 1);
-        if (user.getValidationTries() > triesUntilFail) {
+        if (user.getValidationTries() > TRIES_UNTIL_FAIL) {
             user.setValidated("failed");
         }
     }

@@ -12,8 +12,12 @@ import ssc_flairbot.persistence.User;
 @Controller
 public class UserController {
 
+    private final Logic logic;
+
     @Autowired
-    private Logic logic;
+    public UserController(Logic logic) {
+        this.logic = logic;
+    }
 
     @RequestMapping("/test")
     public String test() {

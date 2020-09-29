@@ -33,9 +33,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableOAuth2Client
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Qualifier("oauth2ClientContext")
-    @Autowired
+    final
     OAuth2ClientContext oauth2ClientContext;
+
+    @Autowired
+    public SecurityConfig(@Qualifier("oauth2ClientContext") OAuth2ClientContext oauth2ClientContext) {
+        this.oauth2ClientContext = oauth2ClientContext;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

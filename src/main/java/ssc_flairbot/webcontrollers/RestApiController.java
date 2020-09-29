@@ -14,8 +14,12 @@ import ssc_flairbot.persistence.User;
 @RestController
 public class RestApiController {
 
+    private final Logic logic;
+
     @Autowired
-    Logic logic;
+    public RestApiController(Logic logic) {
+        this.logic = logic;
+    }
 
     @PostMapping("/addSummoner")
     public String addSummoner(User user, Principal principal) {

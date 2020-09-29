@@ -12,12 +12,16 @@ import java.util.List;
 @Component
 public class RankUpdateTask {
 
+    private final LeagueApi lolApi;
+    private final DBHandler database;
+    private final FlairHandler flairHandler;
+
     @Autowired
-    LeagueApi lolApi;
-    @Autowired
-    DBHandler database;
-    @Autowired
-    FlairHandler flairHandler;
+    public RankUpdateTask(LeagueApi lolApi, DBHandler database, FlairHandler flairHandler) {
+        this.lolApi = lolApi;
+        this.database = database;
+        this.flairHandler = flairHandler;
+    }
 
     public void update(List<User> users, RateLimiter limiter, RateLimiter globalLimiter) {
         for (User user : users) {

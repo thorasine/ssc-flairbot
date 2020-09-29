@@ -10,12 +10,16 @@ import ssc_flairbot.reddit.RedditApi;
 @Configuration
 public class ScheduledTasks {
 
+    private final VerificationUpdater verificationUpdater;
+    private final AccountUpdater accountUpdater;
+    private final RedditApi redditApi;
+
     @Autowired
-    VerificationUpdater verificationUpdater;
-    @Autowired
-    AccountUpdater accountUpdater;
-    @Autowired
-    RedditApi redditApi;
+    public ScheduledTasks(VerificationUpdater verificationUpdater, AccountUpdater accountUpdater, RedditApi redditApi) {
+        this.verificationUpdater = verificationUpdater;
+        this.accountUpdater = accountUpdater;
+        this.redditApi = redditApi;
+    }
 
     @Scheduled(cron = "0 */5 * * * *")
     private void updateVerifications() {
