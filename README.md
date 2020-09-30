@@ -5,7 +5,7 @@ The purpose of this project was to practice Full Stack Development along with [S
 
 **Configuration**
 
-Other than importing dependencies through Maven and have an SQL database running the dev must also create and fill in the following files with the necessary creditenals:  
+Other than importing dependencies through Maven and have an SQL database running the dev must also create and fill in the following files with the necessary credentials:  
 * application.yml ([example](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/resources/application.yml.example))  
 * SecretFile.java ([example](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/java/ssc_flairbot/SecretFile.java.example))   
 
@@ -71,5 +71,5 @@ Tests were created with the help of **JUnit 4**.
 ## Contributions
 
 * The solution started from a [Spring Oaut2](https://github.com/vymiyai/spring-oauth2-discord) sample code, to eventually become what it is today.
-* [L4J8](https://github.com/domisum/L4J8) micro manages the Riot API requests for me.
+* [L4J8](https://github.com/domisum/L4J8) micromanages the Riot API requests for me.
 * [Jesse Hallam](https://github.com/jessehallam/RedditRankedFlairs) for his version of the site, inspiring the site layout and the readme.
