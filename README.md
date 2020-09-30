@@ -64,5 +64,9 @@ The solution was built on **Java 10** in **IntelliJ IDEA** using **Spring Boot 2
 
 The majority of the website is a single HTML file which behaves like an app using **jQuery** and **Bootstrap**. The data representation on the front end is handled by **Thymeleaf**.  
 
-Data persistence is handled by **H2 Database** and **Jdbc**. The users data is stored in an **SQL** database.
+Data persistence is handled by **H2 Database** and **Jdbc**. The users data is stored in an **SQL** database.  
+
+Tests were created with the help of **JUnit 4**  
+
+
 
