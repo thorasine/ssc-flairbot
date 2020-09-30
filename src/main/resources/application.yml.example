@@ -12,7 +12,7 @@ reddit:
     userInfoUri: https://oauth.reddit.com/api/v1/me
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/[dbservername]?useUnicode=yes&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/[dbservername]?useUnicode=yes&characterEncoding=UTF-8
     username: myUserName
     password: myPassword
     driver-class-name: com.mysql.jdbc.Driver

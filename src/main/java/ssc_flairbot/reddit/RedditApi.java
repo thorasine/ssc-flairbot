@@ -40,7 +40,7 @@ public class RedditApi {
         this.token = tokenMaker.getToken();
     }
 
-    //max 100 users at a time
+    //The api can handle max 100 users at a time
     public String updateRankedFlairs(Map<String, String> users) {
         StringBuilder parameters = new StringBuilder("flair_csv=");
         for (String redditName : users.keySet()) {
