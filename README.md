@@ -40,6 +40,20 @@ The flair system was discontinued.
 
 **Systematic verification**
 
-In the summer of 2015, Summoner School's founder put out a call for somebody to try to solve the flair system's problem: verifying contributors in a systematic way.
+In the following years, Summoner School's founder put out a call for somebody to try to solve the flair system's problem: verifying contributors in a systematic way.
 
 This application is the result of that effort.
+
+## How it works
+
+Reddit users visit the site and are prompted to sign in using their Reddit account. Reddit's OAuth 2.0 protocol allows the site to verify that 
+their Reddit account is authentic.
+
+After signing in, the visitor can specify one or more League of Legends accounts that they own. To verify ownership of those accounts, a challenge is made:
+
+* The user must sign in to League of Legends and enter the given verification code
+
+* Using Riot Games' [Developer API](https://developer.riotgames.com/) the code is retrieved and checked for authenticity.
+
+Once these steps have been completed, the user is considered registered. From time to time, the user's rank is retrieved using the Riot API and
+a flair is composed and sent using Reddit's API.
