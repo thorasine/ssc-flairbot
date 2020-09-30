@@ -66,7 +66,10 @@ The majority of the website is a single HTML file which behaves like an app usin
 
 Data persistence is handled by **H2 Database** and **Jdbc**. The users data is stored in an **SQL** database.  
 
-Tests were created with the help of **JUnit 4**  
+Tests were created with the help of **JUnit 4**.  
 
+## Contributions
 
-
+* The solution started from a [Spring Oaut2](https://github.com/vymiyai/spring-oauth2-discord) sample code, to eventually become what it is today.
+* [L4J8](https://github.com/domisum/L4J8) micro manages the Riot API requests for me.
+* [Jesse Hallam](https://github.com/jessehallam/RedditRankedFlairs) for inspiring the site layout and the readme.
