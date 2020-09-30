@@ -60,7 +60,9 @@ a flair is composed and sent using Reddit's API.
 
 # Technical Info
 
-The solution was built on **Java 10** in **IntelliJ IDEA** using **Spring Boot 2.1.1** as the main framework for the server along with it's various components.  
+The solution was built on **Java 10** in **IntelliJ IDEA** using **Spring Boot 2.1.1** as the main framework along with various Spring components.  
+
 The majority of the website is a single HTML file which behaves like an app using **jQuery** and **Bootstrap**. The data representation on the front end is handled by **Thymeleaf**.  
-Data persistence is handled by **H2** and **Jdbc** 
+
+Data persistence is handled by **H2 Database** and **Jdbc**. The users data is stored in an **SQL** database.
 
