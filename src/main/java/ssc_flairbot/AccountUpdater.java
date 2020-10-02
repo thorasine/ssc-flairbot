@@ -19,71 +19,67 @@ import java.util.logging.Logger;
 
 @Component
 public class AccountUpdater {
-	private final DBHandler db;
 
-	private final RankUpdateTask rankUpdateTask;
+    private final DBHandler db;
+    private final RankUpdateTask rankUpdateTask;
+    private double threshold;
+    private RateLimiter globalLimiter;
+    private List<String> servers;
+    private List<RateLimiter> limiters;
 
-	private double threshold;
+    @Autowired
+    public AccountUpdater(DBHandler db, RankUpdateTask rankUpdateTask) {
+        this.db = db;
+        this.rankUpdateTask = rankUpdateTask;
+    }
 
-	private RateLimiter globalLimiter;
+    @PostConstruct
+    private void init() {
+        threshold = 0.5;
+        globalLimiter = new RateLimiter((int) (500 * threshold), 10_000);
+        servers = Arrays.asList("EUW", "NA", "EUNE", "BR", "KR", "LAN", "LAS", "TR", "OCE", "JP", "RU");
+        List<Integer> serverLimits = Arrays.asList(300, 270, 165, 90, 90, 80, 80, 60, 55, 35, 35);
+        serverLimits.forEach(item -> item = (int) (item * threshold));
+        limiters = new ArrayList<>();
+        for (Integer serverLimit : serverLimits) {
+            limiters.add(new RateLimiter(serverLimit, 60_000));
+        }
+    }
 
-	private List<String> servers;
+    String scheduledUpdate() {
+        Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Started: Scheduled database update.");
+        int nThreads = servers.size();
+        ExecutorService executor = Executors.newFixedThreadPool(nThreads);
+        CompletableFuture[] futures = new CompletableFuture[nThreads];
+        for (int i = 0; i < nThreads; i++) {
+            Runnable runner = new UpdateTask(servers.get(i), limiters.get(i), globalLimiter);
+            futures[i] = CompletableFuture.runAsync(runner, executor);
+        }
+        CompletableFuture.allOf(futures).join();
+        Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Finished: Scheduled database update.");
+        return "ok";
+    }
 
-	private List<RateLimiter> limiters;
+    private class UpdateTask implements Runnable {
 
-	@Autowired
-	public AccountUpdater(DBHandler db, RankUpdateTask rankUpdateTask) {
-		this.db = db;
-		this.rankUpdateTask = rankUpdateTask;
-	}
+        private String server;
+        private RateLimiter limiter;
+        private RateLimiter globalLimiter;
 
-	@PostConstruct
-	private void init() {
-		threshold = 0.5;
-		globalLimiter = new RateLimiter((int) (500 * threshold), 10_000);
-		servers = Arrays.asList("EUW", "NA", "EUNE", "BR", "KR", "LAN", "LAS", "TR", "OCE", "JP", "RU");
-		List<Integer> serverLimits = Arrays.asList(300, 270, 165, 90, 90, 80, 80, 60, 55, 35, 35);
-		serverLimits.forEach(item -> item = (int) (item * threshold));
-		limiters = new ArrayList<>();
-		for (Integer serverLimit : serverLimits) {
-			limiters.add(new RateLimiter(serverLimit, 60_000));
-		}
-	}
+        UpdateTask(String server, RateLimiter serverLimiter, RateLimiter globalLimiter) {
+            this.server = server;
+            this.limiter = serverLimiter;
+            this.globalLimiter = globalLimiter;
+        }
 
-	public String scheduledUpdate() {
-		Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Started: Updating database.");
-		ExecutorService executor = Executors.newFixedThreadPool(11);
-		CompletableFuture[] futures = new CompletableFuture[11];
-		for (int i = 0; i < servers.size(); i++) {
-			Runnable runner = new UpdateTask(servers.get(i), limiters.get(i), globalLimiter);
-			futures[i] = CompletableFuture.runAsync(runner, executor);
-		}
-		CompletableFuture.allOf(futures).join();
-		return "ok";
-	}
-
-	private class UpdateTask implements Runnable {
-
-		private String server;
-
-		private RateLimiter limiter;
-
-		private RateLimiter globalLimiter;
-
-		public UpdateTask(String server, RateLimiter serverLimiter, RateLimiter globalLimiter) {
-			this.server = server;
-			this.limiter = serverLimiter;
-			this.globalLimiter = globalLimiter;
-		}
-
-		public void run() {
-			List<User> accounts = db.getValidatedAccountsByServer(server);
-			if (accounts.size() == 0) return;
-			Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Started: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
-			List<List<User>> lists = Lists.partition(accounts, 100);
-			lists.forEach(chunk -> rankUpdateTask.update(chunk, limiter, globalLimiter));
-			Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Finished: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
-		}
-	}
+        public void run() {
+            List<User> accounts = db.getValidatedAccountsByServer(server);
+            if (accounts.size() == 0) return;
+            Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Started: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
+            List<List<User>> lists = Lists.partition(accounts, 100);
+            lists.forEach(chunk -> rankUpdateTask.update(chunk, limiter, globalLimiter));
+            Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Finished: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
+        }
+    }
 
 }
