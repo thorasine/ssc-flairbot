@@ -15,4 +15,4 @@ spring:
     url: jdbc:mysql://localhost:3306/[dbservername]?useUnicode=yes&characterEncoding=UTF-8
     username: myUserName
     password: myPassword
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver

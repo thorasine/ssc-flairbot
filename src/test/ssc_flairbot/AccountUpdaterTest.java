@@ -61,6 +61,7 @@ public class AccountUpdaterTest {
         setUp();
     }
 
+    //todo Reddit name is set to the summoner name too so often it'll result in "unable to resolve user" error from Reddit API
     private void setUsers(String server, List<User> list){
         List<SpectatorParticipant> participants = new SpectatorBuilder().withPlatform(lolApi.platformConvert(server)).getFeaturedGames().get(0).getParticipants();
         for(int i = 0; i < nAccounts; i++){
