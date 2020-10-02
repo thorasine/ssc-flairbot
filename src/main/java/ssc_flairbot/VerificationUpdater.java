@@ -19,7 +19,7 @@ public class VerificationUpdater {
     private final DBHandler database;
     private final FlairHandler flairHandler;
 
-    private final int TRIES_UNTIL_FAIL = 10;
+    private static final int TRIES_UNTIL_FAIL = 10;
 
     @Autowired
     public VerificationUpdater(LeagueApi lolApi, DBHandler database, FlairHandler flairHandler) {

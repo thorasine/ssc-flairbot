@@ -29,7 +29,8 @@ public class FlairHandler {
     public void updateFlairs(List<User> users) {
         if (users.isEmpty()) return;
         Logger.getLogger(FlairHandler.class.getName()).log(Level.FINE, "Started: Updating flairs for " + users.size() + " users.");
-        List<List<User>> lists = Lists.partition(users, 100);
+        int chunkSize = 100;
+        List<List<User>> lists = Lists.partition(users, chunkSize);
         for (List<User> chunk : lists) {
             Map<String, String> flairMap = new HashMap<>();
             chunk.forEach(user -> {

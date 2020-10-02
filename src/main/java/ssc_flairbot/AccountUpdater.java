@@ -36,13 +36,16 @@ public class AccountUpdater {
     @PostConstruct
     private void init() {
         threshold = 0.5;
-        globalLimiter = new RateLimiter((int) (500 * threshold), 10_000);
+        int globalLimit = 500;
+        int globalTimespan = 10_000;
+        int serverTimespan = 60_000;
         servers = Arrays.asList("EUW", "NA", "EUNE", "BR", "KR", "LAN", "LAS", "TR", "OCE", "JP", "RU");
         List<Integer> serverLimits = Arrays.asList(300, 270, 165, 90, 90, 80, 80, 60, 55, 35, 35);
-        serverLimits.forEach(item -> item = (int) (item * threshold));
+        globalLimiter = new RateLimiter((int) (globalLimit * threshold), globalTimespan);
+        serverLimits.forEach(serverLimit -> serverLimit = (int) (serverLimit * threshold));
         limiters = new ArrayList<>();
         for (Integer serverLimit : serverLimits) {
-            limiters.add(new RateLimiter(serverLimit, 60_000));
+            limiters.add(new RateLimiter(serverLimit, serverTimespan));
         }
     }
 
