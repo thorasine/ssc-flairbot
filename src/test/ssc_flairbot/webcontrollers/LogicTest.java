@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import ssc_flairbot.league.LeagueApi;
-import ssc_flairbot.league.RankHandler;
+import ssc_flairbot.league.RankHelper;
 import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
 import ssc_flairbot.persistence.UserBuilder;
@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 
 @JdbcTest
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {Logic.class, LeagueApi.class, RankHandler.class, DBHandler.class, TokenMaker.class})
+@ContextConfiguration(classes = {Logic.class, LeagueApi.class, RankHelper.class, DBHandler.class, TokenMaker.class})
 public class LogicTest {
 
     @Autowired

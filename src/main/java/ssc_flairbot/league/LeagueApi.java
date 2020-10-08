@@ -25,13 +25,13 @@ import ssc_flairbot.persistence.User;
 @Component
 public class LeagueApi {
 
-    private final RankHandler rankHandler;
+    private final RankHelper rankHelper;
     private L4J8 api;
     private List<String> availableRegions;
 
     @Autowired
-    public LeagueApi(RankHandler rankHandler) {
-        this.rankHandler = rankHandler;
+    public LeagueApi(RankHelper rankHelper) {
+        this.rankHelper = rankHelper;
     }
 
     /**
@@ -87,7 +87,7 @@ public class LeagueApi {
         if (leaguePositions.isEmpty()) {
             return "Unranked";
         }
-        return rankHandler.getSummonerHighestRank(leaguePositions);
+        return rankHelper.getSummonerHighestRank(leaguePositions);
     }
 
     /**

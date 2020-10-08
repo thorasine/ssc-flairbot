@@ -13,7 +13,7 @@ import ssc_flairbot.persistence.UserBuilder;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {LeagueApi.class, RankHandler.class})
+@ContextConfiguration(classes = {LeagueApi.class, RankHelper.class})
 public class LeagueApiTest {
 
     @Autowired

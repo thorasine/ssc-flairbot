@@ -12,11 +12,11 @@ import java.util.Set;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {RankHandler.class})
-public class RankHandlerTest {
+@ContextConfiguration(classes = {RankHelper.class})
+public class RankHelperTest {
 
     @Autowired
-    private RankHandler rankHandler;
+    private RankHelper rankHelper;
 
     @Test
     public void getHighestRank() {
@@ -32,13 +32,13 @@ public class RankHandlerTest {
         ranks.add("Master I");
         ranks.add("Grandmaster I");
         ranks.add("Challenger I");
-        assertEquals("Rank is not Challenger I", "Challenger I", rankHandler.getHighestRank(ranks));
+        assertEquals("Rank is not Challenger I", "Challenger I", rankHelper.getHighestRank(ranks));
     }
 
     @Test
     public void getUnranked() {
         Set<String> ranks = new HashSet<>();
-        assertEquals("Rank is not Unranked", "Unranked", rankHandler.getHighestRank(ranks));
+        assertEquals("Rank is not Unranked", "Unranked", rankHelper.getHighestRank(ranks));
     }
 
 }

@@ -2,7 +2,7 @@ package ssc_flairbot.reddit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ssc_flairbot.league.RankHandler;
+import ssc_flairbot.league.RankHelper;
 import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
 
@@ -17,13 +17,13 @@ public class FlairHandler {
 
     private final RedditApi redditApi;
     private final DBHandler database;
-    private final RankHandler rankHandler;
+    private final RankHelper rankHelper;
 
     @Autowired
-    public FlairHandler(RedditApi redditApi, DBHandler database, RankHandler rankHandler) {
+    public FlairHandler(RedditApi redditApi, DBHandler database, RankHelper rankHelper) {
         this.redditApi = redditApi;
         this.database = database;
-        this.rankHandler = rankHandler;
+        this.rankHelper = rankHelper;
     }
 
     public void updateFlairs(List<User> users) {
@@ -50,7 +50,7 @@ public class FlairHandler {
         for (User account : accounts) {
             ranks.add(account.getRank());
         }
-        String rank = rankHandler.getHighestRank(ranks);
+        String rank = rankHelper.getHighestRank(ranks);
         if (!rank.equalsIgnoreCase("Unranked")) {
             return rank;
         }

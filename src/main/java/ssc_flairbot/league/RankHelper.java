@@ -10,20 +10,36 @@ import no.stelar7.api.l4j8.pojo.league.LeagueEntry;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * Class that's main function is to format and retrieve the highest rank from a given collection.
+ *
+ * @author Thorasine
+ */
 @Component
-public class RankHandler {
+public class RankHelper {
 
-    public String getSummonerHighestRank(List<LeagueEntry> leaguePositions) {
+    /**
+     * Returns the highest 5v5 rank as a string from a list of LeagueEntry-s.
+     *
+     * @param leaguePositions list containing LeagueEntry-s (ranks)
+     * @return the highest rank
+     */
+    String getSummonerHighestRank(List<LeagueEntry> leaguePositions) {
         Set<String> ranks = new HashSet<>();
         leaguePositions.forEach(position -> {
             if (position.getQueueType().equals(GameQueueType.RANKED_SOLO_5X5)) {
                 ranks.add(position.getTier() + " " + position.getRank());
             }
         });
-
         return getHighestRank(ranks);
     }
 
+    /**
+     * Returns the highest rank as a string from a set of ranks.
+     *
+     * @param ranks set containing ranks
+     * @return the highest rank
+     */
     public String getHighestRank(Set<String> ranks) {
         String maxTier = "UNRANKED";
         String maxDivision = "IV";
@@ -32,7 +48,6 @@ public class RankHandler {
             String tier = splitted[0].toUpperCase();
             if (tier.equalsIgnoreCase("UNRANKED")) continue;
             String division = splitted[1];
-
             if (Tier.valueOf(tier).isAbove(Tier.valueOf(maxTier))) {
                 maxTier = tier;
                 maxDivision = division;
@@ -42,10 +57,16 @@ public class RankHandler {
                 }
             }
         }
-
         return rankFormatter(maxTier, maxDivision);
     }
 
+    /**
+     * Formats the rank into a proper string (e.g. "Diamond IV") given the tier and division.
+     *
+     * @param tier     first part of the rank (e.g. "Diamond")
+     * @param division second part of the rank (e.g. "IV")
+     * @return the properly formatten rank string
+     */
     private String rankFormatter(String tier, String division) {
         tier = tier.toLowerCase();
         tier = tier.substring(0, 1).toUpperCase() + tier.substring(1);
@@ -56,6 +77,9 @@ public class RankHandler {
         }
     }
 
+    /**
+     * Enumerator for every tier weighted based on their place on the ladder.
+     */
     private enum Tier {
         UNRANKED(0), IRON(1), BRONZE(2), SILVER(3), GOLD(4), PLATINUM(5), DIAMOND(6), MASTER(7), GRANDMASTER(8), CHALLENGER(9);
 
@@ -74,6 +98,9 @@ public class RankHandler {
         }
     }
 
+    /**
+     * Enumerator for every division weighted based on their place inside Tiers in-game.
+     */
     private enum Division {
         IV(0), III(1), II(2), I(3);
 

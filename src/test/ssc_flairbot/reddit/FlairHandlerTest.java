@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import ssc_flairbot.league.RankHandler;
+import ssc_flairbot.league.RankHelper;
 import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
 import ssc_flairbot.persistence.UserBuilder;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @JdbcTest
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {FlairHandler.class, RedditApi.class, DBHandler.class, RankHandler.class, TokenMaker.class})
+@ContextConfiguration(classes = {FlairHandler.class, RedditApi.class, DBHandler.class, RankHelper.class, TokenMaker.class})
 public class FlairHandlerTest {
 
     @Autowired
