@@ -16,6 +16,12 @@ import org.springframework.stereotype.Component;
 import ssc_flairbot.SecretFile;
 import ssc_flairbot.persistence.User;
 
+/**
+ * Class that handles the communication between the app and Riot's REST API with the help of L4J8 library.
+ *
+ * @author Thorasine
+ */
+
 @Component
 public class LeagueApi {
 
@@ -28,12 +34,21 @@ public class LeagueApi {
         this.rankHandler = rankHandler;
     }
 
+    /**
+     * Sets the creditenals and available regions for the L4J8 library.
+     */
     @PostConstruct
     private void init() {
         this.api = new L4J8(SecretFile.CREDS);
         availableRegions = List.of("NA", "EUW", "EUNE", "BR", "LAN", "LAS", "JP", "KR", "OCE", "RU", "TR");
     }
 
+    /**
+     * Returns the user's in-game information through Riot's API.
+     *
+     * @param user whose summonerName and server attributes will identify their in game profile
+     * @return the user's in-game info (including their rank)
+     */
     public Summoner getSummoner(User user) {
         if (!availableRegions.contains(user.getServer())) {
             Logger.getLogger(LeagueApi.class.getName()).log(Level.INFO, "Server not found for: /u/" + user.getRedditName() + " server: " + user.getServer());
@@ -47,6 +62,12 @@ public class LeagueApi {
         return summoner;
     }
 
+    /**
+     * Returns the user's third party code (that they set) using Riot's API, to verify their identity.
+     *
+     * @param user whose code we wish to retrieve
+     * @return the user's third party code
+     */
     public String getThirdPartyCode(User user) {
         String code = new ThirdPartyCodeBuilder().withPlatform(platformConvert(user.getServer())).withSummonerId(user.getSummonerId()).getCode();
         if (code == null) {
@@ -55,7 +76,13 @@ public class LeagueApi {
         return code;
     }
 
-    public String getHighestRank(User user) {
+    /**
+     * Returns the user's 5v5 in-game rank using Riot's API. If the user is not 5v5 ranked, then returns Unranked.
+     *
+     * @param user whose rank we wish to retrieve
+     * @return the user's rank or Unranked
+     */
+    public String getRank(User user) {
         List<LeagueEntry> leaguePositions = api.getLeagueAPI().getLeagueEntries(platformConvert(user.getServer()), user.getSummonerId());
         if (leaguePositions.isEmpty()) {
             return "Unranked";
@@ -63,6 +90,13 @@ public class LeagueApi {
         return rankHandler.getSummonerHighestRank(leaguePositions);
     }
 
+    /**
+     * Converts a String object into a corresponding Platform one. Platform is the required format for server identification
+     * in the L4J8 library.
+     *
+     * @param server which we want to convert
+     * @return a Platform that we can use for Riot API request
+     */
     public Platform platformConvert(String server) {
         switch (server) {
             case "NA":

@@ -56,7 +56,7 @@ public class Logic {
         user.setValidationCode(randomStringGenerator());
         user.setValidated("pending");
         user.setValidationTries(0);
-        user.setRank(lolApi.getHighestRank(user));
+        user.setRank(lolApi.getRank(user));
         database.addUser(user);
         Logger.getLogger(Logic.class.getName()).log(Level.INFO, "Created user: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ") " + "Highest rank: " + user.getRank());
         return "ok";

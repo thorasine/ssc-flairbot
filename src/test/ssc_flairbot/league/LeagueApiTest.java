@@ -34,9 +34,9 @@ public class LeagueApiTest {
 
 
     @Test
-    public void getHighestRank() {
+    public void getRank() {
         user1.setSummonerId(lolApi.getSummoner(user1).getSummonerId());
-        assertNotNull("Highest rank for Thorasine is null.", lolApi.getHighestRank(user1));
+        assertNotNull("Highest rank for Thorasine is null.", lolApi.getRank(user1));
     }
 
 }
