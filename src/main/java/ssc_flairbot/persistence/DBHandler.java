@@ -10,26 +10,28 @@ import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+/**
+ * Class that handles the database requests.
+ *
+ * @author Thorasine
+ */
 @Component
 public class DBHandler {
 
+    private final JdbcTemplate database;
+
     @Autowired
-    JdbcTemplate database;
-
-    public List<User> getPendingUsers() {
-        String SQL = "SELECT * FROM users WHERE validated = 'pending'";
-        List<User> userList = database.query(SQL, new Object[]{}, new UserMapper());
-        return userList;
+    public DBHandler(JdbcTemplate database) {
+        this.database = database;
     }
 
-    public void addUser(User user) {
-        String SQL = "INSERT INTO users(redditName, summonerName, summonerId, server, rank, validated, validationCode, "
-                + "validationTries, updateDate) VALUES (?,?,?,?,?,?,?,?,?)";
-        database.update(SQL, user.getRedditName(), user.getSummonerName(), user.getSummonerId(), user.getServer(),
-                user.getRank(), user.getValidated(), user.getValidationCode(), user.getValidationTries(), getDate());
-    }
-
-    public int[] batchAddUsers(List<User> users) {
+    /**
+     * Adds multiple users to the database in one session.
+     *
+     * @param users we want to add to the database
+     * @return the amount of affected rows
+     */
+    int[] batchAddUsers(List<User> users) {
         String SQL = "INSERT INTO users(redditName, summonerName, summonerId, server, rank, validated, validationCode, "
                 + "validationTries, updateDate) VALUES (?,?,?,?,?,?,?,?,?)";
         int[] updateCounts = database.batchUpdate(SQL,
@@ -53,11 +55,12 @@ public class DBHandler {
         return updateCounts;
     }
 
-    public void deleteUser(long id) {
-        String SQL = "DELETE FROM users WHERE id = ?";
-        database.update(SQL, id);
-    }
-
+    /**
+     * Updates the rank and updateDate for multiple users in one session.
+     *
+     * @param users we want to update
+     * @return the amount of affected rows
+     */
     public int[] batchUpdateUsersRank(List<User> users) {
         int[] updateCounts = database.batchUpdate(
                 "UPDATE users SET rank = ?, updateDate = ? WHERE id = ?",
@@ -75,10 +78,21 @@ public class DBHandler {
         return updateCounts;
     }
 
+    public void addUser(User user) {
+        String SQL = "INSERT INTO users(redditName, summonerName, summonerId, server, rank, validated, validationCode, "
+                + "validationTries, updateDate) VALUES (?,?,?,?,?,?,?,?,?)";
+        database.update(SQL, user.getRedditName(), user.getSummonerName(), user.getSummonerId(), user.getServer(),
+                user.getRank(), user.getValidated(), user.getValidationCode(), user.getValidationTries(), getDate());
+    }
+
+    public void deleteUser(long id) {
+        String SQL = "DELETE FROM users WHERE id = ?";
+        database.update(SQL, id);
+    }
+
     public void updateUser(User user) {
-        String SQL = "UPDATE users SET redditName = ?, summonerName = ?, "
-                + "summonerId = ?, server = ?, rank = ?, validated = ?, validationCode = ?, "
-                + "validationTries = ?, updateDate = ? WHERE id = ?";
+        String SQL = "UPDATE users SET redditName = ?, summonerName = ?, summonerId = ?, server = ?, rank = ?, " +
+                "validated = ?, validationCode = ?, validationTries = ?, updateDate = ? WHERE id = ?";
         database.update(SQL, user.getRedditName(), user.getSummonerName(), user.getSummonerId(), user.getServer(),
                 user.getRank(), user.getValidated(), user.getValidationCode(), user.getValidationTries(),
                 getDate(), user.getId());
@@ -86,8 +100,7 @@ public class DBHandler {
 
     public User getUserById(Long id) {
         String SQL = "SELECT * FROM users WHERE id = ?";
-        User user = database.queryForObject(SQL, new Object[]{id}, new UserMapper());
-        return user;
+        return database.queryForObject(SQL, new Object[]{id}, new UserMapper());
     }
 
     public boolean isSummonerAlreadyValidatedBySomeone(User user) {
@@ -105,26 +118,27 @@ public class DBHandler {
 
     public List<User> getValidatedAccountsByServer(String server) {
         String SQL = "SELECT * FROM users WHERE server = ? AND validated = 'validated'";
-        List<User> accountList = database.query(SQL, new Object[]{server}, new UserMapper());
-        return accountList;
+        return database.query(SQL, new Object[]{server}, new UserMapper());
     }
 
     public List<User> getValidatedAccountsByRedditName(String redditName) {
         String SQL = "SELECT * FROM users WHERE redditName = ? AND validated = 'validated'";
-        List<User> accountList = database.query(SQL, new Object[]{redditName}, new UserMapper());
-        return accountList;
+        return database.query(SQL, new Object[]{redditName}, new UserMapper());
     }
 
     public List<User> getAccountsByRedditName(String redditName) {
         String SQL = "SELECT * FROM users WHERE redditName = ?";
-        List<User> accountList = database.query(SQL, new Object[]{redditName}, new UserMapper());
-        return accountList;
+        return database.query(SQL, new Object[]{redditName}, new UserMapper());
     }
 
     public List<User> getAllUsers() {
         String SQL = "SELECT * FROM users";
-        List<User> users = database.query(SQL, new UserMapper());
-        return users;
+        return database.query(SQL, new UserMapper());
+    }
+
+    public List<User> getPendingUsers() {
+        String SQL = "SELECT * FROM users WHERE validated = 'pending'";
+        return database.query(SQL, new Object[]{}, new UserMapper());
     }
 
     public void createTable() {
