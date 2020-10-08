@@ -70,6 +70,6 @@ Tests were created with the help of **JUnit 4**.
 
 ## Contributions
 
-* The solution started from a [Spring Oaut2](https://github.com/vymiyai/spring-oauth2-discord) sample code, to eventually become what it is today.
-* [L4J8](https://github.com/domisum/L4J8) micromanages the Riot API requests for me.
+* The solution started from a [Spring Oaut2](https://github.com/vymiyai/spring-oauth2-discord) example, to eventually become what it is today.
+* [L4J8](https://github.com/domisum/L4J8) micromanages requests towards Riot API.
 * [Jesse Hallam](https://github.com/jessehallam) for his version of the site, inspiring the site layout and the readme.
