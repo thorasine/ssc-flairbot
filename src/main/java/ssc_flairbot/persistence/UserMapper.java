@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 
 /**
- * Class that helps with database queries
+ * Class that helps with database queries.
  */
 public class UserMapper implements RowMapper<User> {
 

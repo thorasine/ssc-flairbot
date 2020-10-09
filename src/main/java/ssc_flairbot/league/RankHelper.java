@@ -11,7 +11,7 @@ import no.stelar7.api.l4j8.pojo.league.LeagueEntry;
 import org.springframework.stereotype.Component;
 
 /**
- * Class that's main function is to format and retrieve the highest rank from a given collection.
+ * Class to format and retrieve the highest rank from a given collection.
  *
  * @author Thorasine
  */
@@ -19,10 +19,10 @@ import org.springframework.stereotype.Component;
 public class RankHelper {
 
     /**
-     * Returns the highest 5v5 rank as a string from a list of LeagueEntry-s.
+     * Return the highest 5v5 rank as a string from a list of LeagueEntry-s.
      *
-     * @param leaguePositions list containing LeagueEntry-s (ranks)
-     * @return the highest rank
+     * @param leaguePositions the list containing LeagueEntry-s (ranks)
+     * @return the highest rank string
      */
     String getSummonerHighestRank(List<LeagueEntry> leaguePositions) {
         Set<String> ranks = new HashSet<>();
@@ -35,10 +35,10 @@ public class RankHelper {
     }
 
     /**
-     * Returns the highest rank as a string from a set of ranks.
+     * Return the highest rank as a string from a set of ranks.
      *
-     * @param ranks set containing ranks
-     * @return the highest rank
+     * @param ranks the set containing ranks
+     * @return the highest rank string
      */
     public String getHighestRank(Set<String> ranks) {
         String maxTier = "UNRANKED";
@@ -61,7 +61,7 @@ public class RankHelper {
     }
 
     /**
-     * Formats the rank into a proper string (e.g. "Diamond IV") given the tier and division.
+     * Format the rank into a proper string (e.g. "Diamond IV") given the tier and division.
      *
      * @param tier     first part of the rank (e.g. "Diamond")
      * @param division second part of the rank (e.g. "IV")
