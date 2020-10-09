@@ -19,7 +19,7 @@ The following rest APIs are used:
 Over the course of year-long sprints, or "seasons", more than 100 million players worldwide compete to achieve standings on a competitive ladder.
 Those who successfully climb the ladder are awarded ranks: Iron, Bronze, Silver, Gold, Platinum, Diamond, Master, Grandmaster and Challenger.
 
-[Summoner School](https://reddit.com/r/summonerschool) is an online community of players who have come together to help one another be better players.
+[Summoner School](https://reddit.com/r/summonerschool) is an online community counting close to half a million users, who have come together to help one another be better players.
 
 Every day, hundreds of thousands of players come together to share information on Summoner School. In order for the information given there to be vetted correctly, it's sometimes
 important to know the rank of the person giving the information. A "Silver" player may not be wrong, but players might want to prefer the opinion of a "Master" or "Challenger" instead.
