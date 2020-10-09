@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URI;
 
+/**
+ * Class that handles reddit Oath2 authorization.
+ */
 public class RedditHttpRequestFactory extends SimpleClientHttpRequestFactory {
 
     @Override
@@ -21,8 +24,7 @@ public class RedditHttpRequestFactory extends SimpleClientHttpRequestFactory {
     }
 
     @Override
-    protected void prepareConnection(HttpURLConnection connection, String httpMethod)
-            throws IOException {
+    protected void prepareConnection(HttpURLConnection connection, String httpMethod) throws IOException {
         super.prepareConnection(connection, httpMethod);
         connection.setInstanceFollowRedirects(false);
         connection.setUseCaches(false);

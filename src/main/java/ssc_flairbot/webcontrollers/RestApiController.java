@@ -11,57 +11,90 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ssc_flairbot.persistence.User;
 
+/**
+ * Class that handles the REST API connections.
+ */
 @RestController
 public class RestApiController {
 
-    private final Logic logic;
+    private final WebLogic webLogic;
 
     @Autowired
-    public RestApiController(Logic logic) {
-        this.logic = logic;
+    public RestApiController(WebLogic webLogic) {
+        this.webLogic = webLogic;
     }
 
+    /**
+     * Attempt to add a user's summoner (in-game account) to the user's account and save it into
+     * the database.
+     *
+     * @param user      the user whose in-game account gets added
+     * @param principal the user's principal
+     * @return the response based on the outcome of the operation
+     */
     @PostMapping("/addSummoner")
     public String addSummoner(User user, Principal principal) {
-        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        Map<?, ?> details = (Map<?, ?>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String redditName = (String) details.get("name");
         user.setRedditName(redditName);
-        String response = logic.addUser(user);
-        return response;
+        return webLogic.addUser(user);
     }
 
+    /**
+     * Attempt to delete a user's summoner (in-game account) from the user's account.
+     *
+     * @param id        the ID of the summoner in the database
+     * @param principal the user's principal
+     * @return the response based on the outcome of the operation
+     */
     @PostMapping("/deleteSummoner")
     public String deleteSummoner(@RequestParam(value = "id") Long id, Principal principal) {
-        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        Map<?, ?> details = (Map<?, ?>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String redditName = (String) details.get("name");
-        String response = logic.deleteUser(redditName, id);
-        return response;
+        return webLogic.deleteUser(redditName, id);
     }
 
+    /**
+     * Get the princial name (aka reddit username) from the user's principal.
+     *
+     * @param principal the user's principal
+     * @return the user's reddit name
+     */
     @GetMapping("/principalName")
     public String principalName(Principal principal) {
-        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
-        String principalName = (String) details.get("name");
-        return principalName;
+        Map<?, ?> details = (Map<?, ?>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        return (String) details.get("name");
     }
 
+    /**
+     * Method one used for testing purposes. Only calls underlying functions if the user is named "thorasine".
+     *
+     * @param principal the user's principal
+     * @return the string "test 1"
+     */
     @PostMapping("/testFunction")
     public String test(Principal principal) {
-        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        Map<?, ?> details = (Map<?, ?>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String principalName = (String) details.get("name");
         if (principalName.equalsIgnoreCase("thorasine")) {
-            logic.test();
+            webLogic.test();
         }
-        return "Tested.";
+        return "test 1";
     }
 
+    /**
+     * Method two used for testing purposes. Only calls underlying functions if the user is named "thorasine".
+     *
+     * @param principal the user's principal
+     * @return the string "test 2"
+     */
     @PostMapping("/testFunction2")
     public String test2(Principal principal) {
-        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        Map<?, ?> details = (Map<?, ?>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String principalName = (String) details.get("name");
         if (principalName.equalsIgnoreCase("thorasine")) {
-            logic.test2();
+            webLogic.test2();
         }
-        return "Tested.";
+        return "test 2";
     }
 }

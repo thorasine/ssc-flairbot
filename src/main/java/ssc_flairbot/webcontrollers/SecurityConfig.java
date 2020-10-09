@@ -20,7 +20,6 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticat
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.oauth2.client.token.AccessTokenProvider;
 import org.springframework.security.oauth2.client.token.AccessTokenProviderChain;
-import org.springframework.security.oauth2.client.token.OAuth2AccessTokenSupport;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeAccessTokenProvider;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
@@ -29,12 +28,14 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+/**
+ * Class that configures Spring Security and Oauth2.
+ */
 @Configuration
 @EnableOAuth2Client
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    final
-    OAuth2ClientContext oauth2ClientContext;
+    private final OAuth2ClientContext oauth2ClientContext;
 
     @Autowired
     public SecurityConfig(@Qualifier("oauth2ClientContext") OAuth2ClientContext oauth2ClientContext) {
@@ -65,10 +66,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         ClientHttpRequestFactory requestFactory = new RedditHttpRequestFactory();
 
-        OAuth2AccessTokenSupport authAccessProvider = new AuthorizationCodeAccessTokenProvider();
+        AuthorizationCodeAccessTokenProvider authAccessProvider = new AuthorizationCodeAccessTokenProvider();
         authAccessProvider.setRequestFactory(requestFactory);
 
-        AccessTokenProvider accessTokenProvider = new AccessTokenProviderChain(Arrays.<AccessTokenProvider>asList((AuthorizationCodeAccessTokenProvider) authAccessProvider));
+        AccessTokenProvider accessTokenProvider = new AccessTokenProviderChain(Arrays.<AccessTokenProvider>asList(authAccessProvider));
         discordTemplate.setAccessTokenProvider(accessTokenProvider);
 
         discordTemplate.setRequestFactory(requestFactory);

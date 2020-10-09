@@ -17,25 +17,34 @@ import ssc_flairbot.league.LeagueApi;
 import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
 
+/**
+ * Class that processes incoming user requests.
+ */
 @Component
-public class Logic {
+public class WebLogic {
 
     private final DBHandler database;
     private final LeagueApi lolApi;
 
     @Autowired
-    public Logic(DBHandler database, LeagueApi lolApi) {
+    public WebLogic(DBHandler database, LeagueApi lolApi) {
         this.database = database;
         this.lolApi = lolApi;
     }
 
-    public String addUser(User user) {
-        //Check if user's summoner is a name
+    /**
+     * Add a user to the database if it have passed the checks.
+     *
+     * @param user the user we want to add
+     * @return "ok" string if every check have passed, an error message otherwise
+     */
+    String addUser(User user) {
+        //user's summoner is a name
         if (user.getSummonerName().equals("")) {
             return "You must fill the Summoner Name section!";
         }
 
-        //Check if summoner exists
+        //summoner (in-game account) exists
         Summoner summoner = lolApi.getSummoner(user);
         if (summoner == null) {
             return "Summoner " + user.getSummonerName() + " (" + user.getServer() + ") does not exists.";
@@ -43,27 +52,36 @@ public class Logic {
         user.setSummonerName(summoner.getName());
         user.setSummonerId(summoner.getSummonerId());
 
-        //Check if he have already added this summoner
+        //user have already have this summoner addded
         if (database.isSummonerAlreadyRegisteredByUser(user)) {
             return "You have already registered this account.";
         }
-        //Check if validated one already exists
+
+        //someone else have already verified this summoner on their account
         if (database.isSummonerAlreadyValidatedBySomeone(user)) {
             return "Summoner is already validated by someone else.";
         }
 
-        //User passed the checks, complete registration
+        //user passed the checks, complete the registration
         user.setValidationCode(randomStringGenerator());
         user.setValidated("pending");
         user.setValidationTries(0);
         user.setRank(lolApi.getRank(user));
         database.addUser(user);
-        Logger.getLogger(Logic.class.getName()).log(Level.INFO, "Created user: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ") " + "Highest rank: " + user.getRank());
+        Logger.getLogger(WebLogic.class.getName()).log(Level.INFO, "Created user: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ") " + "Highest rank: " + user.getRank());
         return "ok";
     }
 
-    public String deleteUser(String redditName, Long id) {
+    /**
+     * Delete a user from the database if it have passed the checks.
+     *
+     * @param redditName the user's account name
+     * @param id         the ID of the account we want to delete
+     * @return "ok" string if every check have passed, an error message otherwise
+     */
+    String deleteUser(String redditName, Long id) {
         User user;
+        //
         try {
             user = database.getUserById(id);
         } catch (EmptyResultDataAccessException ex) {
@@ -74,24 +92,29 @@ public class Logic {
             return "The account you tried to delete is not yours!";
         }
         database.deleteUser(id);
-        Logger.getLogger(Logic.class.getName()).log(Level.INFO, "Deleted user: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ")");
+        Logger.getLogger(WebLogic.class.getName()).log(Level.INFO, "Deleted user: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ")");
         return "ok";
     }
 
-    public List<User> getUserAccounts(Principal principal) {
-        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+    /**
+     * Return a list that contains all of the user's accounts in an ordered fashion.
+     *
+     * @param principal the user's principal (for the username)
+     * @return a list of the user's account.
+     */
+    List<User> getUserAccounts(Principal principal) {
+        Map<?, ?> details = (Map<?, ?>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String redditName = (String) details.get("name");
         List<User> accounts = database.getAccountsByRedditName(redditName);
         accounts.sort(Comparator.comparing(User::getId));
         return accounts;
     }
 
-    public void test() {
-    }
-
-    public void test2(){
-    }
-
+    /**
+     * Return a 5 long random string. Used to generate a verification string for third party verification.
+     *
+     * @return a random string.
+     */
     private String randomStringGenerator() {
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder salt = new StringBuilder();
@@ -100,8 +123,19 @@ public class Logic {
             int index = (int) (rnd.nextFloat() * SALTCHARS.length());
             salt.append(SALTCHARS.charAt(index));
         }
-        String saltStr = salt.toString();
-        return saltStr;
+        return salt.toString();
+    }
+
+    /**
+     * Method one used for testing purposes.
+     */
+    void test() {
+    }
+
+    /**
+     * Method two used for testing purposes.
+     */
+    void test2() {
     }
 
 }
