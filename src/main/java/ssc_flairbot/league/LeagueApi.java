@@ -87,7 +87,7 @@ public class LeagueApi {
         if (leaguePositions.isEmpty()) {
             return "Unranked";
         }
-        return rankHelper.getSummonerHighestRank(leaguePositions);
+        return rankHelper.get5v5SoloRank(leaguePositions);
     }
 
     /**

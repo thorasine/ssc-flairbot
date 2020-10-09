@@ -41,7 +41,7 @@ public class VerificationUpdater {
         }
         Logger.getLogger(VerificationUpdater.class.getName()).log(Level.INFO, "Ended: Updating verifications have been successfully completed.");
         if (!verifiedUsers.isEmpty()) {
-            flairHandler.setFlairs(verifiedUsers);
+            flairHandler.updateFlairs(verifiedUsers);
         }
     }
 

@@ -24,7 +24,7 @@ public class RankHelper {
      * @param leaguePositions the list containing LeagueEntry-s (ranks)
      * @return the highest rank string
      */
-    String getSummonerHighestRank(List<LeagueEntry> leaguePositions) {
+    String get5v5SoloRank(List<LeagueEntry> leaguePositions) {
         Set<String> ranks = new HashSet<>();
         leaguePositions.forEach(position -> {
             if (position.getQueueType().equals(GameQueueType.RANKED_SOLO_5X5)) {

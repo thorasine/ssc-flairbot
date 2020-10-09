@@ -57,7 +57,7 @@ public class FlairHandlerTest {
         users.add(user2);
         users.add(user3);
         users.add(user4);
-        flairHandler.setFlairs(users);
+        flairHandler.updateFlairs(users);
     }
 
     @Test
@@ -70,6 +70,6 @@ public class FlairHandlerTest {
             users.add(user1);
         }
         users.add(user3);
-        flairHandler.setFlairs(users);
+        flairHandler.updateFlairs(users);
     }
 }

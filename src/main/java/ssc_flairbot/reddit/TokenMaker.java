@@ -12,6 +12,9 @@ import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class that handles the token generating for reddit's REST API
+ */
 @Component
 public class TokenMaker {
 
@@ -19,18 +22,29 @@ public class TokenMaker {
     private final String clientId = SecretFile.REDDIT_MOD_CLIENT_ID;
     private final String clientSecret = SecretFile.REDDIT_MOD_CLIENT_SECRET;
 
-    public String getToken(){
+    /**
+     * Get the current token or generate one if there is none.
+     *
+     * @return the access token
+     */
+    String getToken() {
         String token = null;
         try {
             token = refreshToken();
         } catch (Exception e) {
-            Logger.getLogger(TokenMaker.class.getName()).log(Level.SEVERE,"Error refreshing reddit token: " + e.getMessage());
+            Logger.getLogger(TokenMaker.class.getName()).log(Level.SEVERE, "Error refreshing reddit token: " + e.getMessage());
         }
-        Logger.getLogger(TokenMaker.class.getName()).log(Level.INFO,"Refreshed reddit token successfully.");
+        Logger.getLogger(TokenMaker.class.getName()).log(Level.INFO, "Refreshed reddit token successfully.");
         return token;
     }
 
-    public String refreshToken() throws Exception {
+    /**
+     * Send a request to reddit's API to acquire a temporary token (with 1 hour lifespan)
+     *
+     * @return the access token
+     * @throws Exception if something goes wrong with the request
+     */
+    private String refreshToken() throws Exception {
         String url = "https://www.reddit.com/api/v1/access_token";
         URL object = new URL(url);
         HttpURLConnection con = (HttpURLConnection) object.openConnection();
@@ -50,13 +64,17 @@ public class TokenMaker {
         try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
             wr.write(postData);
         }
-
-        //Reading
-        String token = readResults(con).getString("access_token");
-        return token;
+        return readResults(con).getString("access_token");
     }
 
-    private JSONObject readResults(HttpURLConnection con) throws Exception{
+    /**
+     * Read the response of an HTTP request.
+     *
+     * @param con the HTTP connector
+     * @return the response in the form of a JSONArray
+     * @throws Exception if something goes wrong with the request
+     */
+    private JSONObject readResults(HttpURLConnection con) throws Exception {
         JSONObject json = null;
         int HttpResult = con.getResponseCode();
         if (HttpResult == HttpURLConnection.HTTP_OK) {

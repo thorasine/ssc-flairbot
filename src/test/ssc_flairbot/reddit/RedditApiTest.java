@@ -23,13 +23,13 @@ public class RedditApiTest {
         Map<String,String> flairs = new HashMap<>();
         flairs.put("Thorasine", "Challenger I");
         flairs.put("Its_Vizicsacsi", "Platinum III");
-        assertEquals("Flair update failed.", "ok", redditApi.updateRankedFlairs(flairs));
+        assertEquals("Flair update failed.", "ok", redditApi.setFlairs(flairs));
     }
 
     @Test
     public void updateNonExistingAccount() {
         Map<String,String> flairs = new HashMap<>();
         flairs.put("ThorasineNonExistingAccount", "Challenger I");
-        assertNotEquals("Flair update not failed.", "ok", redditApi.updateRankedFlairs(flairs));
+        assertNotEquals("Flair update not failed.", "ok", redditApi.setFlairs(flairs));
     }
 }

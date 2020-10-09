@@ -14,6 +14,8 @@ import java.util.logging.Logger;
 
 /**
  * Class that manages the handling (setting and updating) of user flairs on reddit through reddit's API.
+ *
+ * @author Thorasine
  */
 @Component
 public class FlairHandler {
@@ -30,11 +32,12 @@ public class FlairHandler {
     }
 
     /**
-     * Sets the reddit flairs for the given users throught reddit's API. Breaks down the requests into 100 users
+     * Update the reddit flairs for the given users throught reddit's API. Breaks down the requests into 100 users
      * chunks, because that is the maximum this API method can handle.
+     *
      * @param users the users whose reddit flairs we want to update
      */
-    public void setFlairs(List<User> users) {
+    public void updateFlairs(List<User> users) {
         if (users.isEmpty()) return;
         Logger.getLogger(FlairHandler.class.getName()).log(Level.FINE, "Started: Updating flairs for " + users.size() + " users.");
         int chunkSize = 100;
@@ -42,22 +45,24 @@ public class FlairHandler {
         for (List<User> chunk : lists) {
             Map<String, String> flairMap = new HashMap<>();
             chunk.forEach(user -> {
-                String rank = getRedditHighestRank(user);
+                String rank = getAccountHighestRank(user);
                 if (rank != null) {
                     flairMap.put(user.getRedditName(), rank);
                 }
             });
-            redditApi.updateRankedFlairs(flairMap);
+            redditApi.setFlairs(flairMap);
         }
         Logger.getLogger(FlairHandler.class.getName()).log(Level.FINE, "Finished: Updating flairs for " + users.size() + " users.");
     }
 
     /**
-     * Return the highest rank for a given user out of all the verified summoners attached to that reddit account.
+     * Return the highest rank for a given user out of all the verified summoners attached to that reddit account from
+     * the database.
+     *
      * @param user whose highest rank is needed
      * @return the highest rank string
      */
-    private String getRedditHighestRank(User user) {
+    private String getAccountHighestRank(User user) {
         Set<String> ranks = new HashSet<>();
         List<User> accounts = database.getValidatedAccountsByRedditName(user.getRedditName());
         for (User account : accounts) {

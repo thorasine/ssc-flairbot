@@ -2,6 +2,8 @@ package ssc_flairbot.persistence;
 
 /**
  * Class to represent a user entity.
+ *
+ * @author Thorasine
  */
 public class User {
 

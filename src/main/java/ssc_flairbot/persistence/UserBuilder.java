@@ -2,6 +2,8 @@ package ssc_flairbot.persistence;
 
 /**
  * Class that streamlines the creation of User objects.
+ *
+ * @author Thorasine
  */
 public class UserBuilder {
 

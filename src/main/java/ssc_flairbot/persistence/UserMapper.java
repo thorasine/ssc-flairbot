@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.RowMapper;
 
 /**
  * Class that helps with database queries.
+ *
+ * @author Thorasine
  */
 public class UserMapper implements RowMapper<User> {
 
