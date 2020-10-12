@@ -11,6 +11,8 @@ import java.net.URI;
 
 /**
  * Class that handles reddit Oath2 authorization.
+ *
+ * @author Thorasine
  */
 public class RedditHttpRequestFactory extends SimpleClientHttpRequestFactory {
 

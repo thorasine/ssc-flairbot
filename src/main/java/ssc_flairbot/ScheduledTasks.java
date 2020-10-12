@@ -6,6 +6,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Scheduled;
 import ssc_flairbot.reddit.RedditApi;
 
+/**
+ * Class that handles task scheduling.
+ *
+ * @author Thorasine
+ */
 @ConditionalOnProperty(value = "app.scheduling.enable", havingValue = "true", matchIfMissing = true)
 @Configuration
 public class ScheduledTasks {
@@ -21,18 +26,30 @@ public class ScheduledTasks {
         this.redditApi = redditApi;
     }
 
+    /**
+     * Fires every 5 minutes.
+     * Check if the pendig users have set their third party code already to verify their in-game accounts.
+     */
     @Scheduled(cron = "0 */5 * * * *")
     private void updateVerifications() {
         verificationUpdater.scheduledUpdate();
     }
 
-    @Scheduled(cron = "0 0 */6 * * *")
-    private void updateAccounts() {
-        accountUpdater.scheduledUpdate();
-    }
-
+    /**
+     * Fires every 55 minutes.
+     * Update the reddit token that expires every hour.
+     */
     @Scheduled(cron = "0 */55 * * * *")
     private void updateRedditToken() {
         redditApi.refreshToken();
+    }
+
+    /**
+     * Fires every 6 hours.
+     * Updated the ranks, database and flairs for every account with current in-game rank.
+     */
+    @Scheduled(cron = "0 0 */6 * * *")
+    private void updateAccounts() {
+        accountUpdater.scheduledUpdate();
     }
 }

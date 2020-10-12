@@ -9,11 +9,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+/**
+ * Main class  of the application
+ *
+ * @author Thorasine
+ */
 @SpringBootApplication
 @EnableScheduling
 public class Application implements CommandLineRunner {
 
     private final DBHandler database;
+    private static final boolean IN_TEST_PHASE = true;
 
     @Autowired
     public Application(DBHandler database) {
@@ -26,9 +32,14 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... strings) {
-        putInSampleData();
+        if (IN_TEST_PHASE) {
+            putInSampleData();
+        }
     }
 
+    /**
+     * Reset the database and put in sample data for testing purposes.
+     */
     private void putInSampleData() {
         database.dropTable();
         database.createTable();

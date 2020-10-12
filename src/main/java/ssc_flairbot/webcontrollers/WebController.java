@@ -11,6 +11,8 @@ import ssc_flairbot.persistence.User;
 
 /**
  * Class that handles the website's pages
+ *
+ * @author Thorasine
  */
 @Controller
 public class WebController {

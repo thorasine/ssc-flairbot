@@ -17,6 +17,11 @@ import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class that handles updating the rank, database and flairs for the users.
+ *
+ * @author Thorasine
+ */
 @Component
 public class AccountUpdater {
 
@@ -33,15 +38,25 @@ public class AccountUpdater {
         this.rankUpdateTask = rankUpdateTask;
     }
 
+    /**
+     * Set up various properties for Riot API's requests.
+     * threshold:       Percentage of the total capacity the app is allowed to use for requests towards Riot's API
+     * globalLimit:     Maximum amount of requests the app can fire
+     * globalTimespan:  The amount of time that needs to pass until Riot API gives more allowances for the app
+     * serverLimits:    A list of maximum amount of requests the app can fire towards each server
+     * serverTimespan:  The amount of time that needs to pass until Riot API gives more allowances for the server
+     * servers:         A list of available servers
+     * globaLimiter:
+     */
     @PostConstruct
     private void init() {
         threshold = 0.5;
         int globalLimit = 500;
         int globalTimespan = 10_000;
-        int serverTimespan = 60_000;
-        servers = Arrays.asList("EUW", "NA", "EUNE", "BR", "KR", "LAN", "LAS", "TR", "OCE", "JP", "RU");
-        List<Integer> serverLimits = Arrays.asList(300, 270, 165, 90, 90, 80, 80, 60, 55, 35, 35);
         globalLimiter = new RateLimiter((int) (globalLimit * threshold), globalTimespan);
+        int serverTimespan = 60_000;
+        List<Integer> serverLimits = Arrays.asList(2000, 2000, 1600, 1300, 2000, 1000, 1000, 1300, 800, 800, 600);
+        servers = Arrays.asList("EUW", "NA", "EUNE", "BR", "KR", "LAN", "LAS", "TR", "OCE", "JP", "RU");
         serverLimits.forEach(serverLimit -> serverLimit = (int) (serverLimit * threshold));
         limiters = new ArrayList<>();
         for (Integer serverLimit : serverLimits) {

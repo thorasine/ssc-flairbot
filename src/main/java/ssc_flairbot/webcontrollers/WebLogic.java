@@ -19,6 +19,8 @@ import ssc_flairbot.persistence.User;
 
 /**
  * Class that processes incoming user requests.
+ *
+ * @author Thorasine
  */
 @Component
 public class WebLogic {
@@ -113,7 +115,7 @@ public class WebLogic {
     /**
      * Return a 5 long random string. Used to generate a verification string for third party verification.
      *
-     * @return a random string.
+     * @return a randomly generated string
      */
     private String randomStringGenerator() {
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";

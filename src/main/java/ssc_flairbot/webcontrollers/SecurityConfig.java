@@ -30,6 +30,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * Class that configures Spring Security and Oauth2.
+ *
+ * @author Thorasine
  */
 @Configuration
 @EnableOAuth2Client

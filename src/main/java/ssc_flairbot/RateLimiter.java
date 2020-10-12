@@ -2,6 +2,10 @@ package ssc_flairbot;
 
 import java.util.LinkedList;
 
+/**
+ * Class that handles the locking of threads until they can continue. Used to help to stay in bounds of the third
+ * party API requests.
+ */
 public class RateLimiter {
 
     private final LinkedList<Long> list = new LinkedList<>();

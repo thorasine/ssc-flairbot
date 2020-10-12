@@ -13,6 +13,8 @@ import ssc_flairbot.persistence.User;
 
 /**
  * Class that handles the REST API connections.
+ *
+ * @author Thorasine
  */
 @RestController
 public class RestApiController {

@@ -9,6 +9,11 @@ import ssc_flairbot.reddit.FlairHandler;
 
 import java.util.List;
 
+/**
+ * Class that handles the updating of ranks for the given users.
+ *
+ * @author Thorasine
+ */
 @Component
 public class RankUpdateTask {
 
@@ -23,7 +28,15 @@ public class RankUpdateTask {
         this.flairHandler = flairHandler;
     }
 
-    public void update(List<User> users, RateLimiter limiter, RateLimiter globalLimiter) {
+    /**
+     * Get the given users rank from in-game, update said users in the database and set their flairs on reddit to their
+     * current in-game rank.
+     *
+     * @param users         the users we want to update
+     * @param limiter       the method limiter for the given server for the Riot API
+     * @param globalLimiter the global limiter for the application (this) for the Riot API
+     */
+    void update(List<User> users, RateLimiter limiter, RateLimiter globalLimiter) {
         for (User user : users) {
             globalLimiter.acquire();
             globalLimiter.enter();
