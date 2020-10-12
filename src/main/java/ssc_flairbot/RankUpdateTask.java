@@ -33,15 +33,18 @@ public class RankUpdateTask {
      * current in-game rank.
      *
      * @param users         the users we want to update
-     * @param limiter       the method limiter for the given server for the Riot API
-     * @param globalLimiter the global limiter for the application (this) for the Riot API
+     * @param methodLimiter the method limiter
+     * @param appLimiter1   the first app limiter
+     * @param applimiter2   the second app limiter
      */
-    void update(List<User> users, RateLimiter limiter, RateLimiter globalLimiter) {
+    void update(List<User> users, RateLimiter methodLimiter, RateLimiter appLimiter1, RateLimiter applimiter2) {
         for (User user : users) {
-            globalLimiter.acquire();
-            globalLimiter.enter();
-            limiter.acquire();
-            limiter.enter();
+            appLimiter1.acquire();
+            appLimiter1.enter();
+            applimiter2.acquire();
+            applimiter2.enter();
+            methodLimiter.acquire();
+            methodLimiter.enter();
             user.setRank(lolApi.getRank(user));
         }
         database.batchUpdateUsersRank(users);
