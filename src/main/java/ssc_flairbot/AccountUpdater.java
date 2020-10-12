@@ -39,7 +39,7 @@ public class AccountUpdater {
     /**
      * Fill the servers array with the available Riot regions and their limiters.
      * <p>
-     * threshold: Percentage of the total capacity the app is allowed to use for requests towards Riot's API.
+     * threshold: Percentage of the total capacity is allowed to use for requests towards Riot's API for the updating of the database.
      */
     @PostConstruct
     private void init() {
