@@ -40,12 +40,6 @@ public class AccountUpdater {
      * Fill the servers array with the available Riot regions and their limiters.
      * <p>
      * threshold: Percentage of the total capacity the app is allowed to use for requests towards Riot's API.
-     * <p>
-     * The app and method limiters restrict the amount of request the app will send towards riot's API server. App and
-     * method rate limiting are enforced per region.
-     * Generally L4J8 handles rate limiting, but this case I want to control how much reasources (requests) the update
-     * task can hug during updating the whole database, so the site will be able to send different requests towards
-     * Riot's API so the user experience remains unaffected.
      */
     @PostConstruct
     private void init() {
@@ -79,7 +73,7 @@ public class AccountUpdater {
     /**
      * Initiate an UpdateTask for every server on a new thread.
      *
-     * @return "ok" string for testing purposes
+     * @return "ok" string for the tests
      */
     String scheduledUpdate() {
         Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Started: Scheduled database update.");
@@ -96,7 +90,7 @@ public class AccountUpdater {
     }
 
     /**
-     * Helper class to update the database and flairs for given servers, 100 user at a time.
+     * Helper class to update the database and flairs for given servers, 100 users at a time.
      */
     private class UpdateTask implements Runnable {
 
@@ -107,7 +101,7 @@ public class AccountUpdater {
         }
 
         /**
-         * Updates the database and flair for given server 100 user at a time.
+         * Update the database and flair for given server 100 user at a time.
          */
         public void run() {
             List<User> accounts = db.getValidatedAccountsByServer(server.name);
