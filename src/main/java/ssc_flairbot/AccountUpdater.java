@@ -49,10 +49,8 @@ public class AccountUpdater {
 
     /**
      * Initiate an UpdateTask for every server on a new thread.
-     *
-     * @return "ok" string for the tests
      */
-    String scheduledUpdate() {
+    void scheduledUpdate() {
         Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Started: Scheduled database update.");
         int nThreads = servers.size();
         ExecutorService executor = Executors.newFixedThreadPool(nThreads);
@@ -63,7 +61,6 @@ public class AccountUpdater {
         }
         CompletableFuture.allOf(futures).join();
         Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Finished: Scheduled database update.");
-        return "ok";
     }
 
     /**
@@ -83,7 +80,6 @@ public class AccountUpdater {
         public void run() {
             List<User> accounts = db.getValidatedAccountsByServer(server.getName());
             if (accounts.size() == 0) return;
-
             Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Started: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
             List<List<User>> lists = Lists.partition(accounts, 100);
             lists.forEach(chunk -> rankUpdateTask.update(chunk, server.getMethodLimiter(), server.getAppLimiter1(), server.getApplimiter2()));

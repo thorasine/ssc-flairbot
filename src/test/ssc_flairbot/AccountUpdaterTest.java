@@ -40,7 +40,6 @@ public class AccountUpdaterTest {
 
     private static int nAccounts = 5; //Number of accounts / server, max 10
     private static boolean setUpIsDone = false;
-    private final L4J8 riotApi = new L4J8(SecretFile.CREDS);
     private static List<User> euwUsers = new ArrayList<>();
     private static List<User> naUsers = new ArrayList<>();
     private static List<User> krUsers = new ArrayList<>();
@@ -83,9 +82,8 @@ public class AccountUpdaterTest {
         List<User> users = database.getAllUsers();
         users.forEach(user -> user.setRank("Iron I"));
         database.batchUpdateUsersRank(users);
-        String response = accountUpdater.scheduledUpdate();
+        accountUpdater.scheduledUpdate();
         users = database.getAllUsers();
-        assertEquals("Couldn't finsh updating account ranks.", "ok", response);
         users.forEach(user -> assertNotEquals("User's rank didn't get updated.", "Iron I", user.getRank()));
     }
 }
