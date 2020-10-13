@@ -3,19 +3,35 @@ package ssc_flairbot.league;
 import ssc_flairbot.RateLimiter;
 
 /**
- * Class to hold the Riot API related server information.
+ * Class to hold the Riot API method related server information.
  *
  * @author Thorasine
  */
 public class LeagueServer {
-    public String name;
-    public int methodLimit;
-    public RateLimiter appLimiter1;
-    public RateLimiter applimiter2;
-    public RateLimiter methodLimiter;
+    private String name;
+    int methodLimit;
+    RateLimiter appLimiter1;
+    RateLimiter applimiter2;
+    RateLimiter methodLimiter;
 
-    public LeagueServer(String name, int methodLimit) {
+    LeagueServer(String name, int methodLimit) {
         this.name = name;
         this.methodLimit = methodLimit;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public RateLimiter getAppLimiter1() {
+        return appLimiter1;
+    }
+
+    public RateLimiter getApplimiter2() {
+        return applimiter2;
+    }
+
+    public RateLimiter getMethodLimiter() {
+        return methodLimiter;
     }
 }

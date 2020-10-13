@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ssc_flairbot.league.LeagueServer;
+import ssc_flairbot.league.LeagueServerBuilder;
 import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
 
 import javax.annotation.PostConstruct;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.logging.Level;
@@ -27,47 +27,24 @@ public class AccountUpdater {
 
     private final DBHandler db;
     private final RankUpdateTask rankUpdateTask;
-    private double threshold;
     private List<LeagueServer> servers;
 
     @Autowired
     public AccountUpdater(DBHandler db, RankUpdateTask rankUpdateTask) {
+
         this.db = db;
         this.rankUpdateTask = rankUpdateTask;
     }
 
     /**
-     * Fill the servers array with the available Riot regions and their limiters.
-     * <p>
-     * threshold: Percentage of the total capacity is allowed to use for requests towards Riot's API for the updating of the database.
+     * Create the server handlers with the given threshold
      */
     @PostConstruct
     private void init() {
-        threshold = 0.8;
-        int appLimit1 = 100;
-        int appTimespan1 = 120_000;
-        int appLimit2 = 20;
-        int appTimespan2 = 10_000;
-        int methodTimespan = 60_000;
-
-        servers = Arrays.asList(new LeagueServer("EUW", 2000),
-                new LeagueServer("NA", 2000),
-                new LeagueServer("EUNE", 1600),
-                new LeagueServer("BR", 1300),
-                new LeagueServer("KR", 200),
-                new LeagueServer("LAN", 1000),
-                new LeagueServer("LAS", 1000),
-                new LeagueServer("TR", 1300),
-                new LeagueServer("OCE", 800),
-                new LeagueServer("JP", 800),
-                new LeagueServer("RU", 600));
-
-        servers.forEach(server -> {
-            server.methodLimit = (int) (server.methodLimit * threshold);
-            server.methodLimiter = new RateLimiter(server.methodLimit, methodTimespan);
-            server.appLimiter1 = new RateLimiter((int) (appLimit1 * threshold), appTimespan1);
-            server.applimiter2 = new RateLimiter((int) (appLimit2 * threshold), appTimespan2);
-        });
+        //percentage of the total capacity is allowed to use for requests towards Riot's API for the updating the database
+        double threshold = 0.8;
+        LeagueServerBuilder serverBuilder = new LeagueServerBuilder();
+        servers = serverBuilder.getServers(threshold);
     }
 
     /**
@@ -101,14 +78,15 @@ public class AccountUpdater {
         }
 
         /**
-         * Update the database and flair for given server 100 user at a time.
+         * Update the database and flair for given server 100 users at a time.
          */
         public void run() {
-            List<User> accounts = db.getValidatedAccountsByServer(server.name);
+            List<User> accounts = db.getValidatedAccountsByServer(server.getName());
             if (accounts.size() == 0) return;
+
             Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Started: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
             List<List<User>> lists = Lists.partition(accounts, 100);
-            lists.forEach(chunk -> rankUpdateTask.update(chunk, server.methodLimiter, server.appLimiter1, server.applimiter2));
+            lists.forEach(chunk -> rankUpdateTask.update(chunk, server.getMethodLimiter(), server.getAppLimiter1(), server.getApplimiter2()));
             Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Finished: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
         }
     }
