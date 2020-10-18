@@ -2,7 +2,7 @@ package ssc_flairbot.reddit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ssc_flairbot.league.RankHelper;
+import ssc_flairbot.league.LeagueRankHelper;
 import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
 
@@ -22,13 +22,13 @@ public class FlairHandler {
 
     private final RedditApi redditApi;
     private final DBHandler database;
-    private final RankHelper rankHelper;
+    private final LeagueRankHelper leagueRankHelper;
 
     @Autowired
-    public FlairHandler(RedditApi redditApi, DBHandler database, RankHelper rankHelper) {
+    public FlairHandler(RedditApi redditApi, DBHandler database, LeagueRankHelper leagueRankHelper) {
         this.redditApi = redditApi;
         this.database = database;
-        this.rankHelper = rankHelper;
+        this.leagueRankHelper = leagueRankHelper;
     }
 
     /**
@@ -68,7 +68,7 @@ public class FlairHandler {
         for (User account : accounts) {
             ranks.add(account.getRank());
         }
-        String rank = rankHelper.getHighestRank(ranks);
+        String rank = leagueRankHelper.getHighestRank(ranks);
         if (!rank.equalsIgnoreCase("Unranked")) {
             return rank;
         }

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * @author Thorasine
  */
 @Component
-public class RankHelper {
+public class LeagueRankHelper {
 
     /**
      * Return the highest 5v5 rank as a string from a list of LeagueEntry-s.

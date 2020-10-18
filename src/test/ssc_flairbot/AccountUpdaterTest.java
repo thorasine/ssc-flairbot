@@ -1,7 +1,6 @@
 package ssc_flairbot;
 
 
-import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.pojo.spectator.SpectatorParticipant;
@@ -38,8 +37,8 @@ public class AccountUpdaterTest {
     @Autowired
     LeagueApi lolApi;
 
-    private static int nAccounts = 5; //Number of accounts / server, max 10
-    private static boolean setUpIsDone = false;
+    private static int nAccounts = 5;
+    private static boolean setupNeeded = true;
     private static List<User> euwUsers = new ArrayList<>();
     private static List<User> naUsers = new ArrayList<>();
     private static List<User> krUsers = new ArrayList<>();
@@ -47,23 +46,21 @@ public class AccountUpdaterTest {
 
     @Before
     public void setUp() {
-        if (setUpIsDone) {
-            database.dropTable();
-            database.createTable();
-            return;
+        if (setupNeeded) {
+            setUsers("EUW", euwUsers);
+            setUsers("NA", naUsers);
+            setUsers("KR", krUsers);
+            setUsers("OCE", oceUsers);
+            setupNeeded = false;
         }
-        setUsers("EUW", euwUsers);
-        setUsers("NA", naUsers);
-        setUsers("KR", krUsers);
-        setUsers("OCE", oceUsers);
-        setUpIsDone = true;
-        setUp();
+        database.dropTable();
+        database.createTable();
     }
 
-    //todo Reddit name is set to the summoner name too so often it'll result in "unable to resolve user" error from Reddit API
-    private void setUsers(String server, List<User> list){
+    //Reddit name is set to the summoner name too so often it'll result in "unable to resolve user" error from Reddit API
+    private void setUsers(String server, List<User> list) {
         List<SpectatorParticipant> participants = new SpectatorBuilder().withPlatform(lolApi.platformConvert(server)).getFeaturedGames().get(0).getParticipants();
-        for(int i = 0; i < nAccounts; i++){
+        for (int i = 0; i < nAccounts; i++) {
             Summoner summoner = new SummonerBuilder().withPlatform(lolApi.platformConvert(server)).withName(participants.get(i).getSummonerName()).get();
             User user = new UserBuilder().redditName(summoner.getName()).summonerName(summoner.getName())
                     .summonerId(summoner.getSummonerId()).server(server).validated("validated").buildUser();
@@ -72,8 +69,8 @@ public class AccountUpdaterTest {
     }
 
     @Test
-    public void persistenceTest() {
-        for(int i = 0; i < nAccounts; i++){
+    public void isEveryoneUpdated() {
+        for (int i = 0; i < nAccounts; i++) {
             database.addUser(euwUsers.get(i));
             database.addUser(naUsers.get(i));
             database.addUser(krUsers.get(i));

@@ -25,20 +25,20 @@ import ssc_flairbot.persistence.User;
 @Component
 public class LeagueApi {
 
-    private final RankHelper rankHelper;
+    private final LeagueRankHelper leagueRankHelper;
     private L4J8 api;
     private List<String> availableRegions;
 
     @Autowired
-    public LeagueApi(RankHelper rankHelper) {
-        this.rankHelper = rankHelper;
+    public LeagueApi(LeagueRankHelper leagueRankHelper) {
+        this.leagueRankHelper = leagueRankHelper;
     }
 
     /**
      * Set the creditenals and available regions for the L4J8 library.
      */
     @PostConstruct
-    private void init() {
+    void init() {
         this.api = new L4J8(SecretFile.CREDS);
         availableRegions = List.of("NA", "EUW", "EUNE", "BR", "LAN", "LAS", "JP", "KR", "OCE", "RU", "TR");
     }
@@ -87,7 +87,7 @@ public class LeagueApi {
         if (leaguePositions.isEmpty()) {
             return "Unranked";
         }
-        return rankHelper.get5v5SoloRank(leaguePositions);
+        return leagueRankHelper.get5v5SoloRank(leaguePositions);
     }
 
     /**
