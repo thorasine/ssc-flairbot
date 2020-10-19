@@ -2,7 +2,6 @@ package ssc_flairbot.league;
 
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

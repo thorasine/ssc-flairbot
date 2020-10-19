@@ -41,7 +41,7 @@ public class AccountUpdater {
      */
     @PostConstruct
     private void init() {
-        //percentage of the total capacity is allowed to use for requests towards Riot's API for the updating the database
+        //percentage of the total capacity allowed to use for requests towards Riot's API for the updating the database
         double threshold = 0.8;
         LeagueServerBuilder serverBuilder = new LeagueServerBuilder();
         servers = serverBuilder.getServers(threshold);
