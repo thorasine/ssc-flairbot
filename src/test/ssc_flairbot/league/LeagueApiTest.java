@@ -40,15 +40,35 @@ public class LeagueApiTest {
     }
 
     @Test
-    public void getThirdPartyCode(){
+    public void getThirdPartyCode() {
         user.setSummonerId(lolApi.getSummoner(user).getSummonerId());
         assertNotNull("Third party code for Thorasine is null", lolApi.getThirdPartyCode(user));
     }
 
     @Test
-    public void getRightPlatform(){
+    public void getRightPlatform() {
         Platform platform = lolApi.platformConvert("EUW");
         assertEquals("Platform converter returns wrong result.", Platform.EUW1, platform);
+        platform = lolApi.platformConvert("NA");
+        assertEquals("Platform converter returns wrong result.", Platform.NA1, platform);
+        platform = lolApi.platformConvert("EUNE");
+        assertEquals("Platform converter returns wrong result.", Platform.EUN1, platform);
+        platform = lolApi.platformConvert("BR");
+        assertEquals("Platform converter returns wrong result.", Platform.BR1, platform);
+        platform = lolApi.platformConvert("LAN");
+        assertEquals("Platform converter returns wrong result.", Platform.LA1, platform);
+        platform = lolApi.platformConvert("LAS");
+        assertEquals("Platform converter returns wrong result.", Platform.LA2, platform);
+        platform = lolApi.platformConvert("JP");
+        assertEquals("Platform converter returns wrong result.", Platform.JP1, platform);
+        platform = lolApi.platformConvert("KR");
+        assertEquals("Platform converter returns wrong result.", Platform.KR, platform);
+        platform = lolApi.platformConvert("OCE");
+        assertEquals("Platform converter returns wrong result.", Platform.OC1, platform);
+        platform = lolApi.platformConvert("RU");
+        assertEquals("Platform converter returns wrong result.", Platform.RU, platform);
+        platform = lolApi.platformConvert("TR");
+        assertEquals("Platform converter returns wrong result.", Platform.TR1, platform);
     }
 
 }
