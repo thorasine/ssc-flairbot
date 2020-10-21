@@ -20,30 +20,29 @@ public class LeagueApiTest {
     @Autowired
     private LeagueApi lolApi;
 
-    private User user1;
+    private User user;
 
     @Before
     public void setUp() {
-        user1 = new UserBuilder().redditName("Thorasine").summonerName("Thorasine").server("EUW").buildUser();
+        user = new UserBuilder().redditName("Thorasine").summonerName("Thorasine").server("EUW").buildUser();
     }
 
     @Test
     public void getSummoner() {
-        Summoner summoner = lolApi.getSummoner(user1);
+        Summoner summoner = lolApi.getSummoner(user);
         assertEquals("Summoner's name is not Thorasine.", "Thorasine", summoner.getName());
     }
 
-
     @Test
     public void getRank() {
-        user1.setSummonerId(lolApi.getSummoner(user1).getSummonerId());
-        assertNotNull("Highest rank for Thorasine is null.", lolApi.getRank(user1));
+        user.setSummonerId(lolApi.getSummoner(user).getSummonerId());
+        assertNotNull("Highest rank for Thorasine is null.", lolApi.getRank(user));
     }
 
     @Test
     public void getThirdPartyCode(){
-        user1.setSummonerId(lolApi.getSummoner(user1).getSummonerId());
-        assertNotNull("Third party code for Thorasine is null", lolApi.getThirdPartyCode(user1));
+        user.setSummonerId(lolApi.getSummoner(user).getSummonerId());
+        assertNotNull("Third party code for Thorasine is null", lolApi.getThirdPartyCode(user));
     }
 
     @Test
