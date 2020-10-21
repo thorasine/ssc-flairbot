@@ -1,5 +1,6 @@
 package ssc_flairbot.league;
 
+import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,6 +38,18 @@ public class LeagueApiTest {
     public void getRank() {
         user1.setSummonerId(lolApi.getSummoner(user1).getSummonerId());
         assertNotNull("Highest rank for Thorasine is null.", lolApi.getRank(user1));
+    }
+
+    @Test
+    public void getThirdPartyCode(){
+        user1.setSummonerId(lolApi.getSummoner(user1).getSummonerId());
+        assertNotNull("Third party code for Thorasine is null", lolApi.getThirdPartyCode(user1));
+    }
+
+    @Test
+    public void getRightPlatform(){
+        Platform platform = lolApi.platformConvert("EUW");
+        assertEquals("Platform converter returns wrong result.", Platform.EUW1, platform);
     }
 
 }

@@ -46,7 +46,7 @@ public class ScheduledTasks {
 
     /**
      * Fires every 6 hours.
-     * Updated the ranks, database and flairs for every account with current in-game rank.
+     * Update the ranks, database and flairs for every account with current in-game rank.
      */
     @Scheduled(cron = "0 0 */6 * * *")
     private void updateAccounts() {
