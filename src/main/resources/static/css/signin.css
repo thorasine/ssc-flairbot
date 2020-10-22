@@ -1,29 +1,76 @@
-html, body {
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap');
+
+html,body{
+    background: black;
+    /*background-image: url('/images/background12.jpg');*/
+    background-image: url('https://i.imgur.com/AJ97dVv.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
     height: 100%;
+    font-family: 'Raleway', sans-serif;
 }
 
-body {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align: center;
-    align-items: center;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background-color: #f5f5f5;
+.container{
+    height: 100%;
+    align-content: center;
 }
 
-.form-signin {
-    width: 100%;
-    max-width: 355px;
-    padding: 15px;
-    margin: auto;
+.card{
+    min-height: 50px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 500px;
+    background-color: rgba(0,0,0,0.5) !important;
+}
+.card-body{
+    padding: 20px;
 }
 
-.form-signin .form-control {
-    position: relative;
-    box-sizing: border-box;
-    height: auto;
-    padding: 10px;
-    font-size: 16px;
+.card-body p{
+    margin-top: 30px;
+    color: white;
 }
 
+.card-body h3{
+    color: white;
+}
+
+.btn_container{
+}
+
+.form-group {
+    margin-top: 50px;
+    margin-bottom: 0px;
+}
+
+.login_btn, .logout_btn, .goback_btn{
+    margin: 5px;
+}
+
+.login_btn {
+    color: black;
+    background-color: #FFC312;
+}
+
+.logout_btn{
+    color: black;
+    background-color: #eb4634;
+}
+
+.goback_btn{
+    color: black;
+    background-color: #FFC312;
+}
+
+.login_btn:hover, .logout_btn:hover, .goback_btn:hover{
+    color: black;
+    background-color: white;
+}
+
+.links{
+    color: white;
+}
+
+.links a{
+    margin-left: 4px;
+}

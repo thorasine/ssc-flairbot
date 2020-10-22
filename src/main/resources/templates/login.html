@@ -1,31 +1,42 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-    <meta charset="utf-8"/>
-    <title>Flairbot Alpha login</title>
-    <meta name="description" content=""/>
-    <meta name="viewport" content="width=device-width"/>
-    <base href="/"/>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.2.1/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/signin.css"/>
-    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <title>Summoner School Flairs login</title>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--Bootsrap 4 CDN-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!--Custom styles-->
+    <link rel="stylesheet" type="text/css" href="/css/signin.css">
 </head>
-<body class="text-center">
-<div class="container" sec:authorize="!isAuthenticated()">
-    <form class="form-signin">
-        <h1 class="h3 mb-3 font-weight-normal">Sign in with Reddit</h1>
-        <a class="btn btn-lg btn-primary btn-block" href="/loginReddit">Sign in</a>
-    </form>
-</div>
-<div class="container" sec:authorize="isAuthenticated()">
-    <div class="form-signin">
-        <h1 class="h3 mb-3 font-weight-normal">You are already logged in.</h1>
-        <a class="btn btn-lg btn-danger" href="/logout">Log out</a>
-        <a class="btn btn-lg btn-primary" href="/">Go back</a>
+<body>
+<div class="container">
+    <div class="d-flex justify-content-center h-100">
+        <div class="card">
+            <div class="card-body" sec:authorize="!isAuthenticated()">
+                <h3>Summoner School Flairs</h3>
+                <p class="text-justify">First, you need to need to authorize the app on Reddit to be able to see your username.</p>
+                <form>
+                    <div class="form-group text-center">
+                        <a class="btn login_btn" href="/loginReddit">Continue on Reddit</a>
+                    </div>
+                </form>
+            </div>
+            <div class="card-body" sec:authorize="isAuthenticated()">
+                <h3>Summoner School Flairs</h3>
+                <p class="text-justify">You are already logged in.</p>
+                <form class="btn_container">
+                    <div class="form-group text-center">
+                        <a class="btn logout_btn" href="/logout">Log out</a>
+                        <a class="btn goback_btn" href="/">Go back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
-
 </body>
 </html>
