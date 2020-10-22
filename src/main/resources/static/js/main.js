@@ -84,6 +84,7 @@ function newSummonerPost() {
 
 var accountId;
 var removableDiv;
+
 function setModalDelAccountTexts() {
     var id = $(this).parent().parent().parent().attr("id");
     var summonerName = $(this).parent().parent().children('.summonerName').text();

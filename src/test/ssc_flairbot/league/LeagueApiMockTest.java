@@ -14,6 +14,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
+/**
+ * The purpose of this test is to practice unit testing with Mockito and AssertJ
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class LeagueApiMockTest {
 
@@ -26,7 +29,7 @@ public class LeagueApiMockTest {
     private User user;
 
     @Before
-    public void setup(){
+    public void setup() {
         lolApi.init();
         user = new UserBuilder().redditName("Thorasine").summonerName("Thorasine").server("EUW").buildUser();
     }

@@ -70,7 +70,7 @@ public class LeagueRankHelper {
     private String rankFormatter(String tier, String division) {
         tier = tier.toLowerCase();
         tier = tier.substring(0, 1).toUpperCase() + tier.substring(1);
-        if (tier.equalsIgnoreCase("Unranked")) {
+        if (tier.equals("Unranked")) {
             return tier;
         } else {
             return tier + " " + division;

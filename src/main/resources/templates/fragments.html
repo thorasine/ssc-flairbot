@@ -1,26 +1,32 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-    <head>
-        <meta charset="utf-8"/>
-    </head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8"/>
+</head>
 
-    <body>
-        <!-- Summoner cards -->
-        <div th:fragment="summonerCards" th:each="user : ${users}" class="card m-1" th:id="${user.id}">
-            <div class="card-body">
-                <h5 th:text=${user.getSummonerName()} class="summonerName card-title"></h5>
-                <h6 th:text=${user.getServer()} class="server card-subtitle mb-2 text-muted"></h6>
-                <h6 th:text=${user.getRank()} class="rank card-subtitle mb-2 text-muted"></h6>
-                <div th:switch="${user.getValidated()}" class="d-flex align-items-center">
-                    <span th:case="'validated'" class="text-success mr-auto"><i class="fas fa-check"></i> Validated</span>
-                    <span th:case="'pending'" data-th-attr="validation-code=${user.ValidationCode}" class="validationModalOpenBtn mr-auto" data-toggle="modal" data-target="#modalValidate">
-                        <btn class="btn btn-sm btn-warning" href="/" data-toggle="tooltip" title="Click to validate"><i class="fas fa-exclamation-triangle"></i> Validation required</btn>
+<body>
+<!-- Summoner cards -->
+<div th:fragment="summonerCards" th:each="user : ${users}" class="card m-1" th:id="${user.id}">
+    <div class="card-body">
+        <h5 th:text=${user.getSummonerName()} class="summonerName card-title"></h5>
+        <h6 th:text=${user.getServer()} class="server card-subtitle mb-2 text-muted"></h6>
+        <h6 th:text=${user.getRank()} class="rank card-subtitle mb-2 text-muted"></h6>
+        <div th:switch="${user.getValidated()}" class="d-flex align-items-center">
+            <span th:case="'validated'" class="text-success mr-auto"><i class="fas fa-check"></i> Validated</span>
+            <span th:case="'pending'" data-th-attr="validation-code=${user.ValidationCode}"
+                  class="validationModalOpenBtn mr-auto" data-toggle="modal" data-target="#modalValidate">
+                        <btn class="btn btn-sm btn-warning" href="/" data-toggle="tooltip" title="Click to validate"><i
+                                class="fas fa-exclamation-triangle"></i> Validation required</btn>
                     </span>
-                    <btn th:case="'failed'" class="btn btn-sm btn-danger mr-auto" href="/"><i class="fas fa-times"></i> Validation failed</btn>
-                    <span class="deleteBtnSpan mr-0 ml-1" data-toggle="modal" data-target="#deleteSummoner">
-                        <btn class="btn btn-sm btn-danger" data-toggle="tooltip" title="Delete"><i class="fas fa-trash-alt"></i></btn>
+            <btn th:case="'failed'" class="btn btn-sm btn-danger mr-auto" href="/"><i class="fas fa-times"></i>
+                Validation failed
+            </btn>
+            <span class="deleteBtnSpan mr-0 ml-1" data-toggle="modal" data-target="#deleteSummoner">
+                        <btn class="btn btn-sm btn-danger" data-toggle="tooltip" title="Delete"><i
+                                class="fas fa-trash-alt"></i></btn>
                     </span>
-                </div>
-            </div>
         </div>
-    <body>
+    </div>
+</div>
+<body>
 </html>

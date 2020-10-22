@@ -34,28 +34,25 @@ public class VerificationUpdaterTest {
     @Autowired
     DBHandler database;
 
-    private static boolean setUpIsDone = false;
-    private final L4J8 riotApi = new L4J8(SecretFile.CREDS);
+    private static boolean setupNeeded = true;
     private static List<User> users = new ArrayList<>();
 
     @Before
     public void setUp() {
-        if (setUpIsDone) {
-            database.dropTable();
-            database.createTable();
-            database.addUser(users.get(0));
-            return;
+        if (setupNeeded) {
+            final List<SpectatorParticipant> participants = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants();
+            for (SpectatorParticipant p : participants) {
+                Summoner summoner = new SummonerBuilder().withPlatform(Platform.EUW1).withName(p.getSummonerName()).get();
+                User user = new UserBuilder().redditName(summoner.getName()).summonerName(summoner.getName())
+                        .summonerId(summoner.getSummonerId()).server("EUW").validated("pending").validationTries(0)
+                        .validationCode("QWERTY").buildUser();
+                users.add(user);
+            }
+            setupNeeded = false;
         }
-        final List<SpectatorParticipant> participants = new SpectatorBuilder().withPlatform(Platform.EUW1).getFeaturedGames().get(0).getParticipants();
-        for (SpectatorParticipant p : participants) {
-            Summoner summoner = new SummonerBuilder().withPlatform(Platform.EUW1).withName(p.getSummonerName()).get();
-            User user = new UserBuilder().redditName(summoner.getName()).summonerName(summoner.getName())
-                    .summonerId(summoner.getSummonerId()).server("EUW").validated("pending").validationTries(0)
-                    .validationCode("QWERTY").buildUser();
-            users.add(user);
-        }
-        setUpIsDone = true;
-        setUp();
+        database.dropTable();
+        database.createTable();
+        database.addUser(users.get(0));
     }
 
     @Test
@@ -89,7 +86,7 @@ public class VerificationUpdaterTest {
 
         verificationUpdater.scheduledUpdate();
         assertEquals("Validation tries is not 1 for user1.", database.getAllUsers().get(0).getValidationTries(), 1);
-        assertEquals("Validation tries is not pending. for user1", database.getAllUsers().get(0).getValidated(),"pending");
+        assertEquals("Validation tries is not pending. for user1", database.getAllUsers().get(0).getValidated(), "pending");
         assertEquals("Validation tries is not 11 for user2.", database.getUserById(user2.getId()).getValidationTries(), 11);
         assertEquals("Validation tries is not failed for user2.", database.getUserById(user2.getId()).getValidated(), "failed");
         assertEquals("User3 got updated despite being validated.", database.getUserById(user3.getId()).getValidationTries(), user3Tries);

@@ -15,7 +15,8 @@ function testFunction() {
         url: "/testFunction",
         //data: {"id": accountId},
         success: function (status) {
-            console.log("success: " + JSON.stringify(status));},
+            console.log("success: " + JSON.stringify(status));
+        },
         error: function (status) {
             console.log("failed: " + JSON.stringify(status));
         }
@@ -34,7 +35,8 @@ function testFunction2() {
         url: "/testFunction2",
         //data: {"id": accountId},
         success: function (status) {
-            console.log("success: " + JSON.stringify(status));},
+            console.log("success: " + JSON.stringify(status));
+        },
         error: function (status) {
             console.log("failed: " + JSON.stringify(status));
         }

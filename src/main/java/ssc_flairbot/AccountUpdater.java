@@ -31,7 +31,6 @@ public class AccountUpdater {
 
     @Autowired
     public AccountUpdater(DBHandler db, RankUpdateTask rankUpdateTask) {
-
         this.db = db;
         this.rankUpdateTask = rankUpdateTask;
     }
@@ -79,7 +78,9 @@ public class AccountUpdater {
          */
         public void run() {
             List<User> accounts = db.getValidatedAccountsByServer(server.getName());
-            if (accounts.size() == 0) return;
+            if (accounts.size() == 0){
+                return;
+            }
             Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Started: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
             List<List<User>> lists = Lists.partition(accounts, 100);
             lists.forEach(chunk -> rankUpdateTask.update(chunk, server.getMethodLimiter(), server.getAppLimiter1(), server.getApplimiter2()));

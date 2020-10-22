@@ -8,8 +8,9 @@ import ssc_flairbot.RateLimiter;
  * @author Thorasine
  */
 public class LeagueServer {
-    private String name;
+
     int methodLimit;
+    private String name;
     RateLimiter appLimiter1;
     RateLimiter applimiter2;
     RateLimiter methodLimiter;
