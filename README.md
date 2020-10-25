@@ -40,7 +40,7 @@ The flair system was discontinued.
 
 **Systematic verification**
 
-In the following years, Summoner School's founder put out a call for somebody to try to solve the flair system's problem: verifying contributors in a systematic way.
+In the following years, Summoner School's founder put out a call for somebody to try to solve the flair system's problem: verifying contributors in a systematic way. This application is a solution for the issue.
 
 ## How it works
 
