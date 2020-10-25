@@ -51,7 +51,7 @@ their Reddit account is authentic.
 
 After signing in, the visitor can specify one or more League of Legends accounts that they own. To verify ownership of those accounts, a challenge is made:
 
-* The user must sign in to League of Legends and enter the given verification code
+* The user must sign in to League of Legends and enter the given verification code.
 
 * Using Riot Games' [Developer API](https://developer.riotgames.com/) the code is retrieved and checked for authenticity.
 
