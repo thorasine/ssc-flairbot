@@ -2,8 +2,7 @@
 
 html,body{
     background: black;
-    /*background-image: url('/images/background12.jpg');*/
-    background-image: url('https://i.imgur.com/AJ97dVv.jpg');
+    background-image: url('https://i.imgur.com/7Ly0WR5.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
@@ -21,6 +20,7 @@ html,body{
     margin-bottom: auto;
     width: 500px;
     background-color: rgba(0,0,0,0.5) !important;
+    backdrop-filter: blur(3px);
 }
 .card-body{
     padding: 20px;

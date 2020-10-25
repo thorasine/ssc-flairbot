@@ -4,14 +4,47 @@ body {
 
 html, body {
     height: 100%;
+    background-image: url('https://i.imgur.com/7Ly0WR5.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 #container {
     min-height: 100%;
 }
 
+#headerBar{
+    background-color: rgba(52,58,64,0.8);
+    backdrop-filter: blur(3px);
+}
+
+#headerBar .navbar-brand{
+    color: white;
+}
+
+#newSummonerModalBtn{
+    color: black;
+    background-color: #FFC312;
+}
+
+#newSummonerModalBtn:hover{
+    color: black;
+    background-color: white;
+}
+
 .card {
     min-width: 16rem;
+    background-color: rgba(255,255,255,0.85);
+    backdrop-filter: blur(3px);
+}
+
+.footer {
+    background-color: rgba(52,58,64,0.8);
+    backdrop-filter: blur(3px);
+}
+
+.footer p{
+    color: #a6a6a6;
 }
 
 .blockquote {
