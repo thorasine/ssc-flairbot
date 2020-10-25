@@ -1,9 +1,10 @@
-body {
-    background-color: #f5f5f5;
-}
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&display=swap');
 
 html, body {
     height: 100%;
+    background-color: #f5f5f5;
     background-image: url('https://i.imgur.com/7Ly0WR5.jpg');
     background-size: cover;
     background-repeat: no-repeat;
@@ -20,6 +21,7 @@ html, body {
 
 #headerBar .navbar-brand{
     color: white;
+    font-family: 'Raleway', sans-serif;
 }
 
 #newSummonerModalBtn{
@@ -30,6 +32,19 @@ html, body {
 #newSummonerModalBtn:hover{
     color: black;
     background-color: white;
+}
+
+.modal h5{
+    font-family: 'Raleway', sans-serif;
+}
+
+.modal-body{
+    font-family: 'Quicksand', sans-serif;
+}
+
+.btn-main {
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
 }
 
 .card {

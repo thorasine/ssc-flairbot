@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&display=swap');
 
 html,body{
     background: black;
@@ -27,8 +28,9 @@ html,body{
 }
 
 .card-body p{
-    margin-top: 30px;
+    margin-top: 10px;
     color: white;
+    font-family: 'Quicksand', sans-serif;
 }
 
 .card-body h3{
@@ -45,6 +47,8 @@ html,body{
 
 .login_btn, .logout_btn, .goback_btn{
     margin: 5px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
 }
 
 .login_btn {
