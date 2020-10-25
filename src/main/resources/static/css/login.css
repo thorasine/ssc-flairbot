@@ -7,7 +7,6 @@ html,body{
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
-    font-family: 'Raleway', sans-serif;
 }
 
 .container{
@@ -35,6 +34,7 @@ html,body{
 
 .card-body h3{
     color: white;
+    font-family: 'Raleway', sans-serif;
 }
 
 .btn_container{
@@ -48,7 +48,6 @@ html,body{
 .login_btn, .logout_btn, .goback_btn{
     margin: 5px;
     font-family: 'Raleway', sans-serif;
-    font-weight: bold;
 }
 
 .login_btn {

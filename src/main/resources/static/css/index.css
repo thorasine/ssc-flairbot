@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&display=swap');
 
 html, body {
     height: 100%;
@@ -36,10 +35,16 @@ html, body {
 
 .modal h5{
     font-family: 'Raleway', sans-serif;
+    font-weight: bold;
 }
 
 .modal-body{
-    font-family: 'Quicksand', sans-serif;
+
+}
+
+.modal-content{
+    background-color: rgba(255,255,255,0.85);
+    backdrop-filter: blur(3px);
 }
 
 .btn-main {
