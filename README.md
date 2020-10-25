@@ -59,7 +59,7 @@ Once these steps have been completed, the user is considered registered. From ti
 a flair is composed and sent using Reddit's API.  
 
 ## Screenshots
-<img src="https://i.imgur.com/IQCSWdN.jpg" width="50%" style="margin-right: 20px;"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/woiRAWk.png" width="50%"></img> <br/> <img src="https://i.imgur.com/4IPlNAL.png" width="45%" style="margin-right: 20px;"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/IKgCX7l.png" width="45%"></img><br /><img src="https://i.imgur.com/ZIYx5bt.png" width="45%" style="margin-right: 20px;"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/mGbTdTt.png" width="45%"></img> 
+<img src="https://i.imgur.com/IQCSWdN.jpg" width="45%" style="margin-right: 20px;"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/woiRAWk.png" width="45%"></img> <br/> <img src="https://i.imgur.com/4IPlNAL.png" width="45%" style="margin-right: 20px;"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/IKgCX7l.png" width="45%"></img><br /><img src="https://i.imgur.com/ZIYx5bt.png" width="45%" style="margin-right: 20px;"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/mGbTdTt.png" width="45%"></img> 
 
 # Technical Info
 
