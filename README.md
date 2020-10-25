@@ -56,7 +56,10 @@ After signing in, the visitor can specify one or more League of Legends accounts
 * Using Riot Games' [Developer API](https://developer.riotgames.com/) the code is retrieved and checked for authenticity.
 
 Once these steps have been completed, the user is considered registered. From time to time, the user's rank is retrieved using the Riot API and
-a flair is composed and sent using Reddit's API.
+a flair is composed and sent using Reddit's API.  
+
+## Screenshots
+<img src="https://i.imgur.com/IQCSWdN.jpg" width="45%" style="margin-right: 20px;"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/woiRAWk.png" width="45%"></img> <br/> <img src="https://i.imgur.com/4IPlNAL.png" width="45%" style="margin-right: 20px;"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/IKgCX7l.png" width="45%"></img><br /><img src="https://i.imgur.com/ZIYx5bt.png" width="45%" style="margin-right: 20px;"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/mGbTdTt.png" width="45%"></img> 
 
 # Technical Info
 
