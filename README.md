@@ -5,11 +5,11 @@ The purpose of this project was to practice Full Stack Development along with [S
 
 **Configuration**
 
-Other than importing dependencies through Maven and have an SQL database running the dev must also create and fill in the following files with the necessary credentials:  
+Import the dependencies through Maven and have an SQL database running and the dev must also create and fill in the following files with the necessary credentials:  
 * application.yml ([example](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/resources/application.yml.example))  
 * SecretFile.java ([example](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/java/ssc_flairbot/SecretFile.java.example))   
 
-The following rest APIs are used:  
+The following REST APIs are used:  
 * [Riot Games API](https://developer.riotgames.com/): Used to access the user's in-game ranks.  
 * [Reddit API](https://www.reddit.com/dev/api/):      Used for OAuth2 authorization and to manage user's reddit flairs. These are two separate entities, both require their own separate keys.  
 
