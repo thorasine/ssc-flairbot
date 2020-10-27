@@ -1,7 +1,6 @@
 # SummonerSchool-Flairbot
 
-This repository is the source of a site meant be used by [/r/summonerschool](https://reddit.com/r/summonerschool) to add verified ranked flairs to contributors.  
-The purpose of this project was to practice Full Stack Development along with [Spring](https://spring.io/) (as it is my first Spring project).
+This repository is the source of a site meant be used by [/r/summonerschool](https://reddit.com/r/summonerschool) to add verified ranked flairs to contributors. The purpose of this project was to practice Full Stack Development along with [Spring](https://spring.io/) (as it is my first Spring project).
 
 **Configuration**
 
@@ -16,13 +15,11 @@ The following REST APIs are used:
 ## What's this all about?
 
 [League of Legends](https://www.leagueoflegends.com) is the [astonishingly popular](https://www.google.ca/url?sa=t&rct=j&q=&esrc=s&source=web&cd=3&cad=rja&uact=8&ved=0ahUKEwjthcqmzsrLAhVDmYMKHa86CVEQFggmMAI&url=http%3A%2F%2Fwww.forbes.com%2Fsites%2Finsertcoin%2F2014%2F01%2F27%2Friots-league-of-legends-reveals-astonishing-27-million-daily-players-67-million-monthly%2F&usg=AFQjCNHMpPx45j6T40Fs9F6DvhkAP1JUng&sig2=abwf3efOnI3xx15Wvinxzg) action strategy game by Riot Games.
-Over the course of year-long sprints, or "seasons", more than 100 million players worldwide compete to achieve standings on a competitive ladder.
-Those who successfully climb the ladder are awarded ranks: Iron, Bronze, Silver, Gold, Platinum, Diamond, Master, Grandmaster and Challenger.
+Over the course of year-long sprints, or "seasons", more than 100 million players worldwide compete to achieve standings on a competitive ladder. Those who successfully climb the ladder are awarded ranks: Iron, Bronze, Silver, Gold, Platinum, Diamond, Master, Grandmaster and Challenger.
 
 [Summoner School](https://reddit.com/r/summonerschool) is an online community counting close to half a million users, who have come together to help one another be better players.
 
-Every day, hundreds of thousands of players come together to share information on Summoner School. In order for the information given there to be vetted correctly, it's sometimes
-important to know the rank of the person giving the information. A "Silver" player may not be wrong, but players might want to prefer the opinion of a "Master" or "Challenger" instead.
+Every day, hundreds of thousands of players come together to share information on Summoner School. In order for the information given there to be vetted correctly, it's sometimes important to know the rank of the person giving the information. A "Silver" player may not be wrong, but players might want to prefer the opinion of a "Master" or "Challenger" instead.
 
 **Troubled Beginnings**
 
@@ -30,11 +27,9 @@ important to know the rank of the person giving the information. A "Silver" play
 
 > *A reddit user with a ranked flair.*
 
-The [moderator team](https://www.reddit.com/r/summonerschool/about/moderators) at Summoner School made several attempts to highlight the contributions of high-calibre players.
-Some of these included the use of Reddit's "flair" system. Flairs are badges that appear next to a person's name in all of their contributions.
+The [moderator team](https://www.reddit.com/r/summonerschool/about/moderators) at Summoner School made several attempts to highlight the contributions of high-calibre players. Some of these included the use of Reddit's "flair" system. Flairs are badges that appear next to a person's name in all of their contributions.
 
-Unfortunately, previous attempts at solving the flair system suffered from dishonesty. Contributors were cheating and finding ways
-to obtain flairs which they hadn't earned. Meanwhile, personally validating each player was too time consuming.
+Unfortunately, previous attempts at solving the flair system suffered from dishonesty. Contributors were cheating and finding ways to obtain flairs which they hadn't earned. Meanwhile, personally validating each player was too time consuming.
 
 The flair system was discontinued.
 
@@ -53,8 +48,7 @@ After signing in, the visitor can specify one or more League of Legends accounts
 
 * Using Riot Games' [Developer API](https://developer.riotgames.com/) the code is retrieved and checked for authenticity.
 
-Once these steps have been completed, the user is considered registered. From time to time, the user's rank is retrieved using the Riot API and
-a flair is composed and sent using Reddit's API.  
+Once these steps have been completed, the user is considered registered. From time to time, the user's rank is retrieved using the Riot API and a flair is composed and sent using Reddit's API.  
 
 ## Screenshots
 <img src="https://i.imgur.com/IQCSWdN.jpg" width="45%" style="margin-right: 20px;"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/woiRAWk.png" width="45%"></img> <br/> <img src="https://i.imgur.com/4IPlNAL.png" width="45%" style="margin-right: 20px;"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/IKgCX7l.png" width="45%"></img><br /><img src="https://i.imgur.com/ZIYx5bt.png" width="45%" style="margin-right: 20px;"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/mGbTdTt.png" width="45%"></img> 
