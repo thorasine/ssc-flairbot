@@ -57,14 +57,14 @@ Once these steps have been completed, the user is considered registered. From ti
 
 The solution was built on **Java 10** in **IntelliJ IDEA** using **Spring Boot 2.1.1** as the main framework along with various Spring components.  
 
-The majority of the website is a single HTML file which behaves like an app using **jQuery** and **Bootstrap**. The data representation on the front end is handled by **Thymeleaf**.  
+The majority of the website is a single **HTML** file which behaves like an app using **Javascript**, **Bootstrap** and **CSS**. The data exchange between the site and the server is handled by **Thymeleaf** and **jQuery**.  
 
-Data persistence is handled by **H2 Database** and **Jdbc**. The users data is stored in an **SQL** database.  
+Data persistence is handled by **H2 Database** with **JDBC**. The users data is stored in an **SQL** database.  
 
-Tests were created with the help of **JUnit 4**.  
+Tests were created with the help of **JUnit 4** (and in some newer tests **JUnit 5**, **AssertJ** and **Mockito**.  
 
 ## Contributions
 
-* The solution started from a [Spring Oaut2](https://github.com/vymiyai/spring-oauth2-discord) example, to eventually become what it is today.
+* [Spring Guides](https://spring.io/guides) official guides for Spring Framework.
 * [L4J8](https://github.com/domisum/L4J8) micromanages requests towards Riot API.
 * [Jesse Hallam](https://github.com/jessehallam) for his version of the site, inspiring the site layout and the readme.
