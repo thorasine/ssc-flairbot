@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ssc_flairbot.persistence.User;
 
 /**
- * Class that handles the website's pages
+ * Class that handles the website's pages.
  *
  * @author Thorasine
  */
