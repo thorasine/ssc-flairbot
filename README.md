@@ -5,8 +5,8 @@ This repository is the source of a site meant be used by [/r/summonerschool](htt
 **Configuration**
 
 Import the dependencies through Maven and have an SQL database running and the dev must also create and fill in the following files with the necessary credentials:  
-* application.yml ([example](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/resources/application.yml.example))  
-* SecretFile.java ([example](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/java/ssc_flairbot/SecretFile.java.example))   
+* ([application.yml](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/resources/application.yml.example))  
+* ([SecretFile.java](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/java/ssc_flairbot/SecretFile.java.example))   
 
 The following REST APIs are used:  
 * [Riot Games API](https://developer.riotgames.com/): Used to access the user's in-game ranks.  
