@@ -12,6 +12,8 @@ import java.util.logging.Logger;
 
 /**
  * Class to create sample data for manual testing
+ *
+ * @author Thorasine
  */
 @Component
 public class ManualTest {

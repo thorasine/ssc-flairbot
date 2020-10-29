@@ -54,17 +54,14 @@ public class RedditApi {
      * Set the reddit flairs for the given users.
      *
      * @param users the users whose flairs we want to set
-     * @return a string about the success of the operation
+     * @return a string about the success of the operation, used for tests
      */
     String setFlairs(Map<String, String> users) {
-        StringBuilder parameters = new StringBuilder("flair_csv=");
-        for (String redditName : users.keySet()) {
-            parameters.append(redditName).append(",").append(users.get(redditName)).append(",\n");
-        }
+        String parameters = buildParameterString(users);
         try {
             limiter.acquire();
             limiter.enter();
-            String answer = sendRequest(parameters.toString());
+            String answer = sendRequest(parameters);
             if (!answer.equalsIgnoreCase("ok")) {
                 Logger.getLogger(RedditApi.class.getName()).log(Level.WARNING, "Some user flairs have failed to update:\n" + answer);
                 return "warning";
@@ -73,8 +70,22 @@ public class RedditApi {
             logger.log(Level.SEVERE, "Error while updating reddit flairs: " + e.getMessage());
             return "error";
         }
-        logger.log(Level.FINE, "Updating " + users.size() + " reddit flairs have been successfully completed.");
+        logger.log(Level.INFO, "Updating " + users.size() + " reddit flairs have been successfully completed.");
         return "ok";
+    }
+
+    /**
+     * Build the parameters string for the reddit flair request.
+     *
+     * @param users the users whose flairs we want to send. Key is the user's reddit name, value is their rank in-game
+     * @return parameters string ready to be send in a request
+     */
+    private String buildParameterString(Map<String, String> users) {
+        StringBuilder parameters = new StringBuilder("flair_csv=");
+        for (String redditName : users.keySet()) {
+            parameters.append(redditName).append(",").append(users.get(redditName)).append(",\n");
+        }
+        return parameters.toString();
     }
 
     /**
@@ -103,38 +114,51 @@ public class RedditApi {
             wr.write(postData);
         }
 
+        return readResponse(con);
+    }
+
+    /**
+     * Read the HTTP response
+     *
+     * @param con the HTTP connector
+     * @return "ok" if the request have been successful, an error string otherwise
+     * @throws Exception if an exception has occurred during the reading
+     */
+    private String readResponse(HttpURLConnection con) throws Exception{
         StringBuilder response = new StringBuilder();
-        JSONArray results = readResults(con);
-        for (int i = 0; i < results.length(); i++) {
-            JSONObject json = results.getJSONObject(i);
-            if (!json.getString("ok").equalsIgnoreCase("true")) {
-                response.append(json.getString("errors")).append("\n");
+        JSONArray results = null;
+        int HttpResult = con.getResponseCode();
+        if (HttpResult == HttpURLConnection.HTTP_OK) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));
+            results = convertToJson(br);
+        }
+
+        if (results == null) {
+            response.append("Error during reading the response, got Json has null value");
+        } else {
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject json = results.getJSONObject(i);
+                if (!json.getString("ok").equalsIgnoreCase("true")) {
+                    response.append(json.getString("errors")).append("\n");
+                }
             }
         }
         return response.toString().length() == 0 ? "ok" : response.toString();
     }
 
     /**
-     * Read the response of an HTTP request.
-     *
-     * @param con the HTTP connector
-     * @return the response in the form of a JSONArray
-     * @throws Exception if things have gone wrong with the request
+     * Convert a BufferedReader object into a JSONArray
+     * @param br the BufferedRead we read from
+     * @return the JSONarray
+     * @throws Exception if an exception has occurred during the conersion
      */
-    private JSONArray readResults(HttpURLConnection con) throws Exception {
-        JSONArray jsonArray;
-        int HttpResult = con.getResponseCode();
-        if (HttpResult == HttpURLConnection.HTTP_OK) {
-            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));
-            StringBuilder sb = new StringBuilder();
-            int cp;
-            while ((cp = br.read()) != -1) {
-                sb.append((char) cp);
-            }
-            String jsonText = sb.toString();
-            jsonArray = new JSONArray(jsonText);
-            return jsonArray;
+    private JSONArray convertToJson(BufferedReader br) throws Exception{
+        StringBuilder sb = new StringBuilder();
+        int cp;
+        while ((cp = br.read()) != -1) {
+            sb.append((char) cp);
         }
-        return null;
+        String jsonText = sb.toString();
+        return new JSONArray(jsonText);
     }
 }

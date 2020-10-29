@@ -64,7 +64,7 @@ public class TokenMaker {
         try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
             wr.write(postData);
         }
-        return readResults(con).getString("access_token");
+        return readResponse(con).getString("access_token");
     }
 
     /**
@@ -74,7 +74,7 @@ public class TokenMaker {
      * @return the response in the form of a JSONArray
      * @throws Exception if something goes wrong with the request
      */
-    private JSONObject readResults(HttpURLConnection con) throws Exception {
+    private JSONObject readResponse(HttpURLConnection con) throws Exception {
         JSONObject json = null;
         int HttpResult = con.getResponseCode();
         if (HttpResult == HttpURLConnection.HTTP_OK) {
