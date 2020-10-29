@@ -32,19 +32,15 @@ public class RankUpdateTask {
      * Get the given users rank from in-game, update said users in the database and set their flairs on reddit to their
      * current in-game rank.
      *
-     * @param users         the users we want to update
-     * @param methodLimiter the method limiter
-     * @param appLimiter1   the first app limiter
-     * @param applimiter2   the second app limiter
+     * @param users    the users we want to update
+     * @param limiters the app and method limiters
      */
-    void update(List<User> users, RateLimiter methodLimiter, RateLimiter appLimiter1, RateLimiter applimiter2) {
+    void update(List<User> users, List<RateLimiter> limiters) {
         for (User user : users) {
-            appLimiter1.acquire();
-            appLimiter1.enter();
-            applimiter2.acquire();
-            applimiter2.enter();
-            methodLimiter.acquire();
-            methodLimiter.enter();
+            for (RateLimiter limiter : limiters) {
+                limiter.acquire();
+                limiter.enter();
+            }
             user.setRank(lolApi.getRank(user));
         }
         database.batchUpdateUsersRank(users);

@@ -38,7 +38,7 @@ public class LeagueServerBuilder {
     private void createLeagueServers() {
         int appLimit1;
         int appLimit2;
-        
+
         if (Application.IN_TEST_PHASE) {
             appLimit1 = 100;
             appLimit2 = 20;
@@ -64,7 +64,8 @@ public class LeagueServerBuilder {
         servers.forEach(server -> {
             server.methodLimiter = new RateLimiter((int) (server.methodLimit * threshold), methodTimespan);
             server.appLimiter1 = new RateLimiter((int) (appLimit1 * threshold), appTimespan1);
-            server.applimiter2 = new RateLimiter((int) (appLimit2 * threshold), appTimespan2);
+            server.appLimiter2 = new RateLimiter((int) (appLimit2 * threshold), appTimespan2);
+            server.addLimiters();
         });
     }
 }

@@ -20,10 +20,10 @@ import ssc_flairbot.reddit.FlairHandler;
 @Component
 public class VerificationUpdater {
 
-    private final Logger logger = Logger.getLogger(VerificationUpdater.class.getName());
     private final LeagueApi lolApi;
     private final DBHandler database;
     private final FlairHandler flairHandler;
+    private final Logger logger = Logger.getLogger(VerificationUpdater.class.getName());
     //the amount of times the app tries to validate an user before setting them to "failed"
     static final int TRIES_UNTIL_FAIL = 20;
 
@@ -62,11 +62,7 @@ public class VerificationUpdater {
      */
     private void checkValidationCode(User user) {
         String apiCode = lolApi.getThirdPartyCode(user);
-        if (apiCode == null) {
-            validationFailed(user);
-            return;
-        }
-        if (!apiCode.equalsIgnoreCase(user.getValidationCode())) {
+        if (apiCode == null || !apiCode.equalsIgnoreCase(user.getValidationCode())) {
             validationFailed(user);
             return;
         }
