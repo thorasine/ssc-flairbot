@@ -1,5 +1,6 @@
 package ssc_flairbot.league;
 
+import ssc_flairbot.Application;
 import ssc_flairbot.RateLimiter;
 
 import java.util.Arrays;
@@ -35,12 +36,19 @@ public class LeagueServerBuilder {
      * to the threshold.
      */
     private void createLeagueServers() {
-        int appLimit1 = 100;
+        int appLimit1;
+        int appLimit2;
+        
+        if (Application.IN_TEST_PHASE) {
+            appLimit1 = 100;
+            appLimit2 = 20;
+        } else {
+            appLimit1 = 30000;
+            appLimit2 = 500;
+        }
         int appTimespan1 = 120_000;
-        int appLimit2 = 20;
         int appTimespan2 = 10_000;
         int methodTimespan = 60_000;
-
         servers = Arrays.asList(new LeagueServer("EUW", 2000),
                 new LeagueServer("NA", 2000),
                 new LeagueServer("EUNE", 1600),
