@@ -1,18 +1,20 @@
+#values between [brackets] are need to be changed
+
 reddit:
   client:
-    clientId: myRedditAppId
-    clientSecret: myRedditAppSecret
+    clientId: [myRedditLoginAppID]
+    clientSecret: [myRedditLoginAppIDSecret]
     accessTokenUri: https://www.reddit.com/api/v1/access_token
     userAuthorizationUri: https://www.reddit.com/api/v1/authorize
     scope: identity
     clientAuthenticationScheme: header
-    preEstablishedRedirectUri: myRedirectUri
+    preEstablishedRedirectUri: [myRedditLoginAppRedirectUri]
     useCurrentUri: false
   resource:
     userInfoUri: https://oauth.reddit.com/api/v1/me
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/[dbservername]?useUnicode=yes&characterEncoding=UTF-8
-    username: myUserName
-    password: myPassword
+    username: [myDatabaseUserName]
+    password: [myDatabasePassword]
     driver-class-name: com.mysql.cj.jdbc.Driver

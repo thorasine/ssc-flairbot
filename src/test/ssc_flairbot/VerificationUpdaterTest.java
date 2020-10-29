@@ -34,8 +34,9 @@ public class VerificationUpdaterTest {
     @Autowired
     DBHandler database;
 
-    private static boolean setupNeeded = true;
-    private static List<User> users = new ArrayList<>();
+    private int triesUntilFail = VerificationUpdater.TRIES_UNTIL_FAIL;
+    private boolean setupNeeded = true;
+    private List<User> users = new ArrayList<>();
 
     @Before
     public void setUp() {
@@ -65,10 +66,10 @@ public class VerificationUpdaterTest {
     @Test
     public void userSetToFailedAfterManyTries() {
         User user = database.getAllUsers().get(0);
-        user.setValidationTries(10);
+        user.setValidationTries(triesUntilFail);
         database.updateUser(user);
         verificationUpdater.scheduledUpdate();
-        assertEquals("User didn't change from pending to failed after 11 tries.", database.getAllUsers().get(0).getValidated(), "failed");
+        assertEquals("User didn't change from pending to failed after " + triesUntilFail + " tries.", database.getAllUsers().get(0).getValidated(), "failed");
     }
 
     @Test
@@ -77,7 +78,7 @@ public class VerificationUpdaterTest {
         database.addUser(users.get(2));
         List<User> dbUsers = database.getAllUsers();
         User user2 = dbUsers.get(1);
-        user2.setValidationTries(10);
+        user2.setValidationTries(triesUntilFail);
         database.updateUser(user2);
         User user3 = dbUsers.get(2);
         user3.setValidated("validated");
@@ -87,7 +88,7 @@ public class VerificationUpdaterTest {
         verificationUpdater.scheduledUpdate();
         assertEquals("Validation tries is not 1 for user1.", database.getAllUsers().get(0).getValidationTries(), 1);
         assertEquals("Validation tries is not pending. for user1", database.getAllUsers().get(0).getValidated(), "pending");
-        assertEquals("Validation tries is not 11 for user2.", database.getUserById(user2.getId()).getValidationTries(), 11);
+        assertEquals("Validation tries is not " + triesUntilFail+1 + " for user2.", database.getUserById(user2.getId()).getValidationTries(), triesUntilFail+1);
         assertEquals("Validation tries is not failed for user2.", database.getUserById(user2.getId()).getValidated(), "failed");
         assertEquals("User3 got updated despite being validated.", database.getUserById(user3.getId()).getValidationTries(), user3Tries);
         assertEquals("Validation tries is not validated for user3", database.getUserById(user3.getId()).getValidated(), "validated");

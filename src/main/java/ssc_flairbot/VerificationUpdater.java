@@ -24,9 +24,8 @@ public class VerificationUpdater {
     private final LeagueApi lolApi;
     private final DBHandler database;
     private final FlairHandler flairHandler;
-
     //the amount of times the app tries to validate an user before setting them to "failed"
-    private final int TRIES_UNTIL_FAIL = 20;
+    static final int TRIES_UNTIL_FAIL = 20;
 
     @Autowired
     public VerificationUpdater(LeagueApi lolApi, DBHandler database, FlairHandler flairHandler) {
