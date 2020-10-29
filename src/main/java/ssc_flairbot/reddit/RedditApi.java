@@ -113,7 +113,6 @@ public class RedditApi {
         try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
             wr.write(postData);
         }
-
         return readResponse(con);
     }
 
