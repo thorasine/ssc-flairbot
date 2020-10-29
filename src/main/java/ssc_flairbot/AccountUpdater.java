@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 @Component
 public class AccountUpdater {
 
+    private final Logger logger = Logger.getLogger(AccountUpdater.class.getName());
     private final DBHandler db;
     private final RankUpdateTask rankUpdateTask;
     private List<LeagueServer> servers;
@@ -50,7 +51,7 @@ public class AccountUpdater {
      * Initiate an UpdateTask for every server on a new thread.
      */
     void scheduledUpdate() {
-        Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Started: Scheduled database update.");
+        logger.log(Level.INFO, "Started: Scheduled database update.");
         int nThreads = servers.size();
         ExecutorService executor = Executors.newFixedThreadPool(nThreads);
         CompletableFuture[] futures = new CompletableFuture[nThreads];
@@ -59,7 +60,7 @@ public class AccountUpdater {
             futures[i] = CompletableFuture.runAsync(runner, executor);
         }
         CompletableFuture.allOf(futures).join();
-        Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Finished: Scheduled database update.");
+        logger.log(Level.INFO, "Finished: Scheduled database update.");
     }
 
     /**
@@ -81,10 +82,10 @@ public class AccountUpdater {
             if (accounts.size() == 0){
                 return;
             }
-            Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Started: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
+            logger.log(Level.INFO, "Started: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
             List<List<User>> lists = Lists.partition(accounts, 100);
             lists.forEach(chunk -> rankUpdateTask.update(chunk, server.getMethodLimiter(), server.getAppLimiter1(), server.getApplimiter2()));
-            Logger.getLogger(AccountUpdater.class.getName()).log(Level.INFO, "Finished: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
+            logger.log(Level.INFO, "Finished: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");
         }
     }
 

@@ -26,10 +26,11 @@ import java.util.logging.Logger;
 @Component
 public class RedditApi {
 
+    private final Logger logger = Logger.getLogger(RedditApi.class.getName());
+    private final String SUBREDDIT = SecretFile.SUBREDDIT;
+    private final String REDDIT_MOD_CLIENT_ID = SecretFile.REDDIT_MOD_CLIENT_ID;
     private final TokenMaker tokenMaker;
     private String token;
-    private final String subreddit = SecretFile.SUBREDDIT;
-    private final String redditModClientId = SecretFile.REDDIT_MOD_CLIENT_ID;
     private final RateLimiter limiter = new RateLimiter(60, 60_000);
 
     @Autowired
@@ -69,10 +70,10 @@ public class RedditApi {
                 return "warning";
             }
         } catch (Exception e) {
-            Logger.getLogger(RedditApi.class.getName()).log(Level.SEVERE, "Error while updating reddit flairs: " + e.getMessage());
+            logger.log(Level.SEVERE, "Error while updating reddit flairs: " + e.getMessage());
             return "error";
         }
-        Logger.getLogger(RedditApi.class.getName()).log(Level.FINE, "Updating " + users.size() + " reddit flairs have been successfully completed.");
+        logger.log(Level.FINE, "Updating " + users.size() + " reddit flairs have been successfully completed.");
         return "ok";
     }
 
@@ -84,12 +85,12 @@ public class RedditApi {
      * @throws Exception if things have gone wrong with the request
      */
     private String sendRequest(String parameters) throws Exception {
-        String url = "https://oauth.reddit.com/r/" + subreddit + "/api/flaircsv";
+        String url = "https://oauth.reddit.com/r/" + SUBREDDIT + "/api/flaircsv";
         URL object = new URL(url);
         HttpURLConnection con = (HttpURLConnection) object.openConnection();
         String bearerAuth = "bearer " + token;
         con.setRequestProperty("Authorization", bearerAuth);
-        con.setRequestProperty("User-Agent", "windows:" + redditModClientId + ":0.1 (by /u/Thorasine)");
+        con.setRequestProperty("User-Agent", "windows:" + REDDIT_MOD_CLIENT_ID + ":0.1 (by /u/Thorasine)");
         con.setRequestMethod("POST");
         con.setDoOutput(true);
         con.setDoInput(true);

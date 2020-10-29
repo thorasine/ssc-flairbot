@@ -25,6 +25,7 @@ import ssc_flairbot.persistence.User;
 @Component
 public class WebLogic {
 
+    private final Logger logger = Logger.getLogger(WebLogic.class.getName());
     private final DBHandler database;
     private final LeagueApi lolApi;
 
@@ -70,7 +71,7 @@ public class WebLogic {
         user.setValidationTries(0);
         user.setRank(lolApi.getRank(user));
         database.addUser(user);
-        Logger.getLogger(WebLogic.class.getName()).log(Level.INFO, "Created user: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ") " + "Highest rank: " + user.getRank());
+        logger.log(Level.INFO, "Created user: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ") " + "Highest rank: " + user.getRank());
         return "ok";
     }
 
@@ -94,7 +95,7 @@ public class WebLogic {
             return "The account you tried to delete is not yours!";
         }
         database.deleteUser(id);
-        Logger.getLogger(WebLogic.class.getName()).log(Level.INFO, "Deleted user: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ")");
+        logger.log(Level.INFO, "Deleted user: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ")");
         return "ok";
     }
 

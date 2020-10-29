@@ -25,6 +25,7 @@ import ssc_flairbot.persistence.User;
 @Component
 public class LeagueApi {
 
+    private final Logger logger = Logger.getLogger(LeagueApi.class.getName());
     private final LeagueRankHelper leagueRankHelper;
     private L4J8 api;
     private List<String> availableRegions;
@@ -51,12 +52,12 @@ public class LeagueApi {
      */
     public Summoner getSummoner(User user) {
         if (!availableRegions.contains(user.getServer())) {
-            Logger.getLogger(LeagueApi.class.getName()).log(Level.INFO, "Server not found for: /u/" + user.getRedditName() + " server: " + user.getServer());
+            logger.log(Level.INFO, "Server not found for: /u/" + user.getRedditName() + " server: " + user.getServer());
             return null;
         }
         Summoner summoner = new SummonerBuilder().withPlatform(platformConvert(user.getServer())).withName(user.getSummonerName()).get();
         if (summoner == null) {
-            Logger.getLogger(LeagueApi.class.getName()).log(Level.INFO, "Summoner not found for: " + "/u/" + user.getRedditName() + " Summoner: " + user.getSummonerName() + "(" + user.getServer() + ")");
+            logger.log(Level.INFO, "Summoner not found for: " + "/u/" + user.getRedditName() + " Summoner: " + user.getSummonerName() + "(" + user.getServer() + ")");
             return null;
         }
         return summoner;
@@ -71,7 +72,7 @@ public class LeagueApi {
     public String getThirdPartyCode(User user) {
         String code = new ThirdPartyCodeBuilder().withPlatform(platformConvert(user.getServer())).withSummonerId(user.getSummonerId()).getCode();
         if (code == null) {
-            Logger.getLogger(LeagueApi.class.getName()).log(Level.FINE, "Verification code not found for: " + "/u/" + user.getRedditName() + " Summoner: " + user.getSummonerName() + "(" + user.getServer() + ")");
+            logger.log(Level.FINE, "Verification code not found for: " + "/u/" + user.getRedditName() + " Summoner: " + user.getSummonerName() + "(" + user.getServer() + ")");
         }
         return code;
     }

@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 @Component
 public class FlairHandler {
 
+    private final Logger logger = Logger.getLogger(FlairHandler.class.getName());
     private final RedditApi redditApi;
     private final DBHandler database;
     private final LeagueRankHelper leagueRankHelper;
@@ -39,7 +40,7 @@ public class FlairHandler {
      */
     public void updateFlairs(List<User> users) {
         if (users.isEmpty()) return;
-        Logger.getLogger(FlairHandler.class.getName()).log(Level.FINE, "Started: Updating flairs for " + users.size() + " users.");
+        logger.log(Level.FINE, "Started: Updating flairs for " + users.size() + " users.");
         int chunkSize = 100;
         List<List<User>> lists = Lists.partition(users, chunkSize);
         for (List<User> chunk : lists) {
@@ -52,7 +53,7 @@ public class FlairHandler {
             });
             redditApi.setFlairs(flairMap);
         }
-        Logger.getLogger(FlairHandler.class.getName()).log(Level.FINE, "Finished: Updating flairs for " + users.size() + " users.");
+        logger.log(Level.FINE, "Finished: Updating flairs for " + users.size() + " users.");
     }
 
     /**

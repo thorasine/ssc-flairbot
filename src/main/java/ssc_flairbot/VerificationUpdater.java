@@ -20,6 +20,7 @@ import ssc_flairbot.reddit.FlairHandler;
 @Component
 public class VerificationUpdater {
 
+    private final Logger logger = Logger.getLogger(VerificationUpdater.class.getName());
     private final LeagueApi lolApi;
     private final DBHandler database;
     private final FlairHandler flairHandler;
@@ -40,7 +41,7 @@ public class VerificationUpdater {
     void scheduledUpdate() {
         List<User> users = database.getPendingUsers();
         List<User> verifiedUsers = new ArrayList<>();
-        Logger.getLogger(VerificationUpdater.class.getName()).log(Level.INFO, "Started: Updating verification session for " + users.size() + " users.");
+        logger.log(Level.INFO, "Started: Updating verification session for " + users.size() + " users.");
         for (User user : users) {
             checkValidationCode(user);
             database.updateUser(user);
@@ -48,7 +49,7 @@ public class VerificationUpdater {
                 verifiedUsers.add(user);
             }
         }
-        Logger.getLogger(VerificationUpdater.class.getName()).log(Level.INFO, "Ended: Updating verifications have been successfully completed.");
+        logger.log(Level.INFO, "Ended: Updating verifications have been successfully completed.");
         if (!verifiedUsers.isEmpty()) {
             flairHandler.updateFlairs(verifiedUsers);
         }
