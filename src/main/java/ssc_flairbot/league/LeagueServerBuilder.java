@@ -43,7 +43,7 @@ public class LeagueServerBuilder {
             appLimit1 = 100;
             appLimit2 = 20;
         } else {
-            appLimit1 = 30000;
+            appLimit1 = 30_000;
             appLimit2 = 500;
         }
         int appTimespan1 = 120_000;
