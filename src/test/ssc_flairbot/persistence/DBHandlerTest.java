@@ -8,10 +8,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 @JdbcTest
 @RunWith(SpringRunner.class)
@@ -19,44 +19,44 @@ import static org.junit.Assert.*;
 public class DBHandlerTest {
 
     @Autowired
-    private DBHandler database;
+    private DBHandler db;
 
     private User user1;
     private User user2;
 
     @Before
     public void setUp() {
-        database.dropTable();
-        database.createTable();
+        db.dropTable();
+        db.createTable();
         user1 = new UserBuilder().redditName("Thorasine").summonerName("Trefort")
                 .summonerId("fakeSummonerId1").server("EUW").rank("Diamond I").validated("validated")
                 .validationCode("83ERFK").validationTries(0).buildUser();
         user2 = new UserBuilder().redditName("Thorasine").summonerName("Oreena")
                 .summonerId("fakeSummonerID2").server("EUW").rank("Gold IV").validated("pending")
                 .validationCode("QWERTY").validationTries(0).buildUser();
-        database.addUser(user1);
-        database.addUser(user2);
-        List<User> allUsers = database.getAllUsers();
-        user1 = database.getUserById(allUsers.get(0).getId());
-        user2 = database.getUserById(allUsers.get(1).getId());
+        db.addUser(user1);
+        db.addUser(user2);
+        List<User> allUsers = db.getAllUsers();
+        user1 = db.getUserById(allUsers.get(0).getId());
+        user2 = db.getUserById(allUsers.get(1).getId());
     }
 
     @Test
     public void getAllUsers() {
-        List<User> users = database.getAllUsers();
-        assertEquals("Database size is not 2.", 2, users.size());
+        List<User> users = db.getAllUsers();
+        assertThat(users.size()).isEqualTo(2);
     }
 
     @Test
     public void getPendingUsers() {
-        assertEquals("Database pending users are not 1.", 1, database.getPendingUsers().size());
+        assertThat(db.getPendingUsers().size()).isEqualTo(1);
     }
 
     @Test
     public void getUserById() {
-        User user = database.getUserById(user1.getId());
-        assertEquals("Reddit name is not Thorasine.", "Thorasine", user.getRedditName());
-        assertEquals("Summoner name is not Trefort.", "Trefort", user.getSummonerName());
+        User user = db.getUserById(user1.getId());
+        assertThat(user.getRedditName()).isEqualTo("Thorasine");
+        assertThat(user.getSummonerName()).isEqualTo("Trefort");
     }
 
     @Test
@@ -64,21 +64,21 @@ public class DBHandlerTest {
         User user3 = new UserBuilder().redditName("Pilvax").summonerName("Sniblets")
                 .summonerId("fakeSummonerId3").server("OCE").rank("Master I").validated("validated")
                 .validationCode("AZERTY").validationTries(3).buildUser();
-        database.addUser(user3);
-        User testUser = database.getAllUsers().get(2);
-        assertEquals("Database size is not 3.", 3, database.getAllUsers().size());
-        assertEquals("Reddit name is not Pilvax.", "Pilvax", testUser.getRedditName());
-        assertEquals("Summoner name is not Sniblets.", "Sniblets", testUser.getSummonerName());
-        assertEquals("SummonerId is not fakeSummonerId3", "fakeSummonerId3", testUser.getSummonerId());
-        assertEquals("Server is not OCE", "OCE", testUser.getServer());
-        assertEquals("Rank is not Master I", "Master I", testUser.getRank());
-        assertEquals("Validated is not validated", "validated", testUser.getValidated());
-        assertEquals("Validation code is not AZERTY", "AZERTY", testUser.getValidationCode());
-        assertEquals("Validation tries is not 3", 3, testUser.getValidationTries());
+        db.addUser(user3);
+        User testUser = db.getAllUsers().get(2);
+        assertThat(db.getAllUsers().size()).isEqualTo(3);
+        assertThat(testUser.getRedditName()).isEqualTo("Pilvax");
+        assertThat(testUser.getSummonerName()).isEqualTo("Sniblets");
+        assertThat(testUser.getSummonerId()).isEqualTo("fakeSummonerId3");
+        assertThat(testUser.getServer()).isEqualTo("OCE");
+        assertThat(testUser.getRank()).isEqualTo("Master I");
+        assertThat(testUser.getValidated()).isEqualTo("validated");
+        assertThat(testUser.getValidationCode()).isEqualTo("AZERTY");
+        assertThat(testUser.getValidationTries()).isEqualTo(3);
     }
 
     @Test
-    public void batchAddUser(){
+    public void batchAddUser() {
         User user3 = new UserBuilder().redditName("Pilvax").summonerName("Sniblets")
                 .summonerId("fakeSummonerId3").server("OCE").rank("Master I").validated("validated")
                 .validationCode("AZERTY").validationTries(3).buildUser();
@@ -88,84 +88,86 @@ public class DBHandlerTest {
         List<User> testUsers = new ArrayList<>();
         testUsers.add(user3);
         testUsers.add(user4);
-        database.batchAddUsers(testUsers);
+        db.batchAddUsers(testUsers);
 
-        User testUser3 = database.getAllUsers().get(2);
-        User testUser4 = database.getAllUsers().get(3);
-        assertEquals("Database size is not 3.", 4, database.getAllUsers().size());
-        assertEquals("Reddit name is not Pilvax.", "Pilvax", testUser3.getRedditName());
-        assertEquals("Summoner name is not Sniblets.", "Sniblets", testUser3.getSummonerName());
-        assertEquals("SummonerId is not fakeSummonerId3", "fakeSummonerId3", testUser3.getSummonerId());
-        assertEquals("Server is not OCE", "OCE", testUser3.getServer());
-        assertEquals("Rank is not Master I", "Master I", testUser3.getRank());
-        assertEquals("Validated is not validated", "validated", testUser3.getValidated());
-        assertEquals("Validation code is not AZERTY", "AZERTY", testUser3.getValidationCode());
-        assertEquals("Validation tries is not 3", 3, testUser3.getValidationTries());
+        User testUser3 = db.getAllUsers().get(2);
+        User testUser4 = db.getAllUsers().get(3);
+        assertThat(db.getAllUsers().size()).isEqualTo(4);
 
-        assertEquals("Reddit name is not George.", "George", testUser4.getRedditName());
-        assertEquals("Summoner name is not Charlie.", "Charlie", testUser4.getSummonerName());
-        assertEquals("SummonerId is not fakeSummonerId4", "fakeSummonerId4", testUser4.getSummonerId());
-        assertEquals("Server is not JP", "JP", testUser4.getServer());
-        assertEquals("Rank is not Grandmaster I", "Grandmaster I", testUser4.getRank());
-        assertEquals("Validated is not validated", "validated", testUser4.getValidated());
-        assertEquals("Validation code is not QWERTZ", "QWERTZ", testUser4.getValidationCode());
-        assertEquals("Validation tries is not 5", 5, testUser4.getValidationTries());
+        assertThat(testUser3.getRedditName()).isEqualTo("Pilvax");
+        assertThat(testUser3.getSummonerName()).isEqualTo("Sniblets");
+        assertThat(testUser3.getSummonerId()).isEqualTo("fakeSummonerId3");
+        assertThat(testUser3.getServer()).isEqualTo("OCE");
+        assertThat(testUser3.getRank()).isEqualTo("Master I");
+        assertThat(testUser3.getValidated()).isEqualTo("validated");
+        assertThat(testUser3.getValidationCode()).isEqualTo("AZERTY");
+        assertThat(testUser3.getValidationTries()).isEqualTo(3);
+
+        assertThat(testUser4.getRedditName()).isEqualTo("George");
+        assertThat(testUser4.getSummonerName()).isEqualTo("Charlie");
+        assertThat(testUser4.getSummonerId()).isEqualTo("fakeSummonerId4");
+        assertThat(testUser4.getServer()).isEqualTo("JP");
+        assertThat(testUser4.getRank()).isEqualTo("Grandmaster I");
+        assertThat(testUser4.getValidated()).isEqualTo("validated");
+        assertThat(testUser4.getValidationCode()).isEqualTo("QWERTZ");
+        assertThat(testUser4.getValidationTries()).isEqualTo(5);
     }
 
     @Test
     public void deleteUser() {
-        database.deleteUser(user1.getId());
-        assertEquals("Database size is not 1.", 1, database.getAllUsers().size());
-        List<User> users = database.getAllUsers();
-        assertEquals("Wrong account got deleted.", "Oreena", users.get(0).getSummonerName());
+        db.deleteUser(user1.getId());
+        assertThat(db.getAllUsers().size()).isEqualTo(1);
+        List<User> users = db.getAllUsers();
+        assertThat(users.get(0).getSummonerName()).isEqualTo("Oreena");
     }
 
     @Test
     public void updateUser() {
-        User user = database.getUserById(user1.getId());
+        User user = db.getUserById(user1.getId());
         user.setServer("NA");
-        database.updateUser(user);
-        assertEquals("Users updated server is not NA", "NA", database.getUserById(user.getId()).getServer());
+        db.updateUser(user);
+        assertThat(db.getUserById(user.getId()).getServer()).isEqualTo("NA");
     }
 
     @Test
     public void batchUpdateUsersRank() {
-        List<User> users = database.getAllUsers();
+        List<User> users = db.getAllUsers();
         User userTest1 = users.get(0);
         userTest1.setRank("Gold II");
         User userTest2 = users.get(1);
         userTest2.setRank("Silver IV");
-        database.batchUpdateUsersRank(users);
+        db.batchUpdateUsersRank(users);
 
-        assertEquals("User1 is not Gold II", "Gold II", database.getUserById(users.get(0).getId()).getRank());
-        assertEquals("User2 is not Silver IV", "Silver IV", database.getUserById(users.get(1).getId()).getRank());
+        assertThat(db.getUserById(users.get(0).getId()).getRank()).isEqualTo("Gold II");
+        assertThat(db.getUserById(users.get(1).getId()).getRank()).isEqualTo("Silver IV");
     }
 
     @Test
     public void isSummonerAlreadyValidatedBySomeone() {
-        assertTrue("Validated user Thorasine:Trefort not caught.", database.isSummonerAlreadyValidatedBySomeone(user1));
+        assertThat(db.isSummonerAlreadyValidatedBySomeone(user1)).isTrue();
     }
 
     @Test
     public void isSummonerAlreadyRegisteredByUser() {
-        assertTrue("Registered user Thorasine:Trefort not caught.", database.isSummonerAlreadyValidatedBySomeone(user1));
+        assertThat(db.isSummonerAlreadyRegisteredByUser(user1)).isTrue();
+        //assertTrue("Registered user Thorasine:Trefort not caught.", db.isSummonerAlreadyValidatedBySomeone(user1));
     }
 
     @Test
     public void getValidatedAccountsByServer() {
-        List<User> users = database.getValidatedAccountsByServer("EUW");
-        assertEquals("Validated users on EUW should be 1.", 1, users.size());
+        List<User> users = db.getValidatedAccountsByServer("EUW");
+        assertThat(users.size()).isEqualTo(1);
     }
 
     @Test
     public void getValidatedAccountsByRedditName() {
-        List<User> users = database.getValidatedAccountsByRedditName("Thorasine");
-        assertEquals("Validated accounts for Thorasine should be 1.", 1, users.size());
+        List<User> users = db.getValidatedAccountsByRedditName("Thorasine");
+        assertThat(users.size()).isEqualTo(1);
     }
 
     @Test
     public void getAccountsByRedditName() {
-        List<User> users = database.getAccountsByRedditName("Thorasine");
-        assertEquals("Thorasine's accounts should be 2", 2, users.size());
+        List<User> users = db.getAccountsByRedditName("Thorasine");
+        assertThat(users.size()).isEqualTo(2);
     }
 }
