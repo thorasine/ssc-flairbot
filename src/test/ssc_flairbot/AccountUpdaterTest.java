@@ -21,8 +21,7 @@ import ssc_flairbot.persistence.UserBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
+import static org.assertj.core.api.Assertions.assertThat;
 
 @TestPropertySource(properties = "app.scheduling.enable=false")
 @AutoConfigureTestDatabase
@@ -81,6 +80,6 @@ public class AccountUpdaterTest {
         database.batchUpdateUsersRank(users);
         accountUpdater.scheduledUpdate();
         users = database.getAllUsers();
-        users.forEach(user -> assertNotEquals("User's rank didn't get updated.", "Iron I", user.getRank()));
+        users.forEach(user -> assertThat(user.getRank()).isNotEqualTo("Iron I"));
     }
 }

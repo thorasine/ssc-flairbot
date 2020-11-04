@@ -1,7 +1,6 @@
 package ssc_flairbot;
 
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
-import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.spectator.SpectatorBuilder;
 import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.pojo.spectator.SpectatorParticipant;
@@ -18,10 +17,10 @@ import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
 import ssc_flairbot.persistence.UserBuilder;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 @TestPropertySource(properties = "app.scheduling.enable=false")
 @AutoConfigureTestDatabase
@@ -32,7 +31,7 @@ public class VerificationUpdaterTest {
     @Autowired
     VerificationUpdater verificationUpdater;
     @Autowired
-    DBHandler database;
+    DBHandler db;
 
     private int triesUntilFail = VerificationUpdater.TRIES_UNTIL_FAIL;
     private boolean setupNeeded = true;
@@ -51,47 +50,47 @@ public class VerificationUpdaterTest {
             }
             setupNeeded = false;
         }
-        database.dropTable();
-        database.createTable();
-        database.addUser(users.get(0));
+        db.dropTable();
+        db.createTable();
+        db.addUser(users.get(0));
     }
 
     @Test
     public void validationSessionCompleted() {
         verificationUpdater.scheduledUpdate();
-        assertEquals("Validation tries is not 1.", database.getAllUsers().get(0).getValidationTries(), 1);
-        assertEquals("Validation tries is not pending.", database.getAllUsers().get(0).getValidated(), "pending");
+        assertThat(db.getAllUsers().get(0).getValidationTries()).isEqualTo(1);
+        assertThat(db.getAllUsers().get(0).getValidated()).isEqualTo("pending");
     }
 
     @Test
     public void userSetToFailedAfterManyTries() {
-        User user = database.getAllUsers().get(0);
+        User user = db.getAllUsers().get(0);
         user.setValidationTries(triesUntilFail);
-        database.updateUser(user);
+        db.updateUser(user);
         verificationUpdater.scheduledUpdate();
-        assertEquals("User didn't change from pending to failed after " + triesUntilFail + " tries.", database.getAllUsers().get(0).getValidated(), "failed");
+        assertThat(db.getAllUsers().get(0).getValidated()).isEqualTo("failed");
     }
 
     @Test
     public void updatedMultipleUsersSuccessfully() {
-        database.addUser(users.get(1));
-        database.addUser(users.get(2));
-        List<User> dbUsers = database.getAllUsers();
+        db.addUser(users.get(1));
+        db.addUser(users.get(2));
+        List<User> dbUsers = db.getAllUsers();
         User user2 = dbUsers.get(1);
         user2.setValidationTries(triesUntilFail);
-        database.updateUser(user2);
+        db.updateUser(user2);
         User user3 = dbUsers.get(2);
         user3.setValidated("validated");
         int user3Tries = user3.getValidationTries();
-        database.updateUser(user3);
+        db.updateUser(user3);
 
         verificationUpdater.scheduledUpdate();
-        assertEquals("Validation tries is not 1 for user1.", database.getAllUsers().get(0).getValidationTries(), 1);
-        assertEquals("Validation tries is not pending. for user1", database.getAllUsers().get(0).getValidated(), "pending");
-        assertEquals("Validation tries is not " + triesUntilFail+1 + " for user2.", database.getUserById(user2.getId()).getValidationTries(), triesUntilFail+1);
-        assertEquals("Validation tries is not failed for user2.", database.getUserById(user2.getId()).getValidated(), "failed");
-        assertEquals("User3 got updated despite being validated.", database.getUserById(user3.getId()).getValidationTries(), user3Tries);
-        assertEquals("Validation tries is not validated for user3", database.getUserById(user3.getId()).getValidated(), "validated");
+        assertThat(db.getAllUsers().get(0).getValidationTries()).isEqualTo(1);
+        assertThat(db.getAllUsers().get(0).getValidated()).isEqualTo("pending");
+        assertThat(db.getUserById(user2.getId()).getValidationTries()).isEqualTo(triesUntilFail + 1);
+        assertThat(db.getUserById(user2.getId()).getValidated()).isEqualTo("failed");
+        assertThat(db.getUserById(user3.getId()).getValidationTries()).isEqualTo(user3Tries);
+        assertThat(db.getUserById(user3.getId()).getValidated()).isEqualTo("validated");
     }
 
 }

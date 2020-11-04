@@ -1,6 +1,7 @@
 package ssc_flairbot.reddit;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class FlairHandlerTest {
     }
 
     //todo Write methods to retrive user's flair to be able to properly test these
-    @Test
+    @Ignore
     public void onlyCompareValidatedAccounts() {
         users.add(user1);
         users.add(user2);
@@ -60,7 +61,7 @@ public class FlairHandlerTest {
         flairHandler.updateFlairs(users);
     }
 
-    @Test
+    @Ignore
     public void properlyPartitioned(){
         user1.setRank("Challenger I");
         user3.setRank("Platinum IV");

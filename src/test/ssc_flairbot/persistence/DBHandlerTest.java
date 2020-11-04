@@ -150,7 +150,6 @@ public class DBHandlerTest {
     @Test
     public void isSummonerAlreadyRegisteredByUser() {
         assertThat(db.isSummonerAlreadyRegisteredByUser(user1)).isTrue();
-        //assertTrue("Registered user Thorasine:Trefort not caught.", db.isSummonerAlreadyValidatedBySomeone(user1));
     }
 
     @Test

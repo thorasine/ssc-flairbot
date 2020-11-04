@@ -13,9 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
-/**
- * The purpose of this test is to practice unit testing with Mockito and AssertJ
- */
 @RunWith(MockitoJUnitRunner.class)
 public class LeagueApiMockTest {
 
