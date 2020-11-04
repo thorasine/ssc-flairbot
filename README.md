@@ -65,6 +65,6 @@ Tests were created with the help of **JUnit 4**, **AssertJ** and in some places 
 
 ## Contributions
 
-* [Spring Guides](https://spring.io/guides) official guides for Spring Framework.
-* [L4J8](https://github.com/domisum/L4J8) micromanages requests towards Riot API.
-* [Jesse Hallam](https://github.com/jessehallam) for his version of the site, inspiring the site layout and the readme.
+* [Spring Framework](https://spring.io/) - The framework of the app.
+* [L4J8](https://github.com/domisum/L4J8) - Micromanages requests towards Riot API.
+* [Jesse Hallam](https://github.com/jessehallam) - For his version of the site, inspiring the site layout and the readme.
