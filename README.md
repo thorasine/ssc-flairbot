@@ -61,7 +61,7 @@ The majority of the website is a single **HTML** file which behaves like an app 
 
 Data persistence is handled by **H2 Database** with **JDBC**. The users data is stored in an **MySQL** database.  
 
-Tests were created with the help of **JUnit 4**, **AssertJ** and in some places **Mockito**).  
+Tests were created with the help of **JUnit 4**, **AssertJ** and in some places **Mockito**.  
 
 ## Contributions
 
