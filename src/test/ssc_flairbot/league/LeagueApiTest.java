@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ssc_flairbot.persistence.User;
 import ssc_flairbot.persistence.UserBuilder;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {LeagueApi.class, LeagueRankHelper.class})
@@ -28,47 +28,55 @@ public class LeagueApiTest {
     }
 
     @Test
-    public void getSummoner() {
+    public void hasSummonerName() {
         Summoner summoner = lolApi.getSummoner(user);
-        assertEquals("Summoner's name is not Thorasine.", "Thorasine", summoner.getName());
+        assertThat(summoner).isNotNull();
+        assertThat(summoner.getName()).isNotNull();
     }
 
     @Test
-    public void getRank() {
+    public void hasSummonerRank() {
         user.setSummonerId(lolApi.getSummoner(user).getSummonerId());
-        assertNotNull("Highest rank for Thorasine is null.", lolApi.getRank(user));
+        assertThat(lolApi.getRank(user)).isNotNull();
     }
 
     @Test
-    public void getThirdPartyCode() {
+    public void hasNoSummonerName() {
+        user = new UserBuilder().summonerName("this summoner name cannot exist").server("EUW").buildUser();
+        Summoner summoner = lolApi.getSummoner(user);
+        assertThat(summoner).isNull();
+    }
+
+    @Test
+    public void hasThirdPartyCode() {
         user.setSummonerId(lolApi.getSummoner(user).getSummonerId());
-        assertNotNull("Third party code for Thorasine is null", lolApi.getThirdPartyCode(user));
+        assertThat(lolApi.getThirdPartyCode(user)).isNotNull();
     }
 
     @Test
     public void getRightPlatform() {
         Platform platform = lolApi.platformConvert("EUW");
-        assertEquals("Platform converter returns wrong result.", Platform.EUW1, platform);
+        assertThat(platform).isEqualTo(Platform.EUW1);
         platform = lolApi.platformConvert("NA");
-        assertEquals("Platform converter returns wrong result.", Platform.NA1, platform);
+        assertThat(platform).isEqualTo(Platform.NA1);
         platform = lolApi.platformConvert("EUNE");
-        assertEquals("Platform converter returns wrong result.", Platform.EUN1, platform);
+        assertThat(platform).isEqualTo(Platform.EUN1);
         platform = lolApi.platformConvert("BR");
-        assertEquals("Platform converter returns wrong result.", Platform.BR1, platform);
+        assertThat(platform).isEqualTo(Platform.BR1);
         platform = lolApi.platformConvert("LAN");
-        assertEquals("Platform converter returns wrong result.", Platform.LA1, platform);
+        assertThat(platform).isEqualTo(Platform.LA1);
         platform = lolApi.platformConvert("LAS");
-        assertEquals("Platform converter returns wrong result.", Platform.LA2, platform);
+        assertThat(platform).isEqualTo(Platform.LA2);
         platform = lolApi.platformConvert("JP");
-        assertEquals("Platform converter returns wrong result.", Platform.JP1, platform);
+        assertThat(platform).isEqualTo(Platform.JP1);
         platform = lolApi.platformConvert("KR");
-        assertEquals("Platform converter returns wrong result.", Platform.KR, platform);
+        assertThat(platform).isEqualTo(Platform.KR);
         platform = lolApi.platformConvert("OCE");
-        assertEquals("Platform converter returns wrong result.", Platform.OC1, platform);
+        assertThat(platform).isEqualTo(Platform.OC1);
         platform = lolApi.platformConvert("RU");
-        assertEquals("Platform converter returns wrong result.", Platform.RU, platform);
+        assertThat(platform).isEqualTo(Platform.RU);
         platform = lolApi.platformConvert("TR");
-        assertEquals("Platform converter returns wrong result.", Platform.TR1, platform);
+        assertThat(platform).isEqualTo(Platform.TR1);
     }
 
 }

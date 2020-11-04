@@ -24,8 +24,8 @@ public class LeagueServer {
         this.methodLimit = methodLimit;
     }
 
-    void addLimiters(){
-        if(limiters.size() == 0){
+    void addLimiters() {
+        if (limiters.size() == 0) {
             limiters.add(appLimiter1);
             limiters.add(appLimiter2);
             limiters.add(methodLimiter);
@@ -48,7 +48,7 @@ public class LeagueServer {
         return methodLimiter;
     }
 
-    public List<RateLimiter> getAllLimiters(){
-        return  limiters;
+    public List<RateLimiter> getAllLimiters() {
+        return limiters;
     }
 }

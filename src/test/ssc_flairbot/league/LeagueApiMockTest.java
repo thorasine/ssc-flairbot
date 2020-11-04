@@ -1,6 +1,5 @@
 package ssc_flairbot.league;
 
-import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,22 +34,10 @@ public class LeagueApiMockTest {
     }
 
     @Test
-    public void summonerHasSummonerName() {
-        Summoner summoner = lolApi.getSummoner(user);
-        assertThat(summoner.getName()).isNotNull();
-    }
-
-    @Test
-    public void summonerHasRank() {
+    public void hasRank() {
         when(leagueRankHelper.get5v5SoloRank(anyList())).thenReturn("Diamond I");
         user.setSummonerId(lolApi.getSummoner(user).getSummonerId());
         assertThat(lolApi.getRank(user)).isNotNull();
-    }
-
-    @Test
-    public void summonerHasThirdPartyCode() {
-        user.setSummonerId(lolApi.getSummoner(user).getSummonerId());
-        assertThat(lolApi.getThirdPartyCode(user)).isNotNull();
     }
 
 }

@@ -9,14 +9,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {LeagueRankHelper.class})
 public class LeagueRankHelperTest {
 
     @Autowired
-    private LeagueRankHelper leagueRankHelper;
+    private LeagueRankHelper rankHelper;
 
     @Test
     public void getHighestRank() {
@@ -32,13 +32,12 @@ public class LeagueRankHelperTest {
         ranks.add("Master I");
         ranks.add("Grandmaster I");
         ranks.add("Challenger I");
-        assertEquals("Rank is not Challenger I", "Challenger I", leagueRankHelper.getHighestRank(ranks));
+        assertThat(rankHelper.getHighestRank(ranks)).isEqualTo("Challenger I");
     }
 
     @Test
     public void getUnranked() {
         Set<String> ranks = new HashSet<>();
-        assertEquals("Rank is not Unranked", "Unranked", leagueRankHelper.getHighestRank(ranks));
+        assertThat(rankHelper.getHighestRank(ranks)).isEqualTo("Unranked");
     }
-
 }
