@@ -29,8 +29,7 @@ public class AccountUpdater {
     private final RankUpdateTask rankUpdateTask;
     private final Logger logger = Logger.getLogger(AccountUpdater.class.getName());
     private List<LeagueServer> servers;
-    //percentage of the total capacity allowed to use for requests towards Riot's API for the updating the database
-    private final double THRESHOLD = 0.8;
+    private final double THRESHOLD = Configuration.UPDATE_THRESHOLD;
 
     @Autowired
     public AccountUpdater(DBHandler db, RankUpdateTask rankUpdateTask) {
@@ -79,7 +78,7 @@ public class AccountUpdater {
          */
         public void run() {
             List<User> accounts = db.getValidatedAccountsByServer(server.getName());
-            if (accounts.size() == 0){
+            if (accounts.size() == 0) {
                 return;
             }
             logger.log(Level.INFO, "Started: Updating database and flairs for " + accounts.size() + " (" + server + ") users.");

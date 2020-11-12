@@ -28,7 +28,7 @@ public class ManualTest {
 
     @PostConstruct
     private void startTest() {
-        if (Application.IN_TEST_PHASE) {
+        if (Configuration.IN_DEVELOPMENT_PHASE) {
             logger.log(Level.WARNING, "--TEST PHASE ENABLED!--");
             logger.log(Level.WARNING, "--This will wipe the database and set the League API rate limits to much lower!--");
             putInSampleData();

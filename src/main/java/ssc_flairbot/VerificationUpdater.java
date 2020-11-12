@@ -24,8 +24,7 @@ public class VerificationUpdater {
     private final DBHandler database;
     private final FlairHandler flairHandler;
     private final Logger logger = Logger.getLogger(VerificationUpdater.class.getName());
-    //the amount of times the app tries to validate an user before setting them to "failed"
-    static final int TRIES_UNTIL_FAIL = 20;
+    static final int VERIFICATION_TRIES = Configuration.VERIFICATION_TRIES;
 
     @Autowired
     public VerificationUpdater(LeagueApi lolApi, DBHandler database, FlairHandler flairHandler) {
@@ -70,14 +69,14 @@ public class VerificationUpdater {
     }
 
     /**
-     * Increases the times the app tried to validate the user counter by one. If it has passed the TRIES_UNTIL_FAIL counter
+     * Increases the times the app tried to validate the user counter by one. If it has passed the VERIFICATION_TRIES counter
      * the user's validated status is set to "failed".
      *
      * @param user the user who failed the third party code check
      */
     private void validationFailed(User user) {
         user.setValidationTries(user.getValidationTries() + 1);
-        if (user.getValidationTries() > TRIES_UNTIL_FAIL) {
+        if (user.getValidationTries() > VERIFICATION_TRIES) {
             user.setValidated("failed");
         }
     }

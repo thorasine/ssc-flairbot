@@ -33,7 +33,7 @@ public class VerificationUpdaterTest {
     @Autowired
     DBHandler db;
 
-    private int triesUntilFail = VerificationUpdater.TRIES_UNTIL_FAIL;
+    private int verificationTries = VerificationUpdater.VERIFICATION_TRIES;
     private boolean setupNeeded = true;
     private List<User> users = new ArrayList<>();
 
@@ -65,7 +65,7 @@ public class VerificationUpdaterTest {
     @Test
     public void userSetToFailedAfterManyTries() {
         User user = db.getAllUsers().get(0);
-        user.setValidationTries(triesUntilFail);
+        user.setValidationTries(verificationTries);
         db.updateUser(user);
         verificationUpdater.scheduledUpdate();
         assertThat(db.getAllUsers().get(0).getValidated()).isEqualTo("failed");
@@ -77,7 +77,7 @@ public class VerificationUpdaterTest {
         db.addUser(users.get(2));
         List<User> dbUsers = db.getAllUsers();
         User user2 = dbUsers.get(1);
-        user2.setValidationTries(triesUntilFail);
+        user2.setValidationTries(verificationTries);
         db.updateUser(user2);
         User user3 = dbUsers.get(2);
         user3.setValidated("validated");
@@ -87,7 +87,7 @@ public class VerificationUpdaterTest {
         verificationUpdater.scheduledUpdate();
         assertThat(db.getAllUsers().get(0).getValidationTries()).isEqualTo(1);
         assertThat(db.getAllUsers().get(0).getValidated()).isEqualTo("pending");
-        assertThat(db.getUserById(user2.getId()).getValidationTries()).isEqualTo(triesUntilFail + 1);
+        assertThat(db.getUserById(user2.getId()).getValidationTries()).isEqualTo(verificationTries + 1);
         assertThat(db.getUserById(user2.getId()).getValidated()).isEqualTo("failed");
         assertThat(db.getUserById(user3.getId()).getValidationTries()).isEqualTo(user3Tries);
         assertThat(db.getUserById(user3.getId()).getValidated()).isEqualTo("validated");

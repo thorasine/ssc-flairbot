@@ -1,6 +1,6 @@
 package ssc_flairbot.league;
 
-import ssc_flairbot.Application;
+import ssc_flairbot.Configuration;
 import ssc_flairbot.RateLimiter;
 
 import java.util.Arrays;
@@ -39,7 +39,7 @@ public class LeagueServerBuilder {
         int appLimit1;
         int appLimit2;
 
-        if (Application.IN_TEST_PHASE) {
+        if (Configuration.IN_DEVELOPMENT_PHASE) {
             appLimit1 = 100;
             appLimit2 = 20;
         } else {
