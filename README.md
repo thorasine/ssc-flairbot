@@ -4,7 +4,7 @@ This repository is the source of a site meant be used by [/r/summonerschool](htt
 
 **Configuration**
 
-Import the dependencies through Maven and have an mySQL database running and the dev must also create and fill in the following files with the necessary credentials:  
+Import the dependencies through Maven and have a mySQL database running and the dev must also create and fill in the following files with the necessary credentials:  
 * [application.yml](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/resources/application.yml.example)  
 * [SecretFile.java](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/java/ssc_flairbot/SecretFile.java.example)   
 
