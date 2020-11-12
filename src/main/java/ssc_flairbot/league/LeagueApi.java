@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 
+import no.stelar7.api.l4j8.basic.APICredentials;
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
@@ -40,7 +41,8 @@ public class LeagueApi {
      */
     @PostConstruct
     void init() {
-        this.api = new L4J8(SecretFile.CREDS);
+        APICredentials CREDS = new APICredentials(SecretFile.RIOT_API_KEY, SecretFile.TOURNAMENT_API_KEY);
+        this.api = new L4J8(CREDS);
         availableRegions = List.of("NA", "EUW", "EUNE", "BR", "LAN", "LAS", "JP", "KR", "OCE", "RU", "TR");
     }
 
