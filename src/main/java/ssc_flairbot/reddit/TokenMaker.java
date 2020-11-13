@@ -29,9 +29,9 @@ public class TokenMaker {
     String getToken() {
         String token = null;
         try {
-            token = refreshToken();
+            token = sendTokenRequest();
             logger.log(Level.INFO, "Refreshed reddit token successfully.");
-        }catch(Exception e){
+        } catch (Exception e) {
             logger.log(Level.SEVERE, "Error refreshing reddit token: " + e.getMessage());
         }
         return token;
@@ -41,14 +41,15 @@ public class TokenMaker {
      * Send a request to reddit's API to acquire a temporary token (with 1 hour lifespan)
      *
      * @return the access token
+     * @throws Exception if the request have failed
      */
-    private String refreshToken() throws Exception{
+    private String sendTokenRequest() throws Exception {
         String url = "https://www.reddit.com/api/v1/access_token";
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBasicAuth(clientId, clientSecret);
-        headers.add("user-agent","test:flairbot:v1.0 (by /u/thorasine");
+        headers.add("user-agent", "dev:flairbot:v1.0 (by /u/thorasine");
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
@@ -62,10 +63,12 @@ public class TokenMaker {
                 requestEntity,
                 String.class
         );
-        if(response.getStatusCode() == HttpStatus.OK){
+        String token = null;
+        if (response.getStatusCode() == HttpStatus.OK && response.hasBody()) {
             JSONObject json = new JSONObject(response.getBody());
-            return json.getString("access_token");
-        }
-        return null;
+            token = json.getString("access_token");
+        } else throw new Exception("Something went wrong with the request. Status code: " + response.getStatusCode()
+                + ", has body: " + response.hasBody());
+        return token;
     }
 }

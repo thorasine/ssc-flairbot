@@ -43,10 +43,10 @@ public class ManualTest {
 
     private void setFlair(){
         List<User> users = new ArrayList<>();
-        User user1 = new UserBuilder().redditName("Thorasine").summonerName("Trefort")
-                .summonerId("8kFIUtL2QHnAKmyI485jY7bWifUk6poPC1KQehEbjtr6zCc").server("EUW").rank("Diamond I").validated("validated")
-                .validationCode("83ERFK").validationTries(0).buildUser();
+        User user1 = new UserBuilder().redditName("Thorasine").buildUser();
+        User user2 = new UserBuilder().redditName("Vjostar").buildUser();
         users.add(user1);
+        users.add(user2);
         flairHandler.updateFlairs(users);
     }
 
@@ -70,7 +70,7 @@ public class ManualTest {
                 .validationCode("TEST754").validationTries(0).buildUser();
 
         User user4 = new UserBuilder().redditName("Vjostar").summonerName("Vjostar")
-                .summonerId("wWb-WB9G7sMRNTKCjnze7MX84wkIEJhmqe-2JsRwuu_WsEk").server("EUW").rank("Silver III").validated("pending")
+                .summonerId("wWb-WB9G7sMRNTKCjnze7MX84wkIEJhmqe-2JsRwuu_WsEk").server("EUW").rank("Silver III").validated("validated")
                 .validationCode("TEST434").validationTries(0).buildUser();
 
         User user5 = new UserBuilder().redditName("Holo").summonerName("Holó")
