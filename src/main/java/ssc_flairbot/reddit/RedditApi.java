@@ -133,11 +133,11 @@ public class RedditApi {
         }
 
         if (results == null) {
-            response.append("Error during reading the response, got Json has null value");
+            response.append("Error during reading the response, Json has null value");
         } else {
             for (int i = 0; i < results.length(); i++) {
                 JSONObject json = results.getJSONObject(i);
-                if (!json.getString("ok").equalsIgnoreCase("true")) {
+                if (!json.getBoolean("ok")) {
                     response.append(json.getString("errors")).append("\n");
                 }
             }

@@ -5,8 +5,11 @@ import org.springframework.stereotype.Component;
 import ssc_flairbot.persistence.DBHandler;
 import ssc_flairbot.persistence.User;
 import ssc_flairbot.persistence.UserBuilder;
+import ssc_flairbot.reddit.FlairHandler;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,10 +23,12 @@ public class ManualTest {
 
     private final Logger logger = Logger.getLogger(ManualTest.class.getName());
     private final DBHandler database;
+    private final FlairHandler flairHandler;
 
     @Autowired
-    public ManualTest(DBHandler database) {
+    public ManualTest(DBHandler database, FlairHandler flairHandler) {
         this.database = database;
+        this.flairHandler = flairHandler;
     }
 
     @PostConstruct
@@ -32,7 +37,17 @@ public class ManualTest {
             logger.log(Level.WARNING, "--DEVELOPMENT PHASE ENABLED!--");
             logger.log(Level.WARNING, "--This will wipe the database and set the League API rate limits to much lower!--");
             putInSampleData();
+            setFlair();
         }
+    }
+
+    private void setFlair(){
+        List<User> users = new ArrayList<>();
+        User user1 = new UserBuilder().redditName("Thorasine").summonerName("Trefort")
+                .summonerId("8kFIUtL2QHnAKmyI485jY7bWifUk6poPC1KQehEbjtr6zCc").server("EUW").rank("Diamond I").validated("validated")
+                .validationCode("83ERFK").validationTries(0).buildUser();
+        users.add(user1);
+        flairHandler.updateFlairs(users);
     }
 
     /**
@@ -51,7 +66,7 @@ public class ManualTest {
                 .validationCode("83ITES").validationTries(0).buildUser();
 
         User user3 = new UserBuilder().redditName("Thorasine").summonerName("SecretSmurf")
-                .summonerId("dDsBSlaEk34758KbRuwTnydTNaC1nZQZ5kGOwboGfbb-Zz4").server("NA").rank("Challenger I").validated("validated")
+                .summonerId("dDsBSlaEk34758KbRuwTnydTNaC1nZQZ5kGOwboGfbb-Zz4").server("NA").rank("Master I").validated("validated")
                 .validationCode("TEST754").validationTries(0).buildUser();
 
         User user4 = new UserBuilder().redditName("Vjostar").summonerName("Vjostar")
