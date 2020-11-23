@@ -11,16 +11,16 @@ The following REST APIs are used:
 * [Riot Games API](https://developer.riotgames.com/): Used to access the users in-game ranks.  
 * [Reddit API](https://www.reddit.com/dev/api/):      Used for OAuth2 authorization and to manage users reddit flairs.
 
-More configuration can be adjusted in [Configuration.java](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/java/ssc_flairbot/Configuration.java) file.  
+Additional configuration can be adjusted in [Configuration.java](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/java/ssc_flairbot/Configuration.java) file.  
 
 ## What's this all about?
 
 [League of Legends](https://www.leagueoflegends.com) is the [astonishingly popular](https://www.google.ca/url?sa=t&rct=j&q=&esrc=s&source=web&cd=3&cad=rja&uact=8&ved=0ahUKEwjthcqmzsrLAhVDmYMKHa86CVEQFggmMAI&url=http%3A%2F%2Fwww.forbes.com%2Fsites%2Finsertcoin%2F2014%2F01%2F27%2Friots-league-of-legends-reveals-astonishing-27-million-daily-players-67-million-monthly%2F&usg=AFQjCNHMpPx45j6T40Fs9F6DvhkAP1JUng&sig2=abwf3efOnI3xx15Wvinxzg) action strategy game by Riot Games.
-Over the course of year-long sprints, or "seasons", more than 100 million players worldwide compete to achieve standings on a competitive ladder. Those who successfully climb the ladder are awarded ranks: Iron, Bronze, Silver, Gold, Platinum, Diamond, Master, Grandmaster and Challenger.
+Over the course of year-long sprints or "seasons", more than 100 million players worldwide compete to achieve standings on a competitive ladder. Those who successfully climb the ladder are awarded ranks: Iron, Bronze, Silver, Gold, Platinum, Diamond, Master, Grandmaster and Challenger.
 
 [Summoner School](https://reddit.com/r/summonerschool) is an online community counting close to half a million users, who have come together to help one another be better players.
 
-Every day, hundreds of thousands of players come together to share information on Summoner School. In order for the information given there to be vetted correctly, it's sometimes important to know the rank of the person giving the information. A "Silver" player may not be wrong, but players might want to prefer the opinion of a "Master" or "Challenger" instead.
+Every day, tens thousands of players come together to share information on Summoner School. In order for the information given there to be vetted correctly, it's sometimes important to know the rank of the person giving the information. A "Silver" player may not be wrong, but players might want to prefer the opinion of a "Master" or "Challenger" instead.
 
 **Troubled Beginnings**
 
