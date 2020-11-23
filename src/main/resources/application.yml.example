@@ -2,6 +2,7 @@
 # Riot API: https://developer.riotgames.com/
 # Reddit API Authorization: https://github.com/reddit-archive/reddit/wiki/OAuth2
 # Alternative way of getting refresh token: https://not-an-aardvark.github.io/reddit-oauth-helper/
+# The app requires modflair scope for the refresh token.
 
 spring:
   datasource:
