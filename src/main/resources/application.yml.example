@@ -22,6 +22,7 @@ reddit:
     useCurrentUri: false
   resource:
     userInfoUri: https://oauth.reddit.com/api/v1/me
+    modFlairRefreshToken: [modFlairRefreshToken]
   subreddit: [subredditName]
 riot:
   apiKey: [myRiotAPIkey]
