@@ -1,4 +1,4 @@
-#values with [brackets] are need to be filled in
+#Values with [brackets] are need to be filled in. Reddit refers to the OAuth2 login handling client.
 
 reddit:
   client:
