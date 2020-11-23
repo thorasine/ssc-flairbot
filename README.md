@@ -8,8 +8,8 @@ The app uses **Maven** and requires a mySQL database running. The dev must also 
 * [application.yml](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/resources/application.yml.example)    
 
 The following REST APIs are used:  
-* [Riot Games API](https://developer.riotgames.com/): Used to access the user's in-game ranks.  
-* [Reddit API](https://www.reddit.com/dev/api/):      Used for OAuth2 authorization and to manage user's reddit flairs.
+* [Riot Games API](https://developer.riotgames.com/): Used to access the users in-game ranks.  
+* [Reddit API](https://www.reddit.com/dev/api/):      Used for OAuth2 authorization and to manage users reddit flairs.
 
 More configuration can be adjusted in [Configuration.java](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/java/ssc_flairbot/Configuration.java) file.  
 
