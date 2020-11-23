@@ -1,6 +1,6 @@
 # SummonerSchool-Flairbot
 
-This repository is the source of a site meant be used by [/r/summonerschool](https://reddit.com/r/summonerschool) to add verified ranked flairs to contributors. The purpose of this project was to practice Full Stack Development along with [Spring](https://spring.io/) (as it is my first Spring project).
+This repository is the source of a site <em>meant</em> to be used by [/r/summonerschool](https://reddit.com/r/summonerschool) to add verified ranked flairs to contributors. The purpose of this project was to practice Full Stack Development along with [Spring](https://spring.io/) (as it is my first Spring project).
 
 **Install and Configuration**
 
