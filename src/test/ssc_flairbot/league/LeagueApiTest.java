@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import ssc_flairbot.persistence.User;
@@ -14,7 +15,8 @@ import ssc_flairbot.persistence.UserBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {LeagueApi.class, LeagueRankHelper.class})
+//the initializer needed to be able to retrieve they key from application.yml
+@ContextConfiguration(classes = {LeagueApi.class, LeagueRankHelper.class}, initializers = ConfigFileApplicationContextInitializer.class)
 public class LeagueApiTest {
 
     @Autowired

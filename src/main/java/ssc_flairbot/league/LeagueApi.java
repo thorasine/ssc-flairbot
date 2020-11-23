@@ -13,6 +13,7 @@ import no.stelar7.api.l4j8.impl.builders.thirdparty.ThirdPartyCodeBuilder;
 import no.stelar7.api.l4j8.pojo.league.LeagueEntry;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ssc_flairbot.SecretFile;
 import ssc_flairbot.persistence.User;
@@ -31,6 +32,9 @@ public class LeagueApi {
     private L4J8 api;
     private List<String> availableRegions;
 
+    @Value("${riot.apiKey}")
+    public String apiKey;
+
     @Autowired
     public LeagueApi(LeagueRankHelper leagueRankHelper) {
         this.leagueRankHelper = leagueRankHelper;
@@ -41,7 +45,7 @@ public class LeagueApi {
      */
     @PostConstruct
     void init() {
-        APICredentials CREDS = new APICredentials(SecretFile.RIOT_API_KEY, SecretFile.TOURNAMENT_API_KEY);
+        APICredentials CREDS = new APICredentials(apiKey, "optional tournament key");
         this.api = new L4J8(CREDS);
         availableRegions = List.of("NA", "EUW", "EUNE", "BR", "LAN", "LAS", "JP", "KR", "OCE", "RU", "TR");
     }
