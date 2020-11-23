@@ -4,13 +4,12 @@ This repository is the source of a site <em>meant</em> to be used by [/r/summone
 
 **Install and Configuration**
 
-The app uses **Maven** and requires a mySQL database running. The dev must also create and fill in the following files with the necessary credentials:  
-* [application.yml](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/resources/application.yml.example)  
-* [SecretFile.java](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/java/ssc_flairbot/SecretFile.java.example)   
+The app uses **Maven** and requires a mySQL database running. The dev must also create and fill in the following file with the necessary credentials:  
+* [application.yml](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/resources/application.yml.example)    
 
 The following REST APIs are used:  
 * [Riot Games API](https://developer.riotgames.com/): Used to access the user's in-game ranks.  
-* [Reddit API](https://www.reddit.com/dev/api/):      Used for OAuth2 authorization and to manage user's reddit flairs. These are two separate entities, both require their own separate keys.  
+* [Reddit API](https://www.reddit.com/dev/api/):      Used for OAuth2 authorization and to manage user's reddit flairs.
 
 More configuration can be adjusted in [Configuration.java](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/java/ssc_flairbot/Configuration.java) file.  
 
