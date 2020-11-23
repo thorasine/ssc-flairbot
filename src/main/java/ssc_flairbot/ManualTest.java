@@ -66,7 +66,7 @@ public class ManualTest {
                 .validationCode("83ITES").validationTries(0).buildUser();
 
         User user3 = new UserBuilder().redditName("Thorasine").summonerName("SecretSmurf")
-                .summonerId("dDsBSlaEk34758KbRuwTnydTNaC1nZQZ5kGOwboGfbb-Zz4").server("NA").rank("Master I").validated("validated")
+                .summonerId("dDsBSlaEk34758KbRuwTnydTNaC1nZQZ5kGOwboGfbb-Zz4").server("NA").rank("Grandmaster I").validated("validated")
                 .validationCode("TEST754").validationTries(0).buildUser();
 
         User user4 = new UserBuilder().redditName("Vjostar").summonerName("Vjostar")

@@ -3,11 +3,11 @@ package ssc_flairbot.reddit;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import ssc_flairbot.RateLimiter;
-import ssc_flairbot.SecretFile;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
@@ -20,7 +20,8 @@ import java.util.logging.Logger;
 @Component
 public class RedditApi {
     private final Logger logger = Logger.getLogger(RedditApi.class.getName());
-    private final String SUBREDDIT = SecretFile.SUBREDDIT;
+    @Value("${reddit.subreddit}")
+    private String subreddit;
     private final TokenMaker tokenMaker;
     private String token;
     //Reddit API limit
@@ -89,7 +90,7 @@ public class RedditApi {
      * @throws Exception if the request or reading have failed
      */
     private String sendFlairRequest(String parameters) throws Exception {
-        String url = "https://oauth.reddit.com/r/" + SUBREDDIT + "/api/flaircsv?flair_csv=";
+        String url = "https://oauth.reddit.com/r/" + subreddit + "/api/flaircsv?flair_csv=";
         url += parameters;
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();

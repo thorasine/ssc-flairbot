@@ -33,7 +33,7 @@ public class LeagueApi {
     private List<String> availableRegions;
 
     @Value("${riot.apiKey}")
-    public String apiKey;
+    private String apiKey;
 
     @Autowired
     public LeagueApi(LeagueRankHelper leagueRankHelper) {

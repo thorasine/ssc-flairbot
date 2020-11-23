@@ -1,5 +1,14 @@
-#Values with [brackets] are need to be filled in. Reddit refers to the OAuth2 login handling client.
+# Values with [brackets] are need to be filled in.
+# Riot API: https://developer.riotgames.com/
+# Reddit API Authorization: https://github.com/reddit-archive/reddit/wiki/OAuth2
+# Alternative way of getting refresh token: https://not-an-aardvark.github.io/reddit-oauth-helper/
 
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/[dbservername]?useUnicode=yes&characterEncoding=UTF-8
+    username: [myDatabaseUserName]
+    password: [myDatabasePassword]
+    driver-class-name: com.mysql.cj.jdbc.Driver
 reddit:
   client:
     clientId: [myRedditLoginAppID]
@@ -12,9 +21,6 @@ reddit:
     useCurrentUri: false
   resource:
     userInfoUri: https://oauth.reddit.com/api/v1/me
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/[dbservername]?useUnicode=yes&characterEncoding=UTF-8
-    username: [myDatabaseUserName]
-    password: [myDatabasePassword]
-    driver-class-name: com.mysql.cj.jdbc.Driver
+  subreddit: [subredditName]
+riot:
+  apiKey: [myRiotAPIkey]

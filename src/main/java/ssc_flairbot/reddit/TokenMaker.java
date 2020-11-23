@@ -1,6 +1,7 @@
 package ssc_flairbot.reddit;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -17,9 +18,12 @@ import java.util.logging.Logger;
 public class TokenMaker {
 
     private final Logger logger = Logger.getLogger(TokenMaker.class.getName());
-    private final String refreshToken = SecretFile.REDDIT_REFRESH_TOKEN;
-    private final String clientId = SecretFile.REDDIT_MOD_CLIENT_ID;
-    private final String clientSecret = SecretFile.REDDIT_MOD_CLIENT_SECRET;
+    @Value("${reddit.client.modFlairRefreshToken}")
+    private String refreshToken;
+    @Value("${reddit.client.clientId}")
+    private String clientId;
+    @Value("${reddit.client.clientSecret}")
+    private String clientSecret;
 
     /**
      * Get the current token or generate one if there is none.
