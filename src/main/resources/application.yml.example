@@ -20,9 +20,9 @@ reddit:
     clientAuthenticationScheme: header
     preEstablishedRedirectUri: [myRedditLoginAppRedirectUri]
     useCurrentUri: false
+    modFlairRefreshToken: [modFlairRefreshToken]
   resource:
     userInfoUri: https://oauth.reddit.com/api/v1/me
-    modFlairRefreshToken: [modFlairRefreshToken]
   subreddit: [subredditName]
 riot:
   apiKey: [myRiotAPIkey]
