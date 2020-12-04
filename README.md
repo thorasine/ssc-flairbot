@@ -4,7 +4,7 @@ This repository is the source of a site <em>meant</em> to be used by [/r/summone
 
 **Install and Configuration**
 
-The app uses **Maven** and requires a mySQL database running. The dev must also create and fill in the following file with the necessary credentials:  
+The app uses **Maven** and requires a **MySQL database** running. One must also create and fill in the following file with the necessary credentials:  
 * [application.yml](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/resources/application.yml.example)    
 
 The following REST APIs are used:  
