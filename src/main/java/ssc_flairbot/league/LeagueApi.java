@@ -30,7 +30,6 @@ public class LeagueApi {
     private final LeagueRankHelper leagueRankHelper;
     private L4J8 api;
     private List<String> availableRegions;
-
     @Value("${riot.apiKey}")
     private String apiKey;
 
@@ -40,7 +39,7 @@ public class LeagueApi {
     }
 
     /**
-     * Set the creditenals and available regions for the L4J8 library.
+     * Set the creditenals for the L4J8 library and the available regions.
      */
     @PostConstruct
     void init() {

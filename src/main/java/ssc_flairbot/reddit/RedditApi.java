@@ -24,7 +24,7 @@ public class RedditApi {
     private String subreddit;
     private final TokenMaker tokenMaker;
     private String token;
-    //Reddit API limit
+    //Reddit API limit, max 60 request in 60 seconds.
     private final RateLimiter limiter = new RateLimiter(60, 60_000);
 
     @Autowired
