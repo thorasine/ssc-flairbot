@@ -4,7 +4,7 @@ This repository is the source of a site <em>meant</em> to be used by [/r/summone
 
 **Install and Configuration**
 
-The app uses **Maven** and requires a mySQL database running. The dev must also create and fill in the following file with the necessary credentials:  
+The app uses **Maven** and requires a **MySQL database** running. One must also create and fill in the following file with the necessary credentials:  
 * [application.yml](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/resources/application.yml.example)    
 
 The following REST APIs are used:  
@@ -66,6 +66,6 @@ Tests were created with the help of **JUnit 4**, **AssertJ** and in some places 
 
 ## Contributions
 
-* [Spring Framework](https://spring.io/) - The framework that the app built on.
-* [L4J8](https://github.com/domisum/L4J8) - Micromanages requests towards Riot API.
+* [Spring Framework](https://spring.io/) - The framework that the app was built on.
+* [L4J8](https://github.com/domisum/L4J8) - Provides caching and micro managing towards Riot API.
 * [Jesse Hallam](https://github.com/jessehallam) - For his version of the site, inspiring the site layout and the readme.
