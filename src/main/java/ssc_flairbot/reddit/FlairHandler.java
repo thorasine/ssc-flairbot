@@ -34,7 +34,7 @@ public class FlairHandler {
 
     /**
      * Update the reddit flairs to their highest in-game rank for the given users. Breaks down the requests into
-     * 100 users chunks, because that is the maximum this API method can handle.
+     * 100 users chunks, because that is the maximum this API method can handle and safety reasons.
      *
      * @param users the users whose reddit flairs we want to update
      */

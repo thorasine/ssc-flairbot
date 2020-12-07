@@ -5,7 +5,6 @@ $(function () {
     $('#deleteConfirmBtn').click(deleteSummoner);
     $('#summonerName').on("keyup", newSummonerModalButtonEnabler);
     $('#region').on("change", newSummonerModalButtonEnabler);
-
     $('#videoExampleToggle').click(videoPlayToggle);
     $("#verificationVideo").hide();
     $('#modalValidate').on('hidden.bs.modal', validationModalClose);

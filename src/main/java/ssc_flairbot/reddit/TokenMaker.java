@@ -6,13 +6,12 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import ssc_flairbot.SecretFile;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Class that handles the token generating for reddit's REST API
+ * Class that handles the access token generating for reddit's REST API
  */
 @Component
 public class TokenMaker {
@@ -26,7 +25,7 @@ public class TokenMaker {
     private String clientSecret;
 
     /**
-     * Get the current token or generate one if there is none.
+     * Generate an access token
      *
      * @return the access token
      */
