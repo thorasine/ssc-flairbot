@@ -3,8 +3,8 @@ package ssc_flairbot;
 import java.util.LinkedList;
 
 /**
- * Class that handles the locking of threads until they can continue. Used to help to stay in bounds of the third
- * party API requests.
+ * Class that handles the locking of thread until it can continue. Used to prevent outgoing API requests pass the
+ * allowed amount.
  */
 public class RateLimiter {
 

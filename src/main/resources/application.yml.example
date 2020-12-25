@@ -12,13 +12,13 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 reddit:
   client:
-    clientId: [myRedditLoginAppID]
-    clientSecret: [myRedditLoginAppIDSecret]
+    clientId: [myRedditAppID]
+    clientSecret: [myRedditAppIDSecret]
     accessTokenUri: https://www.reddit.com/api/v1/access_token
     userAuthorizationUri: https://www.reddit.com/api/v1/authorize
     scope: identity
     clientAuthenticationScheme: header
-    preEstablishedRedirectUri: [myRedditLoginAppRedirectUri]
+    preEstablishedRedirectUri: [myRedditAppRedirectUri]
     useCurrentUri: false
     modFlairRefreshToken: [modFlairRefreshToken]
   resource:

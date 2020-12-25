@@ -56,38 +56,19 @@ public class VerificationUpdater {
 
     /**
      * Check through Riot API if a given user have set their third party code to the same as the app required them to.
+     * Set the user's status accordingly if the validation was successful or failed more than the allowed amount.
      *
      * @param user the user whose code we check
      */
     private void checkValidationCode(User user) {
         String apiCode = lolApi.getThirdPartyCode(user);
+        user.setValidationTries(user.getValidationTries() + 1);
         if (apiCode == null || !apiCode.equalsIgnoreCase(user.getValidationCode())) {
-            validationFailed(user);
-            return;
+            if (user.getValidationTries() > VERIFICATION_TRIES) {
+                user.setValidated("failed");
+            }
+        } else {
+            user.setValidated("validated");
         }
-        validationSuccess(user);
-    }
-
-    /**
-     * Increases the times the app tried to validate the user counter by one. If it has passed the VERIFICATION_TRIES counter
-     * the user's validated status is set to "failed".
-     *
-     * @param user the user who failed the third party code check
-     */
-    private void validationFailed(User user) {
-        user.setValidationTries(user.getValidationTries() + 1);
-        if (user.getValidationTries() > VERIFICATION_TRIES) {
-            user.setValidated("failed");
-        }
-    }
-
-    /**
-     * Set the user's validated status to "validated". It is now a legitimate in-game account of the user.
-     *
-     * @param user the user who passed the third party code check
-     */
-    private void validationSuccess(User user) {
-        user.setValidationTries(user.getValidationTries() + 1);
-        user.setValidated("validated");
     }
 }

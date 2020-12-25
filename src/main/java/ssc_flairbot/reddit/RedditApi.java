@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Class that handles communication with reddit's REST API.
+ * Class that handles communication with Reddit's REST API.
  */
 @Component
 public class RedditApi {
