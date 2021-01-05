@@ -58,7 +58,8 @@ Once these steps have been completed, the user is considered registered. From ti
 
 The solution was built on **Java 10** in **IntelliJ IDEA** using **Spring Boot 2.3.5** as the main framework along with various Spring components.  
 
-The majority of the website is a single **HTML** file which behaves like an app using **Javascript**, **Bootstrap** and **CSS**. User authentication is done with **OAuth2**. The data exchange between the site and the server is handled by **REST**, **Thymeleaf** and **jQuery**.  
+The majority of the website is a single **HTML** file which behaves like an app using **Javascript**, **Bootstrap** and **CSS**.  
+User authentication is done with **OAuth2**. The data exchange between the site and the server is handled by **REST**, **Thymeleaf** and **jQuery**.  
 
 Data persistence is handled by **H2 Database** with **JDBC**. The users data is stored in an **MySQL** database.  
 
