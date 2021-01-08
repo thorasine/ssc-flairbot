@@ -52,7 +52,9 @@ After signing in, the visitor can specify one or more League of Legends accounts
 Once these steps have been completed, the user is considered registered. From time to time, the user's rank is retrieved using the Riot API and a flair is composed and sent using Reddit's API.  
 
 ## Screenshots
-<img src="https://i.imgur.com/IQCSWdN.jpg" width="45%" style="margin-right: 20px;"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/woiRAWk.png" width="45%"></img> <br/> <img src="https://i.imgur.com/4IPlNAL.png" width="45%" style="margin-right: 20px;"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/IKgCX7l.png" width="45%"></img><br /><img src="https://i.imgur.com/ZIYx5bt.png" width="45%" style="margin-right: 20px;"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/mGbTdTt.png" width="45%"></img> 
+<img src="https://i.imgur.com/IQCSWdN.jpg" width="45%"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/woiRAWk.png" width="45%"></img>
+<img src="https://i.imgur.com/4IPlNAL.png" width="45%"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/IKgCX7l.png" width="45%"></img>
+<img src="https://i.imgur.com/ZIYx5bt.png" width="45%"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/mGbTdTt.png" width="45%"></img> 
 
 # Technical Info
 
@@ -63,8 +65,7 @@ User authentication is done with **OAuth2**. The data exchange between the site 
 
 Data persistence is handled by **H2 Database** with **JDBC**. The users data is stored in an **MySQL** database.  
 
-Tests were created with the help of **JUnit 4**, **AssertJ** and in some places **Mockito**.  
-
+Tests were created with the help of **JUnit 4**, **AssertJ** and in some places **Mockito**.
 
 ## Contributions
 
