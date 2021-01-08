@@ -56,12 +56,19 @@ public class LeagueApi {
      */
     public Summoner getSummoner(User user) {
         if (!availableRegions.contains(user.getServer())) {
-            logger.log(Level.INFO, "Server not found for: /u/" + user.getRedditName() + " server: " + user.getServer());
+            logger.log(Level.INFO, "Server not found for: /u/" + user.getRedditName() +
+                    " server: " + user.getServer());
             return null;
         }
-        Summoner summoner = new SummonerBuilder().withPlatform(platformConvert(user.getServer())).withName(user.getSummonerName()).get();
+        Summoner summoner = new SummonerBuilder()
+                .withPlatform(platformConvert(user.getServer()))
+                .withName(user.getSummonerName())
+                .get();
         if (summoner == null) {
-            logger.log(Level.INFO, "Summoner not found for: " + "/u/" + user.getRedditName() + " Summoner: " + user.getSummonerName() + "(" + user.getServer() + ")");
+            logger.log(Level.INFO, "Summoner not found for:" +
+                    " /u/" + user.getRedditName() +
+                    " Summoner: " + user.getSummonerName() +
+                    " (" + user.getServer() + ")");
             return null;
         }
         return summoner;
@@ -74,9 +81,15 @@ public class LeagueApi {
      * @return the user's third party code
      */
     public String getThirdPartyCode(User user) {
-        String code = new ThirdPartyCodeBuilder().withPlatform(platformConvert(user.getServer())).withSummonerId(user.getSummonerId()).getCode();
+        String code = new ThirdPartyCodeBuilder()
+                .withPlatform(platformConvert(user.getServer()))
+                .withSummonerId(user.getSummonerId())
+                .getCode();
         if (code == null) {
-            logger.log(Level.FINE, "Verification code not found for: " + "/u/" + user.getRedditName() + " Summoner: " + user.getSummonerName() + "(" + user.getServer() + ")");
+            logger.log(Level.FINE, "Verification code not found for:" +
+                    " /u/" + user.getRedditName() +
+                    " Summoner: " + user.getSummonerName() +
+                    " (" + user.getServer() + ")");
         }
         return code;
     }
@@ -88,7 +101,8 @@ public class LeagueApi {
      * @return the user's rank or Unranked
      */
     public String getRank(User user) {
-        List<LeagueEntry> leaguePositions = api.getLeagueAPI().getLeagueEntries(platformConvert(user.getServer()), user.getSummonerId());
+        List<LeagueEntry> leaguePositions =
+                api.getLeagueAPI().getLeagueEntries(platformConvert(user.getServer()), user.getSummonerId());
         if (leaguePositions.isEmpty()) {
             return "Unranked";
         }
@@ -96,8 +110,8 @@ public class LeagueApi {
     }
 
     /**
-     * Convert a String object into a corresponding Platform one. Platform is the required format for server identification
-     * in the L4J8 library.
+     * Convert a String object into a corresponding Platform one. Platform is the required format for server
+     * identification in the L4J8 library.
      *
      * @param server the server which we want to convert to
      * @return a Platform that we can use for Riot API request

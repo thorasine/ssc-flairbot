@@ -13,7 +13,8 @@ import ssc_flairbot.persistence.User;
 import ssc_flairbot.reddit.FlairHandler;
 
 /**
- * Class to check and update if the pending users have set their third party code already to verify their in-game accounts.
+ * Class to check and update if the pending users have set their third party code already to verify their in-game
+ * accounts.
  *
  * @author Thorasine
  */
@@ -34,8 +35,8 @@ public class VerificationUpdater {
     }
 
     /**
-     * Get the pending users, request and compare their validation code and update the user according to it. If a user have
-     * passed the check, update their reddit flair.
+     * Get the pending users, request and compare their validation code and update the user according to it. If a
+     * user have passed the check, update their reddit flair.
      */
     void scheduledUpdate() {
         List<User> users = database.getPendingUsers();
