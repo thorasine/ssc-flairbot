@@ -28,7 +28,7 @@ public class ScheduledTasks {
 
     /**
      * Fires every 5 minutes.
-     * Check if the pendig users have set their third party code already to verify their in-game accounts.
+     * Check if the pending users have set their third party code already to verify their in-game accounts.
      */
     @Scheduled(cron = "0 */5 * * * *")
     private void updateVerifications() {

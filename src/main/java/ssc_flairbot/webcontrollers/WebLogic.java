@@ -55,7 +55,7 @@ public class WebLogic {
         user.setSummonerName(summoner.getName());
         user.setSummonerId(summoner.getSummonerId());
 
-        //user have already have this summoner addded
+        //user have already have this summoner added
         if (database.isSummonerAlreadyRegisteredByUser(user)) {
             return "You have already registered this account.";
         }

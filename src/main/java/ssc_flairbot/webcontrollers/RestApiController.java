@@ -57,7 +57,7 @@ public class RestApiController {
     }
 
     /**
-     * Get the princial name (aka reddit username) from the user's principal.
+     * Get the principal name (aka reddit username) from the user's principal.
      *
      * @param principal the user's principal
      * @return the user's reddit name

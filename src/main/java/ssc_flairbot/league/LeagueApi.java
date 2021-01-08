@@ -39,7 +39,7 @@ public class LeagueApi {
     }
 
     /**
-     * Set the creditenals for the L4J8 library and the available regions.
+     * Set the credentials for the L4J8 library and the available regions.
      */
     @PostConstruct
     void init() {
@@ -126,8 +126,7 @@ public class LeagueApi {
                 return Platform.RU;
             case "TR":
                 return Platform.TR1;
-            default:
-                return Platform.EUW1;
         }
+        return null;
     }
 }

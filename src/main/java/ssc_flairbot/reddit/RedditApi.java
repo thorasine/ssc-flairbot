@@ -83,7 +83,7 @@ public class RedditApi {
     }
 
     /**
-     * Send a request to reddit's REST API to set up to 100 flairs. Retun a string based on the result of the operation
+     * Send a request to reddit's REST API to set up to 100 flairs. Return a string based on the result of the operation
      *
      * @param parameters the names and ranks of the users
      * @return "ok" string if all the updates successful, an error string and description otherwise

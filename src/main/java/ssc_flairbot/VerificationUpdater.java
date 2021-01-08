@@ -13,7 +13,7 @@ import ssc_flairbot.persistence.User;
 import ssc_flairbot.reddit.FlairHandler;
 
 /**
- * Class to check and update if the pendig users have set their third party code already to verify their in-game accounts.
+ * Class to check and update if the pending users have set their third party code already to verify their in-game accounts.
  *
  * @author Thorasine
  */

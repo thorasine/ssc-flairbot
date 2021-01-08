@@ -36,18 +36,6 @@ public class LeagueServer {
         return name;
     }
 
-    public RateLimiter getAppLimiter1() {
-        return appLimiter1;
-    }
-
-    public RateLimiter getAppLimiter2() {
-        return appLimiter2;
-    }
-
-    public RateLimiter getMethodLimiter() {
-        return methodLimiter;
-    }
-
     public List<RateLimiter> getAllLimiters() {
         return limiters;
     }
