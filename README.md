@@ -66,6 +66,12 @@ User authentication is done with **OAuth2**. The data exchange between the site 
 Data persistence is handled by **H2 Database** with **JDBC**. The users data is stored in an **MySQL** database.  
 
 Tests were created with the help of **JUnit 4**, **AssertJ** and in some places **Mockito**.
+## Design
+
+Below you can see a few **simplified** UML layouts representing different packages of the app. The base frames were generated with [Sketch It!](https://plugins.jetbrains.com/plugin/10387-sketch-it-) and rendered with [PlantUML](https://plantuml.com/). The generation errors and missing data were fixed manually.
+
+<img src="https://i.imgur.com/UntJQ48.png" width="42%"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/gVJkzIX.png" width="24.9%"></img></br>
+<img src="https://i.imgur.com/sSfvifj.png" width="28.2%"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/n2wLe3v.png" width="39%"></img></br>
 
 ## Contributions
 
