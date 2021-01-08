@@ -112,7 +112,8 @@ public class DBHandler {
 
     public boolean isSummonerAlreadyRegisteredByUser(User user) {
         String SQL = "SELECT count(*) FROM users WHERE summonerName = ? AND server = ? AND redditName = ?";
-        int count = database.queryForObject(SQL, new Object[]{user.getSummonerName(), user.getServer(), user.getRedditName()}, Integer.class);
+        int count = database.queryForObject(SQL, new Object[]{user.getSummonerName(), user.getServer(),
+                user.getRedditName()}, Integer.class);
         return count > 0;
     }
 

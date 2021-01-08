@@ -42,12 +42,12 @@ public class WebLogic {
      * @return "ok" string if every check have passed, an error message otherwise
      */
     String addUser(User user) {
-        //user's summoner is a name
+        // user's summoner is a name
         if (user.getSummonerName().equals("")) {
             return "You must fill the Summoner Name section!";
         }
 
-        //summoner (in-game account) exists
+        // summoner (in-game account) exists
         Summoner summoner = lolApi.getSummoner(user);
         if (summoner == null) {
             return "Summoner " + user.getSummonerName() + " (" + user.getServer() + ") does not exists.";
@@ -55,23 +55,24 @@ public class WebLogic {
         user.setSummonerName(summoner.getName());
         user.setSummonerId(summoner.getSummonerId());
 
-        //user have already have this summoner added
+        // user have already have this summoner added
         if (database.isSummonerAlreadyRegisteredByUser(user)) {
             return "You have already registered this account.";
         }
 
-        //someone else have already verified this summoner on their account
+        // someone else have already verified this summoner on their account
         if (database.isSummonerAlreadyValidatedBySomeone(user)) {
             return "Summoner is already validated by someone else.";
         }
 
-        //user passed the checks, complete the registration
+        // user passed the checks, complete the registration
         user.setValidationCode(randomStringGenerator());
         user.setValidated("pending");
         user.setValidationTries(0);
         user.setRank(lolApi.getRank(user));
         database.addUser(user);
-        logger.log(Level.INFO, "Created user: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ") " + "Highest rank: " + user.getRank());
+        logger.log(Level.INFO, "Created user: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" +
+                user.getServer() + ") " + "Highest rank: " + user.getRank());
         return "ok";
     }
 
@@ -84,7 +85,6 @@ public class WebLogic {
      */
     String deleteUser(String redditName, Long id) {
         User user;
-        //
         try {
             user = database.getUserById(id);
         } catch (EmptyResultDataAccessException ex) {
@@ -95,7 +95,8 @@ public class WebLogic {
             return "The account you tried to delete is not yours!";
         }
         database.deleteUser(id);
-        logger.log(Level.INFO, "Deleted user: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" + user.getServer() + ")");
+        logger.log(Level.INFO, "Deleted user: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" +
+                user.getServer() + ")");
         return "ok";
     }
 
@@ -130,13 +131,13 @@ public class WebLogic {
     }
 
     /**
-     * Method one used for testing purposes.
+     * Method used for testing purposes.
      */
     void test() {
     }
 
     /**
-     * Method two used for testing purposes.
+     * Method used for testing purposes.
      */
     void test2() {
     }

@@ -81,10 +81,14 @@ public class AccountUpdater {
             if (accounts.size() == 0) {
                 return;
             }
-            logger.log(Level.INFO, "Started: Updating database and flairs for " + accounts.size() + " (" + server.getName() + ") users.");
+            logger.log(Level.INFO, "Started: Updating database and flairs for " + accounts.size() + " (" +
+                    server.getName() + ") users.");
+
             List<List<User>> lists = Lists.partition(accounts, 100);
             lists.forEach(chunk -> rankUpdateTask.update(chunk, server.getAllLimiters()));
-            logger.log(Level.INFO, "Finished: Updating database and flairs for " + accounts.size() + " (" + server.getName() + ") users.");
+
+            logger.log(Level.INFO, "Finished: Updating database and flairs for " + accounts.size() + " (" +
+                    server.getName() + ") users.");
         }
     }
 

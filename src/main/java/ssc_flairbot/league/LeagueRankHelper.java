@@ -44,10 +44,10 @@ public class LeagueRankHelper {
         String maxTier = "UNRANKED";
         String maxDivision = "IV";
         for (String rank : ranks) {
-            String[] splitted = rank.split(" ");
-            String tier = splitted[0].toUpperCase();
-            if (tier.equalsIgnoreCase("UNRANKED")) continue;
-            String division = splitted[1];
+            String[] split = rank.split(" ");
+            String tier = split[0].toUpperCase();
+            if (tier.equals("UNRANKED")) continue;
+            String division = split[1];
             if (Tier.valueOf(tier).isAbove(Tier.valueOf(maxTier))) {
                 maxTier = tier;
                 maxDivision = division;
@@ -81,7 +81,8 @@ public class LeagueRankHelper {
      * Enumerator for every tier weighted based on their place on the ladder.
      */
     private enum Tier {
-        UNRANKED(0), IRON(1), BRONZE(2), SILVER(3), GOLD(4), PLATINUM(5), DIAMOND(6), MASTER(7), GRANDMASTER(8), CHALLENGER(9);
+        UNRANKED(0), IRON(1), BRONZE(2), SILVER(3), GOLD(4), PLATINUM(5),
+        DIAMOND(6), MASTER(7), GRANDMASTER(8), CHALLENGER(9);
 
         private final Integer level;
 

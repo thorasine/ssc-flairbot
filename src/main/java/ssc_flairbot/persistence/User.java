@@ -21,7 +21,8 @@ public class User {
     public User() {
     }
 
-    public User(String redditName, String summonerName, String summonerId, String server, String rank, String validated, String validationCode, int validationTries) {
+    public User(String redditName, String summonerName, String summonerId, String server, String rank,
+                String validated, String validationCode, int validationTries) {
         this.redditName = redditName;
         this.summonerName = summonerName;
         this.summonerId = summonerId;
@@ -114,7 +115,9 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", redditName=" + redditName + ", summonerName=" + summonerName + ", summonerId=" + summonerId + ", server=" + server + ", rank=" + rank + ", validated=" + validated + ", validationCode=" + validationCode + ", validationTries=" + validationTries + ", updateDate=" + updateDate + '}';
+        return "User{" + "id=" + id + ", redditName=" + redditName + ", summonerName=" + summonerName + ", summonerId" +
+                "=" + summonerId + ", server=" + server + ", rank=" + rank + ", validated=" + validated + ", " +
+                "validationCode=" + validationCode + ", validationTries=" + validationTries + ", updateDate=" + updateDate + '}';
     }
 
 }

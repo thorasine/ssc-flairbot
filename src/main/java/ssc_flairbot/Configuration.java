@@ -7,12 +7,13 @@ package ssc_flairbot;
  */
 public class Configuration {
 
-    //wipes the database, puts in sample data, and changes League API rate limits to match a development key's values
+    // wipes the database, puts in sample data, and changes League API rate limits to match a development key's values
     public static final boolean IN_DEVELOPMENT_PHASE = true;
 
-    //percentage of the total capacity allowed to use for requests towards Riot's API for the periodic updating of database
+    // percentage of the total capacity allowed to use for requests towards Riot's API for the periodic updating of
+    // database
     public static final double UPDATE_THRESHOLD = 0.8;
 
-    //the amount of times the app tries to validate an user before setting them to "failed"
+    // the amount of times the app tries to validate an user before setting them to "failed"
     public static final int VERIFICATION_TRIES = 20;
 }

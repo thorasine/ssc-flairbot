@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .antMatcher("/**")
                 .authorizeRequests()
-                .antMatchers("/login**", "/greeting**", "/webjars/**", "/error**", "/js/**", "/css/**","/images/**")
+                .antMatchers("/login**", "/greeting**", "/webjars/**", "/error**", "/js/**", "/css/**", "/images/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated().and().exceptionHandling()
@@ -63,25 +63,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private Filter ssoFilter() {
-        OAuth2ClientAuthenticationProcessingFilter discordFilter = new OAuth2ClientAuthenticationProcessingFilter("/loginReddit");
-        OAuth2RestTemplate discordTemplate = new OAuth2RestTemplate(reddit(), oauth2ClientContext);
-
+        OAuth2ClientAuthenticationProcessingFilter redditFilter = new OAuth2ClientAuthenticationProcessingFilter(
+                "/loginReddit");
+        OAuth2RestTemplate redditTemplate = new OAuth2RestTemplate(reddit(), oauth2ClientContext);
         ClientHttpRequestFactory requestFactory = new RedditHttpRequestFactory();
-
         AuthorizationCodeAccessTokenProvider authAccessProvider = new AuthorizationCodeAccessTokenProvider();
+
         authAccessProvider.setRequestFactory(requestFactory);
+        AccessTokenProvider accessTokenProvider =
+                new AccessTokenProviderChain(Arrays.<AccessTokenProvider>asList(authAccessProvider));
+        redditTemplate.setAccessTokenProvider(accessTokenProvider);
+        redditTemplate.setRequestFactory(requestFactory);
+        redditFilter.setRestTemplate(redditTemplate);
 
-        AccessTokenProvider accessTokenProvider = new AccessTokenProviderChain(Arrays.<AccessTokenProvider>asList(authAccessProvider));
-        discordTemplate.setAccessTokenProvider(accessTokenProvider);
-
-        discordTemplate.setRequestFactory(requestFactory);
-
-        discordFilter.setRestTemplate(discordTemplate);
-        UserInfoTokenServices tokenServices = new UserInfoTokenServices(redditResource().getUserInfoUri(), reddit().getClientId());
-        tokenServices.setRestTemplate(discordTemplate);
-
-        discordFilter.setTokenServices(tokenServices);
-        return discordFilter;
+        UserInfoTokenServices tokenServices = new UserInfoTokenServices(redditResource().getUserInfoUri(),
+                reddit().getClientId());
+        tokenServices.setRestTemplate(redditTemplate);
+        redditFilter.setTokenServices(tokenServices);
+        return redditFilter;
     }
 
     @Bean
