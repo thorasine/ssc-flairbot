@@ -67,8 +67,12 @@ Data persistence is handled by **H2 Database** with **JDBC**. The users data is 
 
 Tests were created with the help of **JUnit 4**, **AssertJ** and in some places **Mockito**.
 ## Model
-Work in progress
+Below you can see a **simplified** UML layout representing the app's model. Additional UML diagrams of different packages can be accessed here: [league](https://i.imgur.com/gVJkzIX.png), 
+[webcontrollers](https://i.imgur.com/n2wLe3v.png), [reddit](https://i.imgur.com/sSfvifj.png).
 
+<img src="https://i.imgur.com/ZcKf2c9.png.jpg" width="65%">  
+
+The diagrams were rendered with [PlantUML](https://plantuml.com/).
 ## Contributions
 
 * [Spring Framework](https://spring.io/) - The framework that the app was built on.
