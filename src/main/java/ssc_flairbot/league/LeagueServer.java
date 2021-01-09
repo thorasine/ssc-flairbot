@@ -17,7 +17,7 @@ public class LeagueServer {
     RateLimiter appLimiter1;
     RateLimiter appLimiter2;
     RateLimiter methodLimiter;
-    private List<RateLimiter> limiters = new ArrayList<>();
+    private List<RateLimiter> limiters;
 
     LeagueServer(String name, int methodLimit) {
         this.name = name;
@@ -25,11 +25,10 @@ public class LeagueServer {
     }
 
     void addLimiters() {
-        if (limiters.size() == 0) {
-            limiters.add(appLimiter1);
-            limiters.add(appLimiter2);
-            limiters.add(methodLimiter);
-        }
+        limiters = new ArrayList<>();
+        limiters.add(appLimiter1);
+        limiters.add(appLimiter2);
+        limiters.add(methodLimiter);
     }
 
     public String getName() {
