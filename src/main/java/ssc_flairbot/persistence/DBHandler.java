@@ -105,14 +105,14 @@ public class DBHandler {
 
     public boolean isSummonerAlreadyValidatedBySomeone(User user) {
         int count;
-        String SQL = "SELECT count(*) FROM users WHERE summonerName = ? AND server = ? AND validated = 'validated'";
-        count = database.queryForObject(SQL, new Object[]{user.getSummonerName(), user.getServer()}, Integer.class);
+        String SQL = "SELECT count(*) FROM users WHERE summonerId = ? AND server = ? AND validated = 'validated'";
+        count = database.queryForObject(SQL, new Object[]{user.getSummonerId(), user.getServer()}, Integer.class);
         return count > 0;
     }
 
     public boolean isSummonerAlreadyRegisteredByUser(User user) {
-        String SQL = "SELECT count(*) FROM users WHERE summonerName = ? AND server = ? AND redditName = ?";
-        int count = database.queryForObject(SQL, new Object[]{user.getSummonerName(), user.getServer(),
+        String SQL = "SELECT count(*) FROM users WHERE summonerId = ? AND server = ? AND redditName = ?";
+        int count = database.queryForObject(SQL, new Object[]{user.getSummonerId(), user.getServer(),
                 user.getRedditName()}, Integer.class);
         return count > 0;
     }
