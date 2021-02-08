@@ -69,10 +69,10 @@ public class WebLogic {
         user.setValidationCode(randomStringGenerator());
         user.setValidated("pending");
         user.setValidationTries(0);
-        user.setRank(lolApi.getRank(user));
+        user.setGamerank(lolApi.getRank(user));
         database.addUser(user);
         logger.log(Level.INFO, "Created user: /u/" + user.getRedditName() + " " + user.getSummonerName() + " (" +
-                user.getServer() + ") " + "Highest rank: " + user.getRank());
+                user.getServer() + ") " + "Highest rank: " + user.getGamerank());
         return "ok";
     }
 

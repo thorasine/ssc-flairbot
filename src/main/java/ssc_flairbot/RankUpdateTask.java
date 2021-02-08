@@ -41,7 +41,7 @@ public class RankUpdateTask {
                 limiter.acquire();
                 limiter.enter();
             }
-            user.setRank(lolApi.getRank(user));
+            user.setGamerank(lolApi.getRank(user));
         }
         database.batchUpdateUsersRank(users);
         flairHandler.updateFlairs(users);

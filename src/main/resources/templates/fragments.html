@@ -10,7 +10,7 @@
     <div class="card-body shadow">
         <h5 th:text=${user.getSummonerName()} class="summonerName card-title"></h5>
         <h6 th:text=${user.getServer()} class="server card-subtitle mb-2 text-muted"></h6>
-        <h6 th:text=${user.getRank()} class="rank card-subtitle mb-2 text-muted"></h6>
+        <h6 th:text=${user.getGamerank()} class="rank card-subtitle mb-2 text-muted"></h6>
         <div th:switch="${user.getValidated()}" class="d-flex align-items-center">
             <span th:case="'validated'" class="text-success mr-auto"><i class="fas fa-check"></i> Validated</span>
             <span th:case="'pending'" data-th-attr="validation-code=${user.ValidationCode}"

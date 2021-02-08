@@ -32,7 +32,7 @@ public class DBHandler {
      * @return the amount of affected rows
      */
     int[] batchAddUsers(List<User> users) {
-        String SQL = "INSERT INTO users(redditName, summonerName, summonerId, server, rank, validated, validationCode, "
+        String SQL = "INSERT INTO users(redditName, summonerName, summonerId, server, gamerank, validated, validationCode, "
                 + "validationTries, updateDate) VALUES (?,?,?,?,?,?,?,?,?)";
         int[] updateCounts = database.batchUpdate(SQL,
                 new BatchPreparedStatementSetter() {
@@ -41,7 +41,7 @@ public class DBHandler {
                         ps.setString(2, users.get(i).getSummonerName());
                         ps.setString(3, users.get(i).getSummonerId());
                         ps.setString(4, users.get(i).getServer());
-                        ps.setString(5, users.get(i).getRank());
+                        ps.setString(5, users.get(i).getGamerank());
                         ps.setString(6, users.get(i).getValidated());
                         ps.setString(7, users.get(i).getValidationCode());
                         ps.setString(8, String.valueOf(users.get(i).getValidationTries()));
@@ -63,10 +63,10 @@ public class DBHandler {
      */
     public int[] batchUpdateUsersRank(List<User> users) {
         int[] updateCounts = database.batchUpdate(
-                "UPDATE users SET rank = ?, updateDate = ? WHERE id = ?",
+                "UPDATE users SET gamerank = ?, updateDate = ? WHERE id = ?",
                 new BatchPreparedStatementSetter() {
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
-                        ps.setString(1, users.get(i).getRank());
+                        ps.setString(1, users.get(i).getGamerank());
                         ps.setString(2, getDate());
                         ps.setString(3, String.valueOf(users.get(i).getId()));
                     }
@@ -79,10 +79,10 @@ public class DBHandler {
     }
 
     public void addUser(User user) {
-        String SQL = "INSERT INTO users(redditName, summonerName, summonerId, server, rank, validated, validationCode, "
+        String SQL = "INSERT INTO users(redditName, summonerName, summonerId, server, gamerank, validated, validationCode, "
                 + "validationTries, updateDate) VALUES (?,?,?,?,?,?,?,?,?)";
         database.update(SQL, user.getRedditName(), user.getSummonerName(), user.getSummonerId(), user.getServer(),
-                user.getRank(), user.getValidated(), user.getValidationCode(), user.getValidationTries(), getDate());
+                user.getGamerank(), user.getValidated(), user.getValidationCode(), user.getValidationTries(), getDate());
     }
 
     public void deleteUser(long id) {
@@ -91,10 +91,10 @@ public class DBHandler {
     }
 
     public void updateUser(User user) {
-        String SQL = "UPDATE users SET redditName = ?, summonerName = ?, summonerId = ?, server = ?, rank = ?, " +
+        String SQL = "UPDATE users SET redditName = ?, summonerName = ?, summonerId = ?, server = ?, gamerank = ?, " +
                 "validated = ?, validationCode = ?, validationTries = ?, updateDate = ? WHERE id = ?";
         database.update(SQL, user.getRedditName(), user.getSummonerName(), user.getSummonerId(), user.getServer(),
-                user.getRank(), user.getValidated(), user.getValidationCode(), user.getValidationTries(),
+                user.getGamerank(), user.getValidated(), user.getValidationCode(), user.getValidationTries(),
                 getDate(), user.getId());
     }
 
@@ -144,7 +144,7 @@ public class DBHandler {
 
     public void createTable() {
         database.execute("CREATE TABLE users(id SERIAL, redditName VARCHAR(255), summonerName VARCHAR(255), "
-                + "summonerId VARCHAR(255), server VARCHAR(255), rank VARCHAR(255), validated VARCHAR(255), "
+                + "summonerId VARCHAR(255), server VARCHAR(255), gamerank VARCHAR(255), validated VARCHAR(255), "
                 + "validationCode VARCHAR(255), validationTries INT(255), updateDate DATETIME)");
     }
 

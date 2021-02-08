@@ -62,8 +62,8 @@ public class FlairHandlerTest {
 
     @Test
     public void properlyPartitioned(){
-        user1.setRank("Challenger I");
-        user3.setRank("Platinum IV");
+        user1.setGamerank("Challenger I");
+        user3.setGamerank("Platinum IV");
         database.updateUser(user1);
         database.updateUser(user3);
         for(int i = 0; i < 100; i++){

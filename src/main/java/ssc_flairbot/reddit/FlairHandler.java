@@ -67,7 +67,7 @@ public class FlairHandler {
         Set<String> ranks = new HashSet<>();
         List<User> accounts = database.getValidatedAccountsByRedditName(user.getRedditName());
         for (User account : accounts) {
-            ranks.add(account.getRank());
+            ranks.add(account.getGamerank());
         }
         String rank = leagueRankHelper.getHighestRank(ranks);
         if (!rank.equalsIgnoreCase("Unranked")) {

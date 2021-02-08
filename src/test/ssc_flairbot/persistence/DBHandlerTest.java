@@ -71,7 +71,7 @@ public class DBHandlerTest {
         assertThat(testUser.getSummonerName()).isEqualTo("Sniblets");
         assertThat(testUser.getSummonerId()).isEqualTo("fakeSummonerId3");
         assertThat(testUser.getServer()).isEqualTo("OCE");
-        assertThat(testUser.getRank()).isEqualTo("Master I");
+        assertThat(testUser.getGamerank()).isEqualTo("Master I");
         assertThat(testUser.getValidated()).isEqualTo("validated");
         assertThat(testUser.getValidationCode()).isEqualTo("AZERTY");
         assertThat(testUser.getValidationTries()).isEqualTo(3);
@@ -98,7 +98,7 @@ public class DBHandlerTest {
         assertThat(testUser3.getSummonerName()).isEqualTo("Sniblets");
         assertThat(testUser3.getSummonerId()).isEqualTo("fakeSummonerId3");
         assertThat(testUser3.getServer()).isEqualTo("OCE");
-        assertThat(testUser3.getRank()).isEqualTo("Master I");
+        assertThat(testUser3.getGamerank()).isEqualTo("Master I");
         assertThat(testUser3.getValidated()).isEqualTo("validated");
         assertThat(testUser3.getValidationCode()).isEqualTo("AZERTY");
         assertThat(testUser3.getValidationTries()).isEqualTo(3);
@@ -107,7 +107,7 @@ public class DBHandlerTest {
         assertThat(testUser4.getSummonerName()).isEqualTo("Charlie");
         assertThat(testUser4.getSummonerId()).isEqualTo("fakeSummonerId4");
         assertThat(testUser4.getServer()).isEqualTo("JP");
-        assertThat(testUser4.getRank()).isEqualTo("Grandmaster I");
+        assertThat(testUser4.getGamerank()).isEqualTo("Grandmaster I");
         assertThat(testUser4.getValidated()).isEqualTo("validated");
         assertThat(testUser4.getValidationCode()).isEqualTo("QWERTZ");
         assertThat(testUser4.getValidationTries()).isEqualTo(5);
@@ -133,13 +133,13 @@ public class DBHandlerTest {
     public void batchUpdateUsersRank() {
         List<User> users = db.getAllUsers();
         User userTest1 = users.get(0);
-        userTest1.setRank("Gold II");
+        userTest1.setGamerank("Gold II");
         User userTest2 = users.get(1);
-        userTest2.setRank("Silver IV");
+        userTest2.setGamerank("Silver IV");
         db.batchUpdateUsersRank(users);
 
-        assertThat(db.getUserById(users.get(0).getId()).getRank()).isEqualTo("Gold II");
-        assertThat(db.getUserById(users.get(1).getId()).getRank()).isEqualTo("Silver IV");
+        assertThat(db.getUserById(users.get(0).getId()).getGamerank()).isEqualTo("Gold II");
+        assertThat(db.getUserById(users.get(1).getId()).getGamerank()).isEqualTo("Silver IV");
     }
 
     @Test

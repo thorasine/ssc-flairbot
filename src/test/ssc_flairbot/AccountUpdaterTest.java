@@ -76,10 +76,10 @@ public class AccountUpdaterTest {
             database.addUser(oceUsers.get(i));
         }
         List<User> users = database.getAllUsers();
-        users.forEach(user -> user.setRank("Iron I"));
+        users.forEach(user -> user.setGamerank("Iron I"));
         database.batchUpdateUsersRank(users);
         accountUpdater.scheduledUpdate();
         users = database.getAllUsers();
-        users.forEach(user -> assertThat(user.getRank()).isNotEqualTo("Iron I"));
+        users.forEach(user -> assertThat(user.getGamerank()).isNotEqualTo("Iron I"));
     }
 }

@@ -12,7 +12,7 @@ public class User {
     private String summonerName;
     private String summonerId;
     private String server;
-    private String rank;
+    private String gamerank;
     private String validated;
     private String validationCode;
     private int validationTries;
@@ -21,13 +21,13 @@ public class User {
     public User() {
     }
 
-    public User(String redditName, String summonerName, String summonerId, String server, String rank,
+    public User(String redditName, String summonerName, String summonerId, String server, String gamerank,
                 String validated, String validationCode, int validationTries) {
         this.redditName = redditName;
         this.summonerName = summonerName;
         this.summonerId = summonerId;
         this.server = server;
-        this.rank = rank;
+        this.gamerank = gamerank;
         this.validated = validated;
         this.validationCode = validationCode;
         this.validationTries = validationTries;
@@ -53,8 +53,8 @@ public class User {
         return server;
     }
 
-    public String getRank() {
-        return rank;
+    public String getGamerank() {
+        return gamerank;
     }
 
     public String getValidated() {
@@ -93,8 +93,8 @@ public class User {
         this.server = server;
     }
 
-    public void setRank(String rank) {
-        this.rank = rank;
+    public void setGamerank(String gamerank) {
+        this.gamerank = gamerank;
     }
 
     public void setValidated(String validated) {
@@ -116,7 +116,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" + "id=" + id + ", redditName=" + redditName + ", summonerName=" + summonerName + ", summonerId" +
-                "=" + summonerId + ", server=" + server + ", rank=" + rank + ", validated=" + validated + ", " +
+                "=" + summonerId + ", server=" + server + ", gamerank=" + gamerank + ", validated=" + validated + ", " +
                 "validationCode=" + validationCode + ", validationTries=" + validationTries + ", updateDate=" + updateDate + '}';
     }
 

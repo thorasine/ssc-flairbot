@@ -19,7 +19,7 @@ public class UserMapper implements RowMapper<User> {
         user.setSummonerName(rs.getString("summonerName"));
         user.setSummonerId(rs.getString("summonerId"));
         user.setServer(rs.getString("server"));
-        user.setRank(rs.getString("rank"));
+        user.setGamerank(rs.getString("gamerank"));
         user.setValidated(rs.getString("validated"));
         user.setValidationCode(rs.getString("validationCode"));
         user.setValidationTries(Integer.valueOf(rs.getString("validationTries")));
