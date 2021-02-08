@@ -36,8 +36,11 @@ public class WebLogicTest {
         db.dropTable();
         db.createTable();
         user = new UserBuilder().redditName("Thorasine").summonerName("Trefort").server("EUW").buildUser();
-        user2 = new UserBuilder().redditName("Its_Vizicsacsi").summonerName("Vizicsacsi").server("EUW").validated("validated").buildUser();
-        db.addUser(user2);
+        user2 = new UserBuilder().redditName("Its_Vizicsacsi").summonerName("Vizicsacsi").server("EUW").buildUser();
+        webLogic.addUser(user2);
+        user2 = db.getPendingUsers().stream().filter(u -> u.getSummonerName().equalsIgnoreCase("Vizicsacsi")).findAny().get();
+        user2.setValidated("validated");
+        db.updateUser(user2);
     }
 
     @Test
