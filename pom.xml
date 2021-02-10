@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>thorasine</groupId>
-    <artifactId>ssc-flairbot</artifactId>
+    <artifactId>ssc_flairbot</artifactId>
     <version>1.0.0</version>
 
     <parent>

@@ -3,5 +3,9 @@
 /src/main/resources/application.yml
 l4j8cache/
 lib/
+artifacts/
+out/
 *.plantuml
 ssc-flairbot.iml
+*META-INF/
+ssc_flairbot.iml
