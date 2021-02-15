@@ -11,7 +11,7 @@ public class UserBuilder {
     private String summonerName;
     private String summonerId;
     private String server;
-    private String rank;
+    private String gamerank;
     private String validated;
     private String validationCode;
     private int validationTries;
@@ -22,7 +22,7 @@ public class UserBuilder {
     }
 
     public User buildUser() {
-        return new User(redditName, summonerName, summonerId, server, rank, validated, validationCode, validationTries);
+        return new User(redditName, summonerName, summonerId, server, gamerank, validated, validationCode, validationTries);
     }
 
     public UserBuilder redditName(String name) {
@@ -45,8 +45,8 @@ public class UserBuilder {
         return this;
     }
 
-    public UserBuilder rank(String rank) {
-        this.rank = rank;
+    public UserBuilder gamerank(String gamerank) {
+        this.gamerank = gamerank;
         return this;
     }
 

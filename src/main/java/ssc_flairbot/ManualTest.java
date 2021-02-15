@@ -59,27 +59,27 @@ public class ManualTest {
         database.createTable();
 
         User user1 = new UserBuilder().redditName("Thorasine").summonerName("Trefort")
-                .summonerId("8kFIUtL2QHnAKmyI485jY7bWifUk6poPC1KQehEbjtr6zCc").server("EUW").rank("Diamond I")
+                .summonerId("8kFIUtL2QHnAKmyI485jY7bWifUk6poPC1KQehEbjtr6zCc").server("EUW").gamerank("Diamond I")
                 .validated("validated").validationCode("83ERFK").validationTries(0).buildUser();
 
         User user2 = new UserBuilder().redditName("Thorasine").summonerName("Oreena")
-                .summonerId("YKuxOWZtcpkiE1V07iLisX1s93FdVSEf3TnHEYHBqy0Qe-8").server("EUW").rank("Gold IV")
+                .summonerId("YKuxOWZtcpkiE1V07iLisX1s93FdVSEf3TnHEYHBqy0Qe-8").server("EUW").gamerank("Gold IV")
                 .validated("pending").validationCode("83ITES").validationTries(0).buildUser();
 
         User user3 = new UserBuilder().redditName("Thorasine").summonerName("SecretSmurf")
-                .summonerId("dDsBSlaEk34758KbRuwTnydTNaC1nZQZ5kGOwboGfbb-Zz4").server("NA").rank("Grandmaster I")
+                .summonerId("dDsBSlaEk34758KbRuwTnydTNaC1nZQZ5kGOwboGfbb-Zz4").server("NA").gamerank("Grandmaster I")
                 .validated("validated").validationCode("TEST754").validationTries(0).buildUser();
 
         User user4 = new UserBuilder().redditName("Vjostar").summonerName("Vjostar")
-                .summonerId("wWb-WB9G7sMRNTKCjnze7MX84wkIEJhmqe-2JsRwuu_WsEk").server("EUW").rank("Silver III")
+                .summonerId("wWb-WB9G7sMRNTKCjnze7MX84wkIEJhmqe-2JsRwuu_WsEk").server("EUW").gamerank("Silver III")
                 .validated("validated").validationCode("TEST434").validationTries(0).buildUser();
 
         User user5 = new UserBuilder().redditName("Holo").summonerName("Holó")
-                .summonerId("_mwCqsqdyUplPbKpVdc9_k65LAmIm6RonekeZ36L0x5F1Ek").server("EUW").rank("Bronze II")
+                .summonerId("_mwCqsqdyUplPbKpVdc9_k65LAmIm6RonekeZ36L0x5F1Ek").server("EUW").gamerank("Bronze II")
                 .validated("validated").validationCode("TEST12").validationTries(0).buildUser();
 
         User user6 = new UserBuilder().redditName("Oprah").summonerName("Oprah Winfrey")
-                .summonerId("O06SyEvi6NVHMbIuisc_iAKh1g82vAEk6jvzzca25pov8oE").server("EUW").rank("Bronze I")
+                .summonerId("O06SyEvi6NVHMbIuisc_iAKh1g82vAEk6jvzzca25pov8oE").server("EUW").gamerank("Bronze I")
                 .validated("validated").validationCode("TEST239").validationTries(0).buildUser();
 
         database.addUser(user1);

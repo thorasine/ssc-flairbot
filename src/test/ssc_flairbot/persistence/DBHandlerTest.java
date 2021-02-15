@@ -29,10 +29,10 @@ public class DBHandlerTest {
         db.dropTable();
         db.createTable();
         user1 = new UserBuilder().redditName("Thorasine").summonerName("Trefort")
-                .summonerId("fakeSummonerId1").server("EUW").rank("Diamond I").validated("validated")
+                .summonerId("fakeSummonerId1").server("EUW").gamerank("Diamond I").validated("validated")
                 .validationCode("83ERFK").validationTries(0).buildUser();
         user2 = new UserBuilder().redditName("Thorasine").summonerName("Oreena")
-                .summonerId("fakeSummonerID2").server("EUW").rank("Gold IV").validated("pending")
+                .summonerId("fakeSummonerID2").server("EUW").gamerank("Gold IV").validated("pending")
                 .validationCode("QWERTY").validationTries(0).buildUser();
         db.addUser(user1);
         db.addUser(user2);
@@ -62,7 +62,7 @@ public class DBHandlerTest {
     @Test
     public void addUser() {
         User user3 = new UserBuilder().redditName("Pilvax").summonerName("Sniblets")
-                .summonerId("fakeSummonerId3").server("OCE").rank("Master I").validated("validated")
+                .summonerId("fakeSummonerId3").server("OCE").gamerank("Master I").validated("validated")
                 .validationCode("AZERTY").validationTries(3).buildUser();
         db.addUser(user3);
         User testUser = db.getAllUsers().get(2);
@@ -80,10 +80,10 @@ public class DBHandlerTest {
     @Test
     public void batchAddUser() {
         User user3 = new UserBuilder().redditName("Pilvax").summonerName("Sniblets")
-                .summonerId("fakeSummonerId3").server("OCE").rank("Master I").validated("validated")
+                .summonerId("fakeSummonerId3").server("OCE").gamerank("Master I").validated("validated")
                 .validationCode("AZERTY").validationTries(3).buildUser();
         User user4 = new UserBuilder().redditName("George").summonerName("Charlie")
-                .summonerId("fakeSummonerId4").server("JP").rank("Grandmaster I").validated("validated")
+                .summonerId("fakeSummonerId4").server("JP").gamerank("Grandmaster I").validated("validated")
                 .validationCode("QWERTZ").validationTries(5).buildUser();
         List<User> testUsers = new ArrayList<>();
         testUsers.add(user3);

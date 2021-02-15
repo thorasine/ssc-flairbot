@@ -35,10 +35,10 @@ public class FlairHandlerTest {
     public void setUp() {
         database.dropTable();
         database.createTable();
-        user1 = new UserBuilder().redditName("Thorasine").summonerName("Trefort").rank("Iron II").validated("validated").buildUser();
-        user2 = new UserBuilder().redditName("Thorasine").summonerName("Thorasine").rank("Grandmaster I").validated("validated").buildUser();
-        user3 = new UserBuilder().redditName("Its_Vizicsacsi").summonerName("Vizicsacsi").rank("Gold II").validated("validated").buildUser();
-        user4 = new UserBuilder().redditName("Its_Vizicsacsi").summonerName("Betteraccount").rank("Diamond III").validated("pending").buildUser();
+        user1 = new UserBuilder().redditName("Thorasine").summonerName("Trefort").gamerank("Iron II").validated("validated").buildUser();
+        user2 = new UserBuilder().redditName("Thorasine").summonerName("Thorasine").gamerank("Grandmaster I").validated("validated").buildUser();
+        user3 = new UserBuilder().redditName("Its_Vizicsacsi").summonerName("Vizicsacsi").gamerank("Gold II").validated("validated").buildUser();
+        user4 = new UserBuilder().redditName("Its_Vizicsacsi").summonerName("Betteraccount").gamerank("Diamond III").validated("pending").buildUser();
         database.addUser(user1);
         database.addUser(user2);
         database.addUser(user3);
