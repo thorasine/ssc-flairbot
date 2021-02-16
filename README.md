@@ -1,11 +1,12 @@
 # SummonerSchool-Flairbot
 
-This repository is the source of a site <em>meant</em> to be used by [/r/summonerschool](https://reddit.com/r/summonerschool) to add verified ranked flairs to contributors. The purpose of this project was to practice Full Stack Development along with [Spring](https://spring.io/) (as it is my first Spring project).
+This repository is the source of a site <em>meant</em> to be used by [/r/summonerschool](https://reddit.com/r/summonerschool) to add verified ranked flairs to contributors. The purpose of this project was to practice full stack development.
 
 **Install and Configuration**
 
-The app uses **Maven** and requires a **MySQL database** running. One must also create and fill in the following file with the necessary credentials:  
-* [application.yml](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/resources/application.yml.example)    
+Create and fill in the following files with the necessary credentials:  
+* [application.yaml](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/resources/application.yaml.example) - Credentials and configuration for Spring.
+* [myapp.yaml](https://github.com/thorasine/ssc-flairbot/blob/master/myapp.yaml.example) 
 
 The following REST APIs are used:  
 * [Riot Games API](https://developer.riotgames.com/): Used to access the users in-game ranks.  
@@ -28,7 +29,7 @@ Every day, tens thousands of players come together to share information on Summo
 
 > *A reddit user with a ranked flair.*
 
-The [moderator team](https://www.reddit.com/r/summonerschool/about/moderators) at Summoner School made several attempts to highlight the contributions of high-calibre players. Some of these included the use of Reddit's "flair" system. Flairs are badges that appear next to a person's name in all of their contributions.
+The [moderator team](https://www.reddit.com/r/summonerschool/about/moderators) at Summoner School made several attempts to highlight the contributions of high-calibre players. Some of these included the use of Reedits "flair" system. Flairs are badges that appear next to a person's name in all of their contributions.
 
 Unfortunately, previous attempts at solving the flair system suffered from dishonesty. Contributors were cheating and finding ways to obtain flairs which they hadn't earned. Meanwhile, personally validating each player was too time consuming.
 
@@ -40,7 +41,7 @@ In the following years, Summoner School's founder put out a call for somebody to
 
 ## How it works
 
-Reddit users visit the site and are prompted to sign in using their Reddit account. Reddit's OAuth 2.0 protocol allows the site to verify that 
+Reddit users visit the site and are prompted to sign in using their Reddit account. Reedits OAuth 2.0 protocol allows the site to verify that 
 their Reddit account is authentic.
 
 After signing in, the visitor can specify one or more League of Legends accounts that they own. To verify ownership of those accounts, a challenge is made:
@@ -49,7 +50,7 @@ After signing in, the visitor can specify one or more League of Legends accounts
 
 * Using Riot Games' [Developer API](https://developer.riotgames.com/) the code is retrieved and checked for authenticity.
 
-Once these steps have been completed, the user is considered registered. From time to time, the user's rank is retrieved using the Riot API and a flair is composed and sent using Reddit's API.  
+Once these steps have been completed, the user is considered registered. From time to time, the user's rank is retrieved using the Riot API and a flair is composed and sent using Reddit API.  
 
 ## Screenshots
 <img src="https://i.imgur.com/IQCSWdN.jpg" width="45%"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/woiRAWk.png" width="45%"></img>

@@ -9,3 +9,5 @@ out/
 ssc-flairbot.iml
 *META-INF/
 ssc_flairbot.iml
+*.yaml
+*.yml
