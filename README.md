@@ -4,15 +4,40 @@ This repository is the source of a site <em>meant</em> to be used by [/r/summone
 
 **Install and Configuration**
 
+You need to have [Maven](https://maven.apache.org/download.cgi) and [Docker](https://www.docker.com/products/docker-desktop) installed.
+
 Create and fill in the following files with the necessary credentials:  
-* [application.yaml](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/resources/application.yaml.example) - Credentials and configuration for Spring.
-* [myapp.yaml](https://github.com/thorasine/ssc-flairbot/blob/master/myapp.yaml.example) 
+* [application.yaml](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/resources/application.yaml.example) - Configuration for Spring.
+* [docker-compose.yaml](https://github.com/thorasine/ssc-flairbot/blob/master/docker-compose.yaml.example) - Configuration for the app's environment.
 
-The following REST APIs are used:  
-* [Riot Games API](https://developer.riotgames.com/): Used to access the users in-game ranks.  
-* [Reddit API](https://www.reddit.com/dev/api/):      Used for OAuth2 authorization and to manage users reddit flairs.
+Additional configuration is available in the [Configuration.java](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/java/ssc_flairbot/Configuration.java) file.  
 
-Additional configuration can be adjusted in [Configuration.java](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/java/ssc_flairbot/Configuration.java) file.  
+Build the application with Maven:
+```
+mvn clean package 
+```
+
+Create the app's Docker image:
+```
+docker build -t ssc-flairbot:1.0 .
+```
+Run the Docker composition:
+```
+docker-compose up -d
+```
+
+After ~20 seconds the app will be online and accessible on your http://[host]:8080/
+
+# Technical Info
+
+The solution was built on **Java 10** with **Maven** and **Docker** in **IntelliJ IDEA** using **Spring Boot 2.3.5** as the main framework along with various Spring components.  
+
+The majority of the website is a single **HTML** file which behaves like an app using **Javascript**, **Bootstrap** and **CSS**.  
+User authentication is done with **OAuth2**. The data exchange between the site and the server is handled by **REST**, **Thymeleaf** and **jQuery**.  
+
+Data persistence is handled by **H2 Database** with **JDBC**. The users data is stored in an **MySQL** database.  
+
+Tests were created with the help of **JUnit 4**, **AssertJ** and in some places **Mockito**.
 
 ## What's this all about?
 
@@ -57,16 +82,6 @@ Once these steps have been completed, the user is considered registered. From ti
 <img src="https://i.imgur.com/4IPlNAL.png" width="45%"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/IKgCX7l.png" width="45%"></img>
 <img src="https://i.imgur.com/ZIYx5bt.png" width="45%"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/mGbTdTt.png" width="45%"></img> 
 
-# Technical Info
-
-The solution was built on **Java 10** in **IntelliJ IDEA** using **Spring Boot 2.3.5** as the main framework along with various Spring components.  
-
-The majority of the website is a single **HTML** file which behaves like an app using **Javascript**, **Bootstrap** and **CSS**.  
-User authentication is done with **OAuth2**. The data exchange between the site and the server is handled by **REST**, **Thymeleaf** and **jQuery**.  
-
-Data persistence is handled by **H2 Database** with **JDBC**. The users data is stored in an **MySQL** database.  
-
-Tests were created with the help of **JUnit 4**, **AssertJ** and in some places **Mockito**.
 ## Model
 Below there is a **simplified** UML layout representing the app's model. Additional UML diagrams of different packages can be accessed here: [league](https://i.imgur.com/gVJkzIX.png), 
 [webcontrollers](https://i.imgur.com/n2wLe3v.png), [reddit](https://i.imgur.com/sSfvifj.png).
