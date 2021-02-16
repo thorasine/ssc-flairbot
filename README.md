@@ -8,7 +8,7 @@ You need to have [Maven](https://maven.apache.org/download.cgi) and [Docker](htt
 
 Create and fill in the following files with the necessary credentials:  
 * [application.yaml](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/resources/application.yaml.example) - Configuration for Spring.
-* [docker-compose.yaml](https://github.com/thorasine/ssc-flairbot/blob/master/docker-compose.yaml.example) - Configuration for the app's environment.
+* [docker-compose.yaml](https://github.com/thorasine/ssc-flairbot/blob/master/docker-compose.yaml.example) - Docker composition for the app's environment.
 
 Additional configuration is available in the [Configuration.java](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/java/ssc_flairbot/Configuration.java) file.  
 
