@@ -33,11 +33,11 @@ After ~20 seconds the app will be online and accessible on your http://[host]:80
 The solution was built on **Java 10** with **Maven** and **Docker** in **IntelliJ IDEA** using **Spring Boot 2.3.5** as the main framework along with various Spring components.  
 
 The majority of the website is a single **HTML** file which behaves like an app using **Javascript**, **Bootstrap** and **CSS**.  
-User authentication is done with **OAuth2**. The data exchange between the site and the server is handled by **REST**, **Thymeleaf** and **jQuery**.  
+User authentication is done with **OAuth2**. The communication between the site and the server is handled by **REST**, **Thymeleaf** and **jQuery**. Data exchange with Reddit and Riots API is through **REST** as well. 
 
 Data persistence is handled by **H2 Database** with **JDBC**. The users data is stored in an **MySQL** database.  
 
-Tests were created with the help of **JUnit 4**, **AssertJ** and in some places **Mockito**.
+Tests were created with the help of **JUnit**, **AssertJ** and in some places **Mockito**.
 
 ## What's this all about?
 
