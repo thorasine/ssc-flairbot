@@ -4,7 +4,7 @@ This repository is the source of a site <em>meant</em> to be used by [/r/summone
 
 **Install and Configuration**
 
-You need to have [Maven](https://maven.apache.org/download.cgi) and [Docker](https://www.docker.com/products/docker-desktop) installed.
+The project uses [Maven](https://maven.apache.org/download.cgi) and [Docker](https://www.docker.com/products/docker-desktop).
 
 Create and fill in the following files with the necessary credentials:  
 * [application.yaml](https://github.com/thorasine/ssc-flairbot/blob/master/src/main/resources/application.yaml.example) - Configuration for Spring.
@@ -14,9 +14,8 @@ Additional configuration is available in the [Configuration.java](https://github
 
 Build the application with Maven:
 ```
-mvn clean package 
+mvn -Dspring-boot.run.profiles=prod package
 ```
-
 Create the app's Docker image:
 ```
 docker build -t ssc-flairbot:1.0 .
@@ -26,18 +25,15 @@ Run the Docker composition:
 docker-compose up -d
 ```
 
-After ~20 seconds the app will be online and accessible on your http://[host]:8080/
+After a minute or so the app will be online and accessible on http://localhost:8080/.
 
 # Technical Info
 
 The solution was built on **Java 10** with **Maven** and **Docker** in **IntelliJ IDEA** using **Spring Boot 2.3.5** as the main framework along with various Spring components.  
 
-The majority of the website is a single **HTML** file which behaves like an app using **Javascript**, **Bootstrap** and **CSS**.  
-User authentication is done with **OAuth2**. The communication between the site and the server is handled by **REST**, **Thymeleaf** and **jQuery**. Data exchange with Reddit and Riots API is through **REST** as well. 
-
-Data persistence is handled by **H2 Database** with **JDBC**. The users data is stored in an **MySQL** database.  
-
-Tests were created with the help of **JUnit**, **AssertJ** and in some places **Mockito**.
+The majority of the website is a single **HTML** file which behaves like an app using **jQuery**, **Bootstrap** and **CSS**.  
+User authentication is done with **OAuth2**. The communication between the site and the server is handled by **REST**, **Thymeleaf** and **Ajax**. Data exchange with Reddit and Riots API is through **REST** as well.  
+Data persistence is handled by **JDBC** in a MySQL database. Tests were created with the help of **JUnit**, and in some places **Mockito**.
 
 ## What's this all about?
 
@@ -83,7 +79,7 @@ Once these steps have been completed, the user is considered registered. From ti
 <img src="https://i.imgur.com/ZIYx5bt.png" width="45%"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/mGbTdTt.png" width="45%"></img> 
 
 ## Model
-Below there is a **simplified** UML layout representing the app's model. Additional UML diagrams of different packages can be accessed here: [league](https://i.imgur.com/gVJkzIX.png), 
+Below there is a **simplified** layout representing the app's model. Additional diagrams of different packages can be accessed here: [league](https://i.imgur.com/gVJkzIX.png), 
 [webcontrollers](https://i.imgur.com/n2wLe3v.png), [reddit](https://i.imgur.com/sSfvifj.png).
 
 <img src="https://i.imgur.com/ZcKf2c9.png.jpg" width="65%">  
