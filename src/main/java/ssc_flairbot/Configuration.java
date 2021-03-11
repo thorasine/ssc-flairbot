@@ -1,5 +1,7 @@
 package ssc_flairbot;
 
+import org.springframework.beans.factory.annotation.Value;
+
 /**
  * Class to hold global configuration values.
  *
@@ -8,7 +10,8 @@ package ssc_flairbot;
 public class Configuration {
 
     // wipes the database, puts in sample data, and changes League API rate limits to match a development key's values
-    public static final boolean IN_DEVELOPMENT_PHASE = true;
+    @Value("${custom.dev-mode}")
+    public static boolean IN_DEVELOPMENT_PHASE;
 
     // percentage of the total capacity allowed to use for requests towards Riot's API for the periodic updating of
     // database

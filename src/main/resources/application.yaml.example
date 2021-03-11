@@ -5,7 +5,6 @@
 # The app requires modflair scope for the refresh token.
 
 spring:
-  profiles: default
   datasource:
     url: jdbc:mysql://db:3306/main
     username: [db-username]
@@ -27,28 +26,5 @@ reddit:
   subreddit: [subreddit-name]
 riot:
   apiKey: [riot-api-key]
----
-# Production profile:
-spring:
-  profiles: production
-  datasource:
-    url: jdbc:mysql://db:3306/main
-    username: [db-username]
-    password: [db-password]
-    driver-class-name: com.mysql.cj.jdbc.Driver
-reddit:
-  client:
-    clientId: [reddit-app-id]
-    clientSecret: [reddit-app-secret]
-    accessTokenUri: https://www.reddit.com/api/v1/access_token
-    userAuthorizationUri: https://www.reddit.com/api/v1/authorize
-    scope: identity
-    clientAuthenticationScheme: header
-    preEstablishedRedirectUri: [reddit-app-redirect-uri (ends with /loginReddit)]
-    useCurrentUri: false
-    modFlairRefreshToken: [mod-flair-refresh-token]
-  resource:
-    userInfoUri: https://oauth.reddit.com/api/v1/me
-  subreddit: [subreddit-name]
-riot:
-  apiKey: [riot-api-key]
+custom:
+  dev-mode: true
