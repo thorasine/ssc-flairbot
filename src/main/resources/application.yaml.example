@@ -28,3 +28,9 @@ riot:
   apiKey: [riot-api-key]
 custom:
   dev-mode: true
+  # a bunch of configuration tuned for development, do not use in production!
+  developmentMode: true
+  # percentage of the total capacity allowed to use for requests towards Riot's API for the periodic updating of database
+  updateThreshold: 0.8
+  # the amount of times the app tries to validate an user before setting them to "failed"
+  verificationTries: 20

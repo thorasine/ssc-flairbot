@@ -39,7 +39,7 @@ public class LeagueServerBuilder {
         int appLimit1;
         int appLimit2;
 
-        if (Configuration.IN_DEVELOPMENT_PHASE) {
+        if (Configuration.isInDevelopmentPhase()) {
             appLimit1 = 100;
             appLimit2 = 20;
         } else {

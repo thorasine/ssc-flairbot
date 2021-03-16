@@ -29,7 +29,7 @@ public class AccountUpdater {
     private final RankUpdateTask rankUpdateTask;
     private final Logger logger = Logger.getLogger(AccountUpdater.class.getName());
     private List<LeagueServer> servers;
-    private double threshold = Configuration.UPDATE_THRESHOLD;
+    private double threshold = Configuration.getUpdateThreshold();
 
     @Autowired
     public AccountUpdater(DBHandler db, RankUpdateTask rankUpdateTask) {

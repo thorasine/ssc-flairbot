@@ -33,7 +33,7 @@ public class VerificationUpdaterTest {
     @Autowired
     DBHandler db;
 
-    private int verificationTries = VerificationUpdater.VERIFICATION_TRIES;
+    private int verificationTries = VerificationUpdater.verificationTries;
     private boolean setupNeeded = true;
     private List<User> users = new ArrayList<>();
 

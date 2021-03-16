@@ -33,12 +33,14 @@ public class ManualTest {
 
     @PostConstruct
     private void startTest() {
-        if (Configuration.IN_DEVELOPMENT_PHASE) {
-            logger.log(Level.WARNING, "--DEVELOPMENT PHASE ENABLED!--");
+        if (Configuration.isInDevelopmentPhase()) {
+            logger.log(Level.WARNING, "--DEVELOPMENT PROFILE ENABLED!--");
             logger.log(Level.WARNING, "--This will wipe the database and set the League API rate limits to much " +
                     "lower!--");
             putInSampleData();
             setFlair();
+        }else{
+            logger.log(Level.WARNING, "--PRODUCTION PROFILE ENABLED!--");
         }
     }
 

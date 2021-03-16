@@ -25,7 +25,7 @@ public class VerificationUpdater {
     private final DBHandler database;
     private final FlairHandler flairHandler;
     private final Logger logger = Logger.getLogger(VerificationUpdater.class.getName());
-    static final int VERIFICATION_TRIES = Configuration.VERIFICATION_TRIES;
+    static final int verificationTries = Configuration.getVerificationTries();
 
     @Autowired
     public VerificationUpdater(LeagueApi lolApi, DBHandler database, FlairHandler flairHandler) {
@@ -65,7 +65,7 @@ public class VerificationUpdater {
         String apiCode = lolApi.getThirdPartyCode(user);
         user.setValidationTries(user.getValidationTries() + 1);
         if (apiCode == null || !apiCode.equalsIgnoreCase(user.getValidationCode())) {
-            if (user.getValidationTries() > VERIFICATION_TRIES) {
+            if (user.getValidationTries() > verificationTries) {
                 user.setValidated("failed");
             }
         } else {
