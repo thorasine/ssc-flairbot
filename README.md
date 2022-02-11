@@ -78,11 +78,6 @@ Once these steps have been completed, the user is considered registered. From ti
 <img src="https://i.imgur.com/4IPlNAL.png" width="45%"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/IKgCX7l.png" width="45%"></img>
 <img src="https://i.imgur.com/ZIYx5bt.png" width="45%"></img>&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/mGbTdTt.png" width="45%"></img> 
 
-## Model
-Below there is a **simplified** layout representing the app's model.
-
-<img src="https://i.imgur.com/ZcKf2c9.png.jpg" width="65%">  
-
 ## Contributions
 
 * [Spring Framework](https://spring.io/) - The framework that the app was built on.
