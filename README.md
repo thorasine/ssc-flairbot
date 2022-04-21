@@ -1,6 +1,6 @@
 # SummonerSchool-Flairbot
 
-This repository is the source of a site <em>meant</em> to be used by [/r/summonerschool](https://reddit.com/r/summonerschool) to add verified ranked flairs to contributors. The purpose of this project was to practice full stack development.
+This repository is the source code of a site <em>meant</em> to be used by [/r/summonerschool](https://reddit.com/r/summonerschool) to add verified ranked flairs to contributors. The purpose of this project was to practice full stack development. I wrote it a while ago, before I started working in my first developer job, so the code is rather suboptimal.
 
 **Install and Configuration**
 
